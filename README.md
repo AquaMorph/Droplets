@@ -5,7 +5,7 @@ A starting point for creating Daisy Patch Projects.
 ## Setup & Deploy
 1. Create git repository
 ```sh
-git clone git@github.com:AquaMorph/DaisyPatchTemplate.git [Project directory name]
+git clone --recurse-submodules git@github.com:AquaMorph/DaisyPatchTemplate.git [Project directory name]
 git remote set-url origin [New git url]
 git push
 ```
