@@ -1,4 +1,4 @@
-TARGET = Main
+TARGET = main
 
 CPP_SOURCES = src/main.cpp
 

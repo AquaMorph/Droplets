@@ -1,0 +1,28 @@
+name: Build Binary
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+    - name: arm-none-eabi-gcc
+      uses: fiam/arm-none-eabi-gcc@v1.0.2
+      with:
+        release: '9-2019-q4'
+    - name: Build Libraries
+      run: make lib
+    - name: Build
+      run: make
+    - name: Archive
+      uses: actions/upload-artifact@v1
+      with:
+        name: main.bin
+        path: build/main.bin
