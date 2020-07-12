@@ -11,7 +11,7 @@ git push
 ```
 2. Build project
 ```sh
-cd daisySP && make && cd ../libDaisy && make && cd .. && make
+cd ./lib/daisySP && make && cd ../libDaisy && make && cd ../.. && make
 ```
 3. Plug usb into Daisy. Enter bootloader mode by holding the BOOT button down, and then pressing the RESET button. Once you release the RESET button, you can also let go of the BOOT button
 4. Write the binary to the Daisy
