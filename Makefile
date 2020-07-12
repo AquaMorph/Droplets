@@ -13,3 +13,4 @@ libdaisy:
 daisysp:
 	cd $(DAISYSP_DIR) && make
 lib: libdaisy daisysp
+deploy: lib all program-dfu
