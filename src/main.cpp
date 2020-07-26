@@ -30,7 +30,7 @@ void ProcessOled() {
   std::string str;
   char* cstr = &str[0];
   patch.display.SetCursor(0,0);
-  str = "Daisy Template";
+  str = "Cascade";
   patch.display.WriteString(cstr, Font_7x10, true);
 
   patch.display.Update();

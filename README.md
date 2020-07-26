@@ -1,13 +1,11 @@
-# Daisy Patch Template
+# Cascade
 
-A starting point for creating Daisy Patch Projects.
+Custom firmware for the Electrosmith Daisy Patch.
 
 ## Setup & Build
 1. Create git repository
 ```sh
-git clone --recurse-submodules git@github.com:AquaMorph/DaisyPatchTemplate.git [Project directory name]
-git remote set-url origin [New git url]
-git push
+git clone --recurse-submodules git@github.com:AquaMorph/Cascade.git
 ```
 2. Build project
 ```sh
