@@ -52,14 +52,22 @@ void ProcessControls() {
 
 void ProcessOutputs() {}
 
+void CreateMenuItem(std::string text, int position, bool highlighted) {
+  char* cstr = &text[0];
+  patch.display.SetCursor(0, (position-1)*10);
+  patch.display.WriteString(cstr, Font_7x10, !highlighted);
+}
+
 void ProcessOled() {
   patch.display.Fill(false);
 
-  std::string str;
-  char* cstr = &str[0];
-  patch.display.SetCursor(0,0);
-  str = std::to_string(selectedMenuItem) + " " + menuItems[selectedMenuItem];
-  patch.display.WriteString(cstr, Font_7x10, true);
-
+  CreateMenuItem(std::to_string(selectedMenuItem) + " " +
+		 menuItems[selectedMenuItem], 1, false);
+  CreateMenuItem("Item 2", 2, false);
+  CreateMenuItem("Item 3", 3, false);
+  CreateMenuItem("Item 4", 4, false);
+  CreateMenuItem("Item 5", 5, false);
+  CreateMenuItem("Item 6", 6, false);
+  
   patch.display.Update();
 }
