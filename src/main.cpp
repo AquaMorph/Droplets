@@ -11,13 +11,19 @@ using namespace daisysp;
 
 DaisyPatch patch;
 
-const int MENU_SIZE = 8;
+const std::string MENU_ITEMS[] = {"VCO", 
+				 "VCA",
+				 "Envelope",
+				 "LFO",
+				 "Logic",
+				 "Noise",
+				 "Delay",
+				 "Reverb"};
+const int MENU_SIZE = sizeof(MENU_ITEMS)/sizeof(*MENU_ITEMS);
 const int MAX_CHAR_LENGTH = 15;
-std::string menuItems[MENU_SIZE];
 const int MENU_X[] = {0,  5,  10,  5,  0};
 const int MENU_Y[] = {0, 11, 22, 41, 52};
 int selectedMenuItem = 0;
-
 
 void DrawSolidRect(uint8_t x1,
 		   uint8_t y1,
@@ -29,21 +35,9 @@ void DrawSolidRect(uint8_t x1,
   }
 }
 
-void SetupMenu() {
-  menuItems[0] = "VCO";
-  menuItems[1] = "VCA";
-  menuItems[2] = "Envelope";
-  menuItems[3] = "LFO";
-  menuItems[4] = "Logic";
-  menuItems[5] = "Noise";
-  menuItems[6] = "Delay";
-  menuItems[7] = "Reverb";
-}
-
 int main(void) {
   patch.Init();
   patch.StartAdc();
-  SetupMenu();
   while(true) {
     ProcessControls();
     ProcessOled();
@@ -63,7 +57,7 @@ std::string FilterMenuText(int position) {
   if (position >= MENU_SIZE || position < 0) {
     return "";
   } else {
-    return menuItems[position];
+    return MENU_ITEMS[position];
   }
 }
 void ProcessControls() {
@@ -84,7 +78,6 @@ void CreateMenuItem(std::string text, int position, bool highlighted) {
   } else {
     patch.display.WriteString(cstr, Font_7x10, !highlighted);
   }
-  //DrawSolidRect(text.size()*7, (position-1)*10, text.size()*7+21, position*10, false);
 }
 
 void ProcessOled() {
