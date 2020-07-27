@@ -74,6 +74,7 @@ void CreateMenuItem(std::string text, int position, bool highlighted) {
   text.insert(text.end(), MAX_CHAR_LENGTH-text.size(), ' ');
   patch.display.SetCursor(MENU_X[position-1], MENU_Y[position-1]);
   if (highlighted) {
+    DrawSolidRect(0, MENU_Y[2], SSD1309_WIDTH, MENU_Y[2]+17, true);
     patch.display.WriteString(cstr, Font_11x18, !highlighted);
   } else {
     patch.display.WriteString(cstr, Font_7x10, !highlighted);
