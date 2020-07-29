@@ -12,13 +12,15 @@ using namespace daisysp;
 DaisyPatch patch;
 
 const std::string MENU_ITEMS[] = {"VCO", 
-				 "VCA",
-				 "Envelope",
-				 "LFO",
-				 "Logic",
-				 "Noise",
-				 "Delay",
-				 "Reverb"};
+				  "VCA",
+				  "Envelope",
+				  "LFO",
+				  "Logic",
+				  "Noise",
+				  "Delay",
+				  "Reverb",
+				  "Turing",
+				  "Quantizer"};
 const int MENU_SIZE = sizeof(MENU_ITEMS)/sizeof(*MENU_ITEMS);
 const int MAX_CHAR_LENGTH = 15;
 const int MENU_X[] = {0,  5,  10,  5,  0};
