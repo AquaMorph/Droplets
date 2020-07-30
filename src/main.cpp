@@ -26,6 +26,7 @@ const int MAX_CHAR_LENGTH = 15;
 const int MENU_X[] = {0,  5,  10,  5,  0};
 const int MENU_Y[] = {0, 11, 22, 41, 52};
 int selectedMenuItem = 0;
+bool inMenu = false;
 
 void DrawSolidRect(uint8_t x1,
 		   uint8_t y1,
@@ -35,6 +36,12 @@ void DrawSolidRect(uint8_t x1,
   for (int i = std::min(y1, y2); i <= std::max(y1, y2); i++) {
     patch.display.DrawLine(x1, i, x2, i, on);
   }
+}
+
+void WriteString(int x, int y, std::string text) {
+  patch.display.SetCursor(x, y);
+  char* cstr = &text[0];
+  patch.display.WriteString(cstr, Font_6x8, true);
 }
 
 int main(void) {
@@ -65,8 +72,20 @@ std::string FilterMenuText(int position) {
 void ProcessControls() {
   patch.UpdateAnalogControls();
   patch.DebounceControls();
-  selectedMenuItem -= patch.encoder.Increment();
-  FilterMenuSelection();
+
+  if (inMenu) {
+    selectedMenuItem -= patch.encoder.Increment();
+    FilterMenuSelection();
+    if (patch.encoder.RisingEdge()) {
+      inMenu = false;
+    }
+  } else {
+    if (patch.encoder.Pressed()) {
+      if (patch.encoder.TimeHeldMs() > 500 && patch.encoder.TimeHeldMs() < 505) {
+	inMenu = true;
+      }
+    }
+  }
 }
 
 void ProcessOutputs() {}
@@ -83,14 +102,21 @@ void CreateMenuItem(std::string text, int position, bool highlighted) {
   }
 }
 
-void ProcessOled() {
-  patch.display.Fill(false);
-
+void ProcessMenuOled() {
   CreateMenuItem(FilterMenuText(selectedMenuItem-2), 1, false);
   CreateMenuItem(FilterMenuText(selectedMenuItem-1), 2, false);
   CreateMenuItem(FilterMenuText(selectedMenuItem), 3, true);
   CreateMenuItem(FilterMenuText(selectedMenuItem+1), 4, false);
   CreateMenuItem(FilterMenuText(selectedMenuItem+2), 5, false);
-  
+}
+
+void ProcessOled() {
+  patch.display.Fill(false);
+
+  if (inMenu) {
+    ProcessMenuOled();
+  } else {
+    WriteString(0, 0, MENU_ITEMS[selectedMenuItem]);
+  }
   patch.display.Update();
 }
