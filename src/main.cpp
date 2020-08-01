@@ -13,7 +13,7 @@ using namespace daisysp;
 
 DaisyPatch patch;
 Util util(&patch);
-Menu menu(&patch);
+Menu menu(&patch, &util);
 
 int main(void) {
   patch.Init();

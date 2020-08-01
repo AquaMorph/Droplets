@@ -1,3 +1,5 @@
+#pragma once
+
 #include "daisy_patch.h"
 
 #include <string>
@@ -10,13 +12,13 @@ class Util {
  public:
   Util(DaisyPatch*);
   
-  void DrawSolidRect(uint8_t x1,
-		     uint8_t y1,
-		     uint8_t x2,
-		     uint8_t y2,
-		     bool on);
+  void DrawSolidRect(uint8_t,
+		     uint8_t,
+		     uint8_t,
+		     uint8_t,
+		     bool);
 
-  void WriteString(int x,
-		   int y,
-		   std::string text);
+  void WriteString(int,
+		   int,
+		   std::string);
 };
