@@ -11,8 +11,20 @@ void DrawSolidRect(DaisyPatch patch,
   }
 }
 
-void WriteString(DaisyPatch patch, int x, int y, FontDef font, std::string text) {
+void WriteString(DaisyPatch patch,
+		 int x,
+		 int y,
+		 FontDef font,
+		 std::string text,
+		 bool on) {
   patch.display.SetCursor(x, y);
-  char* cstr = &text[0];
-  patch.display.WriteString(cstr, font, true);
+  patch.display.WriteString(&text[0], font, on);
+}
+
+void WriteString(DaisyPatch patch,
+		 int x,
+		 int y,
+		 FontDef font,
+		 std::string text) {
+  WriteString(patch, x, y, font, text, true);
 }

@@ -20,6 +20,13 @@ void WriteString(DaisyPatch,
 		 int,
 		 int,
 		 FontDef,
+		 std::string,
+		 bool);
+
+void WriteString(DaisyPatch,
+		 int,
+		 int,
+		 FontDef,
 		 std::string);
 
 #endif // CASCADE_UTIL_H_

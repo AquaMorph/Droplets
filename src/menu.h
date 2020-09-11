@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef CASCADE_MENU_H_
+#define CASCADE_MENU_H_
+
 #include "daisy_patch.h"
 #include "util.h"
 
@@ -21,3 +24,5 @@ class Menu {
   void UpdateMenuPosition();
   std::string SelectedName();
 };
+
+#endif // CASCADE_MENU_H_

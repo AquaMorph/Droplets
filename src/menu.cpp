@@ -45,14 +45,12 @@ std::string Menu::FilterMenuText(int position) {
 }
 
 void Menu::CreateMenuItem(std::string text, int position, bool highlighted) {
-  char* cstr = &text[0];
   text.insert(text.end(), MAX_CHAR_LENGTH-text.size(), ' ');
-  patch->display.SetCursor(MENU_X[position-1], MENU_Y[position-1]);
   if (highlighted) {
     DrawSolidRect(*patch, 0, MENU_Y[2], SSD1309_WIDTH, MENU_Y[2]+17, true);
-    patch->display.WriteString(cstr, Font_11x18, !highlighted);
+    WriteString(*patch, MENU_X[position-1], MENU_Y[position-1], Font_11x18, text, !highlighted);
   } else {
-    patch->display.WriteString(cstr, Font_7x10, !highlighted);
+    WriteString(*patch, MENU_X[position-1], MENU_Y[position-1], Font_7x10, text, !highlighted);
   }
 }
 
