@@ -1,6 +1,6 @@
 TARGET = main
 
-CPP_SOURCES = src/main.cpp src/menu.cpp src/util.cpp
+CPP_SOURCES = src/main.cpp src/util.cpp src/menu.cpp
 
 LIBDAISY_DIR = ./lib/libDaisy
 DAISYSP_DIR = ./lib/daisySP

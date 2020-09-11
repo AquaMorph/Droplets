@@ -10,9 +10,8 @@ using namespace daisy;
 class Menu {
  private:
   DaisyPatch* patch;
-  Util* util;
  public:
-  Menu(DaisyPatch*, Util*);
+  Menu(DaisyPatch*);
   bool InMenu();
   void SetInMenu(bool);
   void FilterMenuSelection();

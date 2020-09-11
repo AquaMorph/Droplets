@@ -1,19 +1,17 @@
 #include "daisysp.h"
 #include "daisy_patch.h"
 
-#include <algorithm>
 #include <string>
 
 #include "main.h"
-#include "menu.h"
 #include "util.h"
+#include "menu.h"
 
 using namespace daisy;
 using namespace daisysp;
 
 DaisyPatch patch;
-Util util(&patch);
-Menu menu(&patch, &util);
+Menu menu(&patch);
 
 int main(void) {
   patch.Init();
@@ -28,7 +26,6 @@ int main(void) {
 void ProcessControls() {
   patch.UpdateAnalogControls();
   patch.DebounceControls();
-
   if (menu.InMenu()) {
     menu.UpdateMenuPosition();
     if (patch.encoder.RisingEdge()) {
@@ -47,11 +44,10 @@ void ProcessOutputs() {}
 
 void ProcessOled() {
   patch.display.Fill(false);
-
   if (menu.InMenu()) {
     menu.ProcessMenuOled();
   } else {
-    util.WriteString(0, 0, menu.SelectedName());
+    WriteString(patch, 0, 0, Font_6x8, menu.SelectedName());
   }
   patch.display.Update();
 }

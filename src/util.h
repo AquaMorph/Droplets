@@ -1,24 +1,25 @@
 #pragma once
 
+#ifndef CASCADE_UTIL_H_
+#define CASCADE_UTIL_H_
+
 #include "daisy_patch.h"
 
 #include <string>
 
 using namespace daisy;
 
-class Util {
- private:
-  DaisyPatch* patch;
- public:
-  Util(DaisyPatch*);
-  
-  void DrawSolidRect(uint8_t,
-		     uint8_t,
-		     uint8_t,
-		     uint8_t,
-		     bool);
+void DrawSolidRect(DaisyPatch,
+		   uint8_t,
+		   uint8_t,
+		   uint8_t,
+		   uint8_t,
+		   bool);
 
-  void WriteString(int,
-		   int,
-		   std::string);
-};
+void WriteString(DaisyPatch,
+		 int,
+		 int,
+		 FontDef,
+		 std::string);
+
+#endif // CASCADE_UTIL_H_
