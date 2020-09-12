@@ -6,16 +6,23 @@
 #include "main.h"
 #include "util.h"
 #include "menu.h"
+#include "droplets/droplet.h"
+#include "droplets/noise_droplet.h"
 
 using namespace daisy;
 using namespace daisysp;
 
 DaisyPatch patch;
 Menu menu(&patch);
+Droplet* droplet;
 
 int main(void) {
   patch.Init();
+  float samplerate = patch.AudioSampleRate();
+  droplet = new NoiseDroplet(samplerate);
   patch.StartAdc();
+  patch.StartAudio(AudioThrough);
+  
   while(true) {
     ProcessControls();
     ProcessOled();
@@ -51,3 +58,9 @@ void ProcessOled() {
   }
   patch.display.Update();
 }
+
+static void AudioThrough(float **in, float **out, size_t size) {
+  patch.UpdateAnalogControls();
+  droplet->Process(in, out, size);
+}
+

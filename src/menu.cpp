@@ -16,7 +16,7 @@ const std::string MENU_ITEMS[] = {"VCO",
 const int MENU_SIZE = sizeof(MENU_ITEMS)/sizeof(*MENU_ITEMS);
 const int MAX_CHAR_LENGTH = 15;
 const int MENU_X[] = {0,  5,  10,  5,  0};
-const int MENU_Y[] = {0, 11, 22, 41, 52};
+const int MENU_Y[] = {0, 11,  22, 41, 52};
 int selectedMenuItem = 0;
 bool inMenu = false;
 
@@ -57,7 +57,7 @@ void Menu::CreateMenuItem(std::string text, int position, bool highlighted) {
 void Menu::ProcessMenuOled() {
   CreateMenuItem(FilterMenuText(selectedMenuItem-2), 1, false);
   CreateMenuItem(FilterMenuText(selectedMenuItem-1), 2, false);
-  CreateMenuItem(FilterMenuText(selectedMenuItem), 3, true);
+  CreateMenuItem(FilterMenuText(selectedMenuItem),   3, true);
   CreateMenuItem(FilterMenuText(selectedMenuItem+1), 4, false);
   CreateMenuItem(FilterMenuText(selectedMenuItem+2), 5, false);
 }
