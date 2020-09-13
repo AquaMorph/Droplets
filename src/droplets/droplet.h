@@ -7,8 +7,11 @@
 
 using namespace daisy;
 
+enum class DropletState {kFull, kLeft, kRight};
+
 class Droplet {
  public:
+  DropletState state;
   virtual ~Droplet() {};
   virtual void Control()=0;
   virtual void Process(float**, float**, size_t)=0;
