@@ -19,7 +19,7 @@ Droplet* droplet;
 int main(void) {
   patch.Init();
   float samplerate = patch.AudioSampleRate();
-  droplet = new NoiseDroplet(samplerate);
+  droplet = new NoiseDroplet(&patch, samplerate);
   patch.StartAdc();
   patch.StartAudio(AudioThrough);
   
@@ -56,6 +56,7 @@ void ProcessOled() {
   } else {
     WriteString(patch, 0, 0, Font_6x8, menu.SelectedName());
   }
+  droplet->Draw();
   patch.display.Update();
 }
 

@@ -1,10 +1,11 @@
 #include "noise_droplet.h"
 
-NoiseDroplet::NoiseDroplet(float sample_rate) {
+NoiseDroplet::NoiseDroplet(DaisyPatch* m_patch, float sample_rate) {
   noise.Init();
+  patch = m_patch;
 }
 
-void NoiseDroplet::Control(float ctr_1, float ctr_2, float ctr_3, float ctr_4) {}
+void NoiseDroplet::Control() {}
 void NoiseDroplet::Process(float** in, float** out, size_t size) {
   for (size_t i = 0; i < size; i += 2) {
     float sig = noise.Process();
@@ -13,4 +14,6 @@ void NoiseDroplet::Process(float** in, float** out, size_t size) {
     }
   }
 }
-void NoiseDroplet::Draw(int* d, int width, int height) {}
+void NoiseDroplet::Draw() {
+  WriteString(*patch, 0, 30, Font_6x8, "Test");
+}
