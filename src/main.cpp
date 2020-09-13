@@ -10,7 +10,6 @@
 #include "droplets/noise_droplet.h"
 
 using namespace daisy;
-using namespace daisysp;
 
 DaisyPatch patch;
 Menu menu(&patch);
