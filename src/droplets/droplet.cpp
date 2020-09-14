@@ -1,12 +1,17 @@
 #include "droplet.h"
 
 void Droplet::DrawName(DaisyPatch* patch, std::string name) {
-  int min = 0;
-  int max = SSD1309_WIDTH;
+  WriteCenteredString(*patch, (screen_min + screen_max) / 2, 0,
+		      Font_6x8, name);
+}
+
+void Droplet::UpdateState(DropletState m_state) {
+  state = m_state;
+  screen_min = 0;
+  screen_max = SSD1309_WIDTH;
   if (state == DropletState::kLeft) {
-    max = SSD1309_WIDTH / 2;
+    screen_max = SSD1309_WIDTH / 2;
   } else if (state == DropletState::kRight) {
-    min = SSD1309_WIDTH / 2;
+    screen_min = SSD1309_WIDTH / 2;
   }
-  WriteCenteredString(*patch, (min + max) / 2, 0, Font_6x8, name);
 }

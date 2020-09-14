@@ -20,8 +20,12 @@ class Droplet {
   virtual void Control()=0;
   virtual void Process(float**, float**, size_t)=0;
   virtual void Draw()=0;
+  const int kTitleHeight = 8;
+  int screen_min;
+  int screen_max;
   void DrawName(daisy::DaisyPatch*,
 		std::string);
+  void UpdateState(DropletState);
 };
 
 #endif // CASCADE_DROPLETS_DROPLET_H_

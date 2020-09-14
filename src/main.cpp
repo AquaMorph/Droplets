@@ -56,8 +56,8 @@ void ProcessOled() {
   if (menu.InMenu()) {
     menu.ProcessMenuOled();
   } else {
-    droplet->Draw();
     WriteString(patch, 0, 0, Font_6x8, menu.SelectedName());
+    droplet->Draw();
   }
   patch.display.Update();
 }
