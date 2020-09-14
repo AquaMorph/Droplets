@@ -18,7 +18,9 @@ Droplet* droplet;
 int main(void) {
   patch.Init();
   float samplerate = patch.AudioSampleRate();
-  droplet = new NoiseDroplet(&patch, samplerate, DropletState::kFull);
+  droplet = new NoiseDroplet(&patch,
+			     samplerate,
+			     DropletState::kFull);
   patch.StartAdc();
   patch.StartAudio(AudioThrough);
   
@@ -39,7 +41,8 @@ void ProcessControls() {
     }
   } else {
     if (patch.encoder.Pressed()) {
-      if (patch.encoder.TimeHeldMs() > 500 && patch.encoder.TimeHeldMs() < 505) {
+      if (patch.encoder.TimeHeldMs() > 500 &&
+	  patch.encoder.TimeHeldMs() < 505) {
 	menu.SetInMenu(true);
       }
     }
@@ -59,7 +62,9 @@ void ProcessOled() {
   patch.display.Update();
 }
 
-static void AudioThrough(float **in, float **out, size_t size) {
+static void AudioThrough(float **in,
+			 float **out,
+			 size_t size) {
   patch.UpdateAnalogControls();
   droplet->Process(in, out, size);
 }

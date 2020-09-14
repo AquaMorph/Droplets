@@ -28,3 +28,22 @@ void WriteString(DaisyPatch patch,
 		 std::string text) {
   WriteString(patch, x, y, font, text, true);
 }
+
+void WriteCenteredString(DaisyPatch patch,
+			 int x,
+			 int y,
+			 FontDef font,
+			 std::string text,
+			 bool on) {
+
+  int text_width = font.FontWidth * text.size();
+  WriteString(patch, x - (text_width / 2), y, font, text, on);
+}
+
+void WriteCenteredString(DaisyPatch patch,
+		 int x,
+		 int y,
+		 FontDef font,
+		 std::string text) {
+  WriteCenteredString(patch, x, y, font, text, true);
+}

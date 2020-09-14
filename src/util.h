@@ -29,4 +29,17 @@ void WriteString(DaisyPatch,
 		 FontDef,
 		 std::string);
 
+void WriteCenteredString(DaisyPatch,
+			 int,
+			 int,
+			 FontDef,
+			 std::string,
+			 bool);
+
+void WriteCenteredString(DaisyPatch,
+			 int,
+			 int,
+			 FontDef,
+			 std::string);
+
 #endif // CASCADE_UTIL_H_
