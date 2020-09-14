@@ -28,17 +28,5 @@ void NoiseDroplet::Process(float** in, float** out, size_t size) {
 }
 
 void NoiseDroplet::Draw() {
-  DrawName(patch);
-}
-
-
-void NoiseDroplet::DrawName(DaisyPatch* patch) {
-  int min = 0;
-  int max = SSD1309_WIDTH;
-  if (state == DropletState::kLeft) {
-    max = SSD1309_WIDTH / 2;
-  } else if (state == DropletState::kRight) {
-    min = SSD1309_WIDTH / 2;
-  }
-  WriteCenteredString(*patch, (min + max) / 2, 0, Font_6x8, "Noise");
+  DrawName(patch, "Noise");
 }

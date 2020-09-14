@@ -1,6 +1,7 @@
 TARGET = cascade
 
-CPP_SOURCES = src/main.cpp src/util.cpp src/menu.cpp src/droplets/noise_droplet.cpp
+CPP_SOURCES = src/main.cpp src/util.cpp src/menu.cpp \
+              src/droplets/droplet.cpp src/droplets/noise_droplet.cpp
 
 LIBDAISY_DIR = ./lib/libDaisy
 DAISYSP_DIR = ./lib/daisySP

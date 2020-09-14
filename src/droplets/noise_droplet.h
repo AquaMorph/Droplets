@@ -14,7 +14,6 @@ class NoiseDroplet: public Droplet {
   DaisyPatch* patch;
   daisysp::WhiteNoise noise;
   daisysp::NlFilt filter;
-  void DrawName(DaisyPatch*);
  public:
   NoiseDroplet(DaisyPatch*, float, DropletState);
   void Control();
