@@ -23,6 +23,8 @@ class Droplet {
   const int kTitleHeight = 8;
   int screen_min;
   int screen_max;
+  size_t chn_min = 0;
+  size_t chn_max = 4;
   void DrawName(daisy::DaisyPatch*,
 		std::string);
   void UpdateState(DropletState);

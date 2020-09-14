@@ -10,8 +10,10 @@ void Droplet::UpdateState(DropletState m_state) {
   screen_min = 0;
   screen_max = SSD1309_WIDTH;
   if (state == DropletState::kLeft) {
+    chn_max = 2;
     screen_max = SSD1309_WIDTH / 2;
   } else if (state == DropletState::kRight) {
+    chn_min = 2;
     screen_min = SSD1309_WIDTH / 2;
   }
 }
