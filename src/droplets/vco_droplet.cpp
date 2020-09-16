@@ -4,6 +4,7 @@ VCODroplet::VCODroplet(DaisyPatch* m_patch,
 		       float sample_rate,
 		       DropletState m_state) {
   UpdateState(m_state);
+  patch = m_patch;
   int num_waves = Oscillator::WAVE_LAST - 1;
   osc.Init(sample_rate);
   freqctrl.Init(patch->controls[patch->CTRL_1], 10.0,

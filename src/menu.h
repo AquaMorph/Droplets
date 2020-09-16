@@ -10,6 +10,8 @@
 
 using namespace daisy;
 
+enum class MenuState {kVCO, kNoise};
+
 class Menu {
  private:
   DaisyPatch* patch;
@@ -23,6 +25,7 @@ class Menu {
   void ProcessMenuOled();
   void UpdateMenuPosition();
   std::string SelectedName();
+  MenuState GetState();
 };
 
 #endif // CASCADE_MENU_H_

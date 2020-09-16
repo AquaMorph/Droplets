@@ -1,27 +1,16 @@
-#include "daisysp.h"
-#include "daisy_patch.h"
-
-#include <string>
-
 #include "main.h"
-#include "util.h"
-#include "menu.h"
-#include "droplets/droplet.h"
-#include "droplets/noise_droplet.h"
-#include "droplets/vco_droplet.h"
 
 using namespace daisy;
 
 DaisyPatch patch;
 Menu menu(&patch);
 Droplet* droplet;
+float samplerate;
 
 int main(void) {
   patch.Init();
-  float samplerate = patch.AudioSampleRate();
-  droplet = new VCODroplet(&patch,
-			   samplerate,
-			   DropletState::kFull);
+  samplerate = patch.AudioSampleRate();
+  droplet = GetDroplet();
   patch.StartAdc();
   patch.StartAudio(AudioThrough);
   
@@ -39,6 +28,8 @@ void ProcessControls() {
     menu.UpdateMenuPosition();
     if (patch.encoder.RisingEdge()) {
       menu.SetInMenu(false);
+      delete droplet;
+      droplet = GetDroplet();
     }
   } else {
     if (patch.encoder.Pressed()) {
@@ -57,7 +48,6 @@ void ProcessOled() {
   if (menu.InMenu()) {
     menu.ProcessMenuOled();
   } else {
-    WriteString(patch, 0, 0, Font_6x8, menu.SelectedName());
     droplet->Draw();
   }
   patch.display.Update();
@@ -70,3 +60,17 @@ static void AudioThrough(float **in,
   droplet->Process(in, out, size);
 }
 
+Droplet* GetDroplet() {
+  switch(menu.GetState()) {
+  case MenuState::kVCO:
+    return new VCODroplet(&patch,
+			  samplerate,
+			  DropletState::kFull);
+    break;
+  case MenuState::kNoise:
+  default:
+    return new NoiseDroplet(&patch,
+			    samplerate,
+			    DropletState::kFull);
+  }	
+}

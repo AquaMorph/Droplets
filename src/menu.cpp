@@ -4,15 +4,7 @@ Menu::Menu(DaisyPatch* m_patch) {
   patch = m_patch;
 }
 const std::string MENU_ITEMS[] = {"VCO", 
-				  "VCA",
-				  "Envelope",
-				  "LFO",
-				  "Logic",
-				  "Noise",
-				  "Delay",
-				  "Reverb",
-				  "Turing",
-				  "Quantizer"};
+				  "Noise"};
 const int MENU_SIZE = sizeof(MENU_ITEMS)/sizeof(*MENU_ITEMS);
 const int MAX_CHAR_LENGTH = 15;
 const int MENU_X[] = {0,  5,  10,  5,  0};
@@ -44,13 +36,18 @@ std::string Menu::FilterMenuText(int position) {
   }
 }
 
-void Menu::CreateMenuItem(std::string text, int position, bool highlighted) {
+void Menu::CreateMenuItem(std::string text,
+			  int position,
+			  bool highlighted) {
   text.insert(text.end(), MAX_CHAR_LENGTH-text.size(), ' ');
   if (highlighted) {
-    DrawSolidRect(*patch, 0, MENU_Y[2], SSD1309_WIDTH, MENU_Y[2]+17, true);
-    WriteString(*patch, MENU_X[position-1], MENU_Y[position-1], Font_11x18, text, !highlighted);
+    DrawSolidRect(*patch, 0, MENU_Y[2],
+		  SSD1309_WIDTH, MENU_Y[2]+17, true);
+    WriteString(*patch, MENU_X[position-1], MENU_Y[position-1],
+		Font_11x18, text, !highlighted);
   } else {
-    WriteString(*patch, MENU_X[position-1], MENU_Y[position-1], Font_7x10, text, !highlighted);
+    WriteString(*patch, MENU_X[position-1], MENU_Y[position-1],
+		Font_7x10, text, !highlighted);
   }
 }
 
@@ -69,4 +66,8 @@ void Menu::UpdateMenuPosition() {
 
 std::string Menu::SelectedName() {
   return MENU_ITEMS[selectedMenuItem];
+}
+
+MenuState Menu::GetState() {
+  return static_cast<MenuState>(selectedMenuItem);
 }
