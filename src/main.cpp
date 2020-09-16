@@ -8,6 +8,7 @@
 #include "menu.h"
 #include "droplets/droplet.h"
 #include "droplets/noise_droplet.h"
+#include "droplets/vco_droplet.h"
 
 using namespace daisy;
 
@@ -18,9 +19,9 @@ Droplet* droplet;
 int main(void) {
   patch.Init();
   float samplerate = patch.AudioSampleRate();
-  droplet = new NoiseDroplet(&patch,
-			     samplerate,
-			     DropletState::kFull);
+  droplet = new VCODroplet(&patch,
+			   samplerate,
+			   DropletState::kFull);
   patch.StartAdc();
   patch.StartAudio(AudioThrough);
   

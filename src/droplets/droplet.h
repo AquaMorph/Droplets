@@ -15,6 +15,7 @@ enum class DropletState {kFull, kLeft, kRight};
 
 class Droplet {
  public:
+  DaisyPatch* patch;
   DropletState state;
   virtual ~Droplet() {};
   virtual void Control()=0;

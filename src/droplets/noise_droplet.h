@@ -11,7 +11,6 @@
 
 class NoiseDroplet: public Droplet {
  private:
-  DaisyPatch* patch;
   daisysp::WhiteNoise noise;
   daisysp::NlFilt filter;
  public:
