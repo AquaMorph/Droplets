@@ -5,7 +5,7 @@ VCODroplet::VCODroplet(DaisyPatch* m_patch,
 		       DropletState m_state) {
   UpdateState(m_state);
   patch = m_patch;
-  int num_waves = Oscillator::WAVE_LAST - 1;
+  int num_waves = Oscillator::WAVE_LAST;
   osc.Init(sample_rate);
   freqctrl.Init(patch->controls[patch->CTRL_1], 10.0,
 		110.0f, Parameter::LINEAR);
@@ -46,4 +46,27 @@ void VCODroplet::Process(float** in, float** out, size_t size) {
 
 void VCODroplet::Draw() {
   DrawName(patch, "VCO");
+  WriteString(*patch, 0, 54, Font_6x8, WaveToString(wavectrl.Process()));
+}
+
+std::string VCODroplet::WaveToString(uint8_t wf) {
+  switch(wf){
+  case Oscillator::WAVE_TRI:
+    return "Triangle";
+  case Oscillator::WAVE_SQUARE:
+    return "Square";
+  case Oscillator::WAVE_SIN:
+    return "Sine";
+  case Oscillator::WAVE_SAW:
+    return "Saw";
+  case Oscillator::WAVE_RAMP:
+    return "Ramp";
+  case Oscillator::WAVE_POLYBLEP_TRI:
+    return "Poly Triangle";
+  case Oscillator::WAVE_POLYBLEP_SQUARE:
+    return "Poly Square";
+  case Oscillator::WAVE_POLYBLEP_SAW:
+    return "Poly Saw";
+  }
+  return "";
 }

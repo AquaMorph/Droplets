@@ -1,3 +1,8 @@
+#pragma once
+
+#ifndef CASCADE_MAIN_H_
+#define CASCADE_MAIN_H_
+
 #include "daisysp.h"
 #include "daisy_patch.h"
 
@@ -14,3 +19,5 @@ void ProcessOled();
 void ProcessOutputs();
 static void AudioThrough(float **, float **, size_t);
 Droplet* GetDroplet();
+
+#endif // CASCADE_MAIN_H_

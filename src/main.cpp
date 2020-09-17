@@ -66,7 +66,6 @@ Droplet* GetDroplet() {
     return new VCODroplet(&patch,
 			  samplerate,
 			  DropletState::kFull);
-    break;
   case MenuState::kNoise:
   default:
     return new NoiseDroplet(&patch,

@@ -16,6 +16,7 @@ class VCODroplet: public Droplet {
  private:
   Oscillator osc;
   Parameter freqctrl, wavectrl, ampctrl, finectrl;
+  std::string WaveToString(uint8_t);
  public:
   VCODroplet(DaisyPatch*, float, DropletState);
   void Control();
