@@ -2,11 +2,11 @@
 
 NoiseDroplet::NoiseDroplet(DaisyPatch* m_patch,
 			   float sample_rate,
-			   DropletState m_state) {
-  patch = m_patch;
+			   DropletState m_state) :
+  Droplet(m_patch,
+	  m_state) {
   noise.Init();
   filter.Init();
-  UpdateState(m_state);
 }
 
 void NoiseDroplet::Control() {}

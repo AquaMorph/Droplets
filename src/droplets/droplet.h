@@ -17,7 +17,7 @@ class Droplet {
  public:
   DaisyPatch* patch;
   DropletState state;
-  virtual ~Droplet() {};
+  Droplet(DaisyPatch*, DropletState);
   virtual void Control()=0;
   virtual void Process(float**, float**, size_t)=0;
   virtual void Draw()=0;

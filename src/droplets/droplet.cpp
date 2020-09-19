@@ -1,5 +1,10 @@
 #include "droplet.h"
 
+Droplet::Droplet(DaisyPatch* m_patch, DropletState m_state) {
+  patch = m_patch;
+  UpdateState(m_state);
+}
+
 void Droplet::DrawName(DaisyPatch* patch, std::string name) {
   WriteCenteredString(*patch, (screen_min + screen_max) / 2, 0,
 		      Font_6x8, name);
