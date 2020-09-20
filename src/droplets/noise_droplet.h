@@ -10,11 +10,10 @@
 #include "../util.h"
 
 class NoiseDroplet: public Droplet {
- private:
+private:
   daisysp::WhiteNoise noise;
-  daisysp::NlFilt filter;
- public:
-  NoiseDroplet(DaisyPatch*, float, DropletState);
+public:
+  NoiseDroplet(DaisyPatch*, DropletState);
   void Control();
   void Process(float**, float**, size_t);
   void Draw();

@@ -13,12 +13,12 @@ using namespace daisy;
 using namespace daisysp;
 
 class VCODroplet: public Droplet {
- private:
+private:
   Oscillator osc;
   Parameter freqctrl, wavectrl, ampctrl, finectrl;
   std::string WaveToString(uint8_t);
- public:
-  VCODroplet(DaisyPatch*, float, DropletState);
+public:
+  VCODroplet(DaisyPatch*, DropletState, float);
   void Control();
   void Process(float**, float**, size_t);
   void Draw();

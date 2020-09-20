@@ -1,8 +1,8 @@
 #include "vco_droplet.h"
 
 VCODroplet::VCODroplet(DaisyPatch* m_patch,
-		       float sample_rate,
-		       DropletState m_state) :
+		       DropletState m_state,
+		       float sample_rate) :
   Droplet(m_patch,
 	  m_state){
   int num_waves = Oscillator::WAVE_LAST;
@@ -46,7 +46,8 @@ void VCODroplet::Process(float** in, float** out, size_t size) {
 
 void VCODroplet::Draw() {
   DrawName(patch, "VCO");
-  WriteString(*patch, 0, 54, Font_6x8, WaveToString(wavectrl.Process()));
+  WriteString(*patch, 0, 54, Font_6x8,
+	      WaveToString(wavectrl.Process()));
 }
 
 std::string VCODroplet::WaveToString(uint8_t wf) {

@@ -14,7 +14,7 @@ using namespace daisy;
 enum class DropletState {kFull, kLeft, kRight};
 
 class Droplet {
- public:
+public:
   DaisyPatch* patch;
   DropletState state;
   Droplet(DaisyPatch*, DropletState);

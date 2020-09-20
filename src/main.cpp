@@ -2,14 +2,9 @@
 
 using namespace daisy;
 
-DaisyPatch patch;
-Menu menu(&patch);
-Droplet* droplet;
-float samplerate;
-
 int main(void) {
   patch.Init();
-  samplerate = patch.AudioSampleRate();
+  sample_rate = patch.AudioSampleRate();
   droplet = GetDroplet();
   patch.StartAdc();
   patch.StartAudio(AudioThrough);
@@ -56,7 +51,6 @@ void ProcessOled() {
 static void AudioThrough(float **in,
 			 float **out,
 			 size_t size) {
-  patch.UpdateAnalogControls();
   droplet->Process(in, out, size);
 }
 
@@ -64,12 +58,11 @@ Droplet* GetDroplet() {
   switch(menu.GetState()) {
   case MenuState::kVCO:
     return new VCODroplet(&patch,
-			  samplerate,
-			  DropletState::kFull);
+			  DropletState::kFull,
+			  sample_rate);
   case MenuState::kNoise:
   default:
     return new NoiseDroplet(&patch,
-			    samplerate,
 			    DropletState::kFull);
   }	
 }

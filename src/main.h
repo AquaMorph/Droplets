@@ -14,6 +14,11 @@
 #include "droplets/noise_droplet.h"
 #include "droplets/vco_droplet.h"
 
+DaisyPatch patch;
+Menu menu(&patch);
+Droplet* droplet;
+float sample_rate;
+
 void ProcessControls();
 void ProcessOled();
 void ProcessOutputs();

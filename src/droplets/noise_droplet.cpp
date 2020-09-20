@@ -1,12 +1,10 @@
 #include "noise_droplet.h"
 
 NoiseDroplet::NoiseDroplet(DaisyPatch* m_patch,
-			   float sample_rate,
 			   DropletState m_state) :
   Droplet(m_patch,
 	  m_state) {
   noise.Init();
-  filter.Init();
 }
 
 void NoiseDroplet::Control() {}
