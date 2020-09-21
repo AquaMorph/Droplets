@@ -3,6 +3,8 @@
 #ifndef CASCADE_DROPLETS_VCO_DROPLET_H_
 #define CASCADE_DROPLETS_VCO_DROPLET_H_
 
+#include <cmath>
+
 #include "daisysp.h"
 #include "daisy_patch.h"
 
@@ -17,6 +19,7 @@ private:
   Oscillator osc;
   Parameter freqctrl, wavectrl, ampctrl, finectrl;
   std::string WaveToString(uint8_t);
+  const double pi = std::acos(-1);
 public:
   VCODroplet(DaisyPatch*, DropletState, float);
   void Control();

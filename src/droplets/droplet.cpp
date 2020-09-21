@@ -22,3 +22,15 @@ void Droplet::UpdateState(DropletState m_state) {
     screen_min = SSD1309_WIDTH / 2;
   }
 }
+
+void Droplet::AnimationInc() {
+  if (count == animation_rate) {
+    animation_count++;
+    count = 0;
+  }
+  count++;
+}
+
+void Droplet::SetAnimationRate(int rate) {
+  animation_rate = rate;
+}
