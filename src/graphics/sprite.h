@@ -13,6 +13,7 @@ class Sprite {
   bool** sprite;
  public:
   Sprite(int, int);
+  ~Sprite();
   void SetPixel(int, int, bool);
   int GetHeight();
   int GetWidth();

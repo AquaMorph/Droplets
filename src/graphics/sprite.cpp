@@ -12,6 +12,13 @@ Sprite::Sprite(int m_width, int m_height) {
   }
 }
 
+Sprite::~Sprite() {
+  for (int w = 0; w < width; w++) {
+    delete[] sprite[w];
+  }
+  delete[] sprite;
+}
+
 void Sprite::SetPixel(int x, int y, bool solid) {
   sprite[x][y] = solid;
 }

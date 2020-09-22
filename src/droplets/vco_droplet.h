@@ -25,6 +25,7 @@ private:
   Sprite* wave = new Sprite(sine_width, kTitleHeight);
 public:
   VCODroplet(DaisyPatch*, DropletState, float);
+  ~VCODroplet();
   void Control();
   void Process(float**, float**, size_t);
   void Draw();

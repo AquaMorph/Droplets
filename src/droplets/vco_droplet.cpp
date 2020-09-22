@@ -4,7 +4,7 @@ VCODroplet::VCODroplet(DaisyPatch* m_patch,
 		       DropletState m_state,
 		       float sample_rate) :
   Droplet(m_patch,
-	  m_state){
+	  m_state) {
   int num_waves = Oscillator::WAVE_LAST;
   SetAnimationRate(10);
   osc.Init(sample_rate);
@@ -16,6 +16,10 @@ VCODroplet::VCODroplet(DaisyPatch* m_patch,
 		num_waves, Parameter::LINEAR);
   ampctrl.Init(patch->controls[patch->CTRL_4], 0.0,
 	       0.5f, Parameter::LINEAR);
+}
+
+VCODroplet::~VCODroplet() {
+  delete wave;
 }
 
 void VCODroplet::Control() {}
@@ -32,7 +36,6 @@ void VCODroplet::Process(float** in, float** out, size_t size) {
     wave = wavectrl.Process();
     amp = ampctrl.Process();
     // Set osc params
-    
     osc.SetFreq(freq);
     osc.SetWaveform(wave);
     osc.SetAmp(amp);
