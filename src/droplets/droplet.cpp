@@ -5,7 +5,35 @@ Droplet::Droplet(DaisyPatch* m_patch, DropletState m_state) {
   UpdateState(m_state);
 }
 
-void Droplet::DrawName(DaisyPatch* patch, std::string name) {
+DaisyPatch* Droplet::Patch() {
+  return patch;
+}
+
+DropletState Droplet::GetState() {
+  return state;
+}
+
+int Droplet::GetTitleHeight() {
+  return kTitleHeight;
+}
+
+int Droplet::GetScreenMin() {
+  return screen_min;
+}
+
+int Droplet::GetScreenMax() {
+  return screen_max;
+}
+
+size_t Droplet::GetChannelMin() {
+  return chn_min;
+}
+
+size_t Droplet::GetChannelMax() {
+  return chn_max;
+}
+
+void Droplet::DrawName(std::string name) {
   WriteCenteredString(*patch, (screen_min + screen_max) / 2, 0,
 		      Font_6x8, name);
 }
@@ -36,4 +64,8 @@ void Droplet::AnimationInc() {
 
 void Droplet::SetAnimationRate(int rate) {
   animation_rate = rate;
+}
+
+int Droplet::GetAnimationCount() {
+  return animation_count;
 }

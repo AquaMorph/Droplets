@@ -22,7 +22,7 @@ private:
   std::string WaveToString(uint8_t);
   const double pi = std::acos(-1);
   int sine_width = 20;
-  Sprite* wave = new Sprite(sine_width, kTitleHeight);
+  Sprite* wave = new Sprite(sine_width, GetTitleHeight());
 public:
   VCODroplet(DaisyPatch*, DropletState, float);
   ~VCODroplet();

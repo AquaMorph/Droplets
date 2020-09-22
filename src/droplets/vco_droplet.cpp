@@ -8,13 +8,13 @@ VCODroplet::VCODroplet(DaisyPatch* m_patch,
   int num_waves = Oscillator::WAVE_LAST;
   SetAnimationRate(10);
   osc.Init(sample_rate);
-  freqctrl.Init(patch->controls[patch->CTRL_1], 10.0,
+  freqctrl.Init(Patch()->controls[Patch()->CTRL_1], 10.0,
 		110.0f, Parameter::LINEAR);
-  finectrl.Init(patch->controls[patch->CTRL_2], 0.f,
+  finectrl.Init(Patch()->controls[Patch()->CTRL_2], 0.f,
 		7.f, Parameter::LINEAR);
-  wavectrl.Init(patch->controls[patch->CTRL_3], 0.0,
+  wavectrl.Init(Patch()->controls[Patch()->CTRL_3], 0.0,
 		num_waves, Parameter::LINEAR);
-  ampctrl.Init(patch->controls[patch->CTRL_4], 0.0,
+  ampctrl.Init(Patch()->controls[Patch()->CTRL_4], 0.0,
 	       0.5f, Parameter::LINEAR);
 }
 
@@ -28,7 +28,7 @@ void VCODroplet::Process(float** in, float** out, size_t size) {
   float sig, freq, amp;
   size_t wave;
   
-  patch->UpdateAnalogControls();
+  Patch()->UpdateAnalogControls();
   
   for (size_t i = 0; i < size; i += 2) {
     // Read Knobs
@@ -51,14 +51,14 @@ void VCODroplet::Process(float** in, float** out, size_t size) {
 void VCODroplet::Draw() {
   wave->SetBlank();
   for (int i = 0; i < sine_width; i++) {
-    int pixel = (int) round(std::sin(2*pi*((double)(i + animation_count%sine_width)/sine_width)) * (kTitleHeight/2) + kTitleHeight/2);
+    int pixel = (int) round(std::sin(2*pi*((double)(i + GetAnimationCount()%sine_width)/sine_width)) * (GetTitleHeight()/2) + GetTitleHeight()/2);
     wave->SetPixel(i, pixel, true);
   }
   
-  WriteString(*patch, 0, 54, Font_6x8,
+  WriteString(*Patch(), 0, 54, Font_6x8,
 	      WaveToString(wavectrl.Process()));
-  wave->DrawTile(*patch, screen_min, 0, screen_max, kTitleHeight);
-  DrawName(patch, "VCO");
+  wave->DrawTile(*Patch(), GetScreenMin(), 0, GetScreenMax(), GetTitleHeight());
+  DrawName("VCO");
   AnimationInc();
 }
 
