@@ -29,6 +29,9 @@ void Droplet::AnimationInc() {
     count = 0;
   }
   count++;
+  //animation_count = animation_count % animation_rate;
+  WriteCenteredString(*patch, (screen_min + screen_max) / 2, 40,
+		      Font_6x8, std::to_string(animation_count));
 }
 
 void Droplet::SetAnimationRate(int rate) {

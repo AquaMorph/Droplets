@@ -46,29 +46,15 @@ void VCODroplet::Process(float** in, float** out, size_t size) {
 }
 
 void VCODroplet::Draw() {
-  int sine_width = 20;
-  bool sine_wave[sine_width][Droplet::kTitleHeight];
-
-  // Set blank pattern
-  for (int h = 0; h < kTitleHeight; h++) {
-    for (int w = screen_min; w < screen_max; w++) {
-      sine_wave[w][h] = false;
-    }
-  }
-
+  wave->SetBlank();
   for (int i = 0; i < sine_width; i++) {
     int pixel = (int) round(std::sin(2*pi*((double)(i + animation_count%sine_width)/sine_width)) * (kTitleHeight/2) + kTitleHeight/2);
-  sine_wave[i][pixel] = true;
-  }
-
-  for (int h = 0; h < kTitleHeight; h++) {
-    for (int w = screen_min; w < screen_max; w++) {
-      patch->display.DrawPixel(w, h, sine_wave[w%sine_width][h%kTitleHeight]);
-    }
+    wave->SetPixel(i, pixel, true);
   }
   
   WriteString(*patch, 0, 54, Font_6x8,
 	      WaveToString(wavectrl.Process()));
+  wave->DrawTile(*patch, screen_min, 0, screen_max, kTitleHeight);
   DrawName(patch, "VCO");
   AnimationInc();
 }
