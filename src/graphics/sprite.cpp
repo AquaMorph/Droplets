@@ -36,7 +36,9 @@ int Sprite::GetWidth() {
 void Sprite::Draw(DaisyPatch patch, int x, int y) {
   for (int w = 0; w < width; w++) {
     for (int h = 0; h < height; h++) {
-      patch.display.DrawPixel(x+w, y+h, sprite[w][h]);
+      patch.display.DrawPixel(x+w, y+h,
+			      sprite[GetShiftArrayX(w)]
+			      [GetShiftArrayY(h)]);
     }
   }
 }
@@ -52,8 +54,8 @@ void Sprite::DrawTile(DaisyPatch patch,
   int y_max = std::max(y1, y2);
   for (int w = x_min; w < x_max; w++) {
     for (int h = y_min; h < y_max; h++) {
-      patch.display.DrawPixel(w, h, sprite[(w-x_min) % width]
-			      [(h-y_min) % height]);
+      patch.display.DrawPixel(w, h, sprite[GetShiftArrayX((w-x_min) % width)]
+			      [GetShiftArrayY((h-y_min+y_shift) % height)]);
     }
   }
 }
@@ -68,4 +70,32 @@ void Sprite::SetBlank() {
       sprite[w][h] = false;
     }  
   }
+}
+
+void Sprite::SetXShift(int x) {
+  x_shift = x;
+}
+
+void Sprite::SetYShift(int y) {
+  y_shift = y;
+}
+
+void Sprite::AdjustXShift(int x) {
+  x_shift -= x;
+}
+
+void Sprite::AdjustYShift(int y) {
+  y_shift += y;
+}
+
+int Sprite::GetShiftArray(int pos, int shift, int array_size) {
+  return (array_size + ((pos + shift) % array_size)) % array_size;
+}
+
+int Sprite::GetShiftArrayX(int pos) {
+  return GetShiftArray(pos, x_shift, width);
+}
+
+int Sprite::GetShiftArrayY(int pos) {
+  return GetShiftArray(pos, y_shift, height);
 }

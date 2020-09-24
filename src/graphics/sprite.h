@@ -11,6 +11,11 @@ class Sprite {
  private:
   int width, height;
   bool** sprite;
+  int x_shift = 0;
+  int y_shift = 0;
+  int GetShiftArray(int, int, int);
+  int GetShiftArrayX(int);
+  int GetShiftArrayY(int);
  public:
   Sprite(int, int);
   ~Sprite();
@@ -21,6 +26,10 @@ class Sprite {
   void Draw(DaisyPatch, int, int);
   void DrawTile(DaisyPatch, int, int, int, int);
   void SetBlank();
+  void SetXShift(int);
+  void SetYShift(int);
+  void AdjustXShift(int);
+  void AdjustYShift(int);
 };
 
 #endif // CASCADE_GRAPHICS_SPRITE_H_

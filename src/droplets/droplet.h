@@ -43,6 +43,7 @@ public:
   void AnimationInc();
   void SetAnimationRate(int);
   int GetAnimationCount();
+  bool NeedUpdate();
 };
 
 #endif // CASCADE_DROPLETS_DROPLET_H_

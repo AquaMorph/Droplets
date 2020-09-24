@@ -16,6 +16,12 @@ VCODroplet::VCODroplet(DaisyPatch* m_patch,
 		num_waves, Parameter::LINEAR);
   ampctrl.Init(Patch()->controls[Patch()->CTRL_4], 0.0,
 	       0.5f, Parameter::LINEAR);
+
+  wave->SetBlank();
+  for (int i = 0; i < sine_width; i++) {
+    int pixel = (int) round(std::sin(2*pi*((double)(i%sine_width)/sine_width)) * (GetTitleHeight()/2) + GetTitleHeight()/2);
+    wave->SetPixel(i, pixel, true);
+  }
 }
 
 VCODroplet::~VCODroplet() {
@@ -49,15 +55,12 @@ void VCODroplet::Process(float** in, float** out, size_t size) {
 }
 
 void VCODroplet::Draw() {
-  wave->SetBlank();
-  for (int i = 0; i < sine_width; i++) {
-    int pixel = (int) round(std::sin(2*pi*((double)(i + GetAnimationCount()%sine_width)/sine_width)) * (GetTitleHeight()/2) + GetTitleHeight()/2);
-    wave->SetPixel(i, pixel, true);
-  }
-  
   WriteString(*Patch(), 0, 54, Font_6x8,
 	      WaveToString(wavectrl.Process()));
   wave->DrawTile(*Patch(), GetScreenMin(), 0, GetScreenMax(), GetTitleHeight());
+  if(NeedUpdate()) {
+    wave->AdjustXShift(1);
+  }
   DrawName("VCO");
   AnimationInc();
 }
