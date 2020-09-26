@@ -19,7 +19,8 @@ class Sprite {
  public:
   Sprite(int, int);
   ~Sprite();
-  void SetPixel(int, int, bool);
+  void AddPixel(int, int, bool);
+  void AddLine(int, int, int, int, bool);
   int GetHeight();
   int GetWidth();
   bool** GetSprite();

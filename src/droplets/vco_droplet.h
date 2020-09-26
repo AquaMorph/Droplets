@@ -10,7 +10,7 @@
 
 #include "droplet.h"
 #include "../util.h"
-#include "../graphics/sprite.h"
+#include "../graphics/wave.h"
 
 using namespace daisy;
 using namespace daisysp;
@@ -22,7 +22,7 @@ private:
   std::string WaveToString(uint8_t);
   const double pi = std::acos(-1);
   int sine_width = 20;
-  Sprite* wave = new Sprite(sine_width, GetTitleHeight());
+  Wave* wave = new Wave(WaveShape::kTriangle, sine_width, GetTitleHeight());
 public:
   VCODroplet(DaisyPatch*, DropletState, float);
   ~VCODroplet();

@@ -19,8 +19,35 @@ Sprite::~Sprite() {
   delete[] sprite;
 }
 
-void Sprite::SetPixel(int x, int y, bool solid) {
+void Sprite::AddPixel(int x, int y, bool solid) {
   sprite[x][y] = solid;
+}
+
+void Sprite::AddLine(int x1,
+	     int y1,
+	     int x2,
+	     int y2,
+	     bool solid) {
+  uint8_t deltaX = abs(x2 - x1);
+  uint8_t deltaY = abs(y2 - y1);
+  int8_t  signX = ((x1 < x2) ? 1 : -1);
+  int8_t  signY = ((y1 < y2) ? 1 : -1);
+  int16_t error = deltaX - deltaY;
+  int16_t error2;
+  
+  AddPixel(x2, y2, solid);
+  while((x1 != x2) || (y1 != y2)) {
+    AddPixel(x1, y1, solid);
+    error2 = error * 2;
+    if(error2 > -deltaY) {
+      error -= deltaY;
+      x1 += signX;
+    }
+    if(error2 < deltaX) {
+      error += deltaX;
+      y1 += signY;
+    }
+  }
 }
 
 int Sprite::GetHeight() {

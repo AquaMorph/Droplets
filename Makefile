@@ -6,7 +6,8 @@ CPP_SOURCES = src/main.cpp \
               src/droplets/droplet.cpp \
               src/droplets/noise_droplet.cpp \
               src/droplets/vco_droplet.cpp \
-              src/graphics/sprite.cpp
+              src/graphics/sprite.cpp \
+              src/graphics/wave.cpp
 
 LIBDAISY_DIR = ./lib/libDaisy
 DAISYSP_DIR = ./lib/daisySP
