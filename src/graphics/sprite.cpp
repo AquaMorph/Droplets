@@ -20,7 +20,7 @@ Sprite::~Sprite() {
 }
 
 void Sprite::AddPixel(int x, int y, bool solid) {
-  sprite[x][y] = solid;
+  sprite[x][height-y-1] = solid;
 }
 
 void Sprite::AddLine(int x1,
@@ -65,7 +65,7 @@ void Sprite::Draw(DaisyPatch patch, int x, int y) {
     for (int h = 0; h < height; h++) {
       patch.display.DrawPixel(x+w, y+h,
 			      sprite[GetShiftArrayX(w)]
-			      [GetShiftArrayY(h)]);
+			      [GetShiftArrayY(height-h)]);
     }
   }
 }
@@ -79,10 +79,12 @@ void Sprite::DrawTile(DaisyPatch patch,
   int x_max = std::max(x1, x2);
   int y_min = std::min(y1, y2);
   int y_max = std::max(y1, y2);
+  int x, y;
   for (int w = x_min; w < x_max; w++) {
     for (int h = y_min; h < y_max; h++) {
-      patch.display.DrawPixel(w, h, sprite[GetShiftArrayX((w-x_min) % width)]
-			      [GetShiftArrayY((h-y_min+y_shift) % height)]);
+      x = GetShiftArrayX((w-x_min) % width);
+      y = GetShiftArrayY((h-y_min) % height);
+      patch.display.DrawPixel(w, h, sprite[x][y]);
     }
   }
 }

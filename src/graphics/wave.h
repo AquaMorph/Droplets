@@ -14,6 +14,7 @@ class Wave: public Sprite {
   void DrawShape();
  public:
   Wave(WaveShape, int, int);
+  void SetWaveShape(WaveShape);
 };
 
 #endif

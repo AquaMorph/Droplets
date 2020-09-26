@@ -20,9 +20,12 @@ private:
   Oscillator osc;
   Parameter freqctrl, wavectrl, ampctrl, finectrl;
   std::string WaveToString(uint8_t);
+  void SetWaveState(uint8_t);
   const double pi = std::acos(-1);
-  int sine_width = 20;
+  int sine_width = 21;
   Wave* wave = new Wave(WaveShape::kTriangle, sine_width, GetTitleHeight());
+  int testH = 20;
+  //Wave* testWave = new Wave(WaveShape::kSaw, 30, testH);
 public:
   VCODroplet(DaisyPatch*, DropletState, float);
   ~VCODroplet();

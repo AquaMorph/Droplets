@@ -19,7 +19,7 @@ VCODroplet::VCODroplet(DaisyPatch* m_patch,
 }
 
 VCODroplet::~VCODroplet() {
-  delete wave;
+  //  delete wave;
 }
 
 void VCODroplet::Control() {}
@@ -51,10 +51,12 @@ void VCODroplet::Process(float** in, float** out, size_t size) {
 void VCODroplet::Draw() {
   WriteString(*Patch(), 0, 54, Font_6x8,
 	      WaveToString(wavectrl.Process()));
+  SetWaveState(wavectrl.Process());
   wave->DrawTile(*Patch(), GetScreenMin(), 0, GetScreenMax(), GetTitleHeight());
   if(NeedUpdate()) {
-    //wave->AdjustXShift(1);
+    wave->AdjustXShift(1);
   }
+  //testWave->DrawTile(*Patch(), 0, GetTitleHeight(), 60, GetTitleHeight()+testH);
   DrawName("VCO");
   AnimationInc();
 }
@@ -79,4 +81,34 @@ std::string VCODroplet::WaveToString(uint8_t wf) {
     return "Poly Saw";
   }
   return "";
+}
+
+void VCODroplet::SetWaveState(uint8_t wf) {
+  switch(wf){
+  case Oscillator::WAVE_TRI:
+    wave->SetWaveShape(WaveShape::kTriangle);
+    return;
+  case Oscillator::WAVE_SQUARE:
+    wave->SetWaveShape(WaveShape::kSquare);
+    return;
+  case Oscillator::WAVE_SIN:
+    wave->SetWaveShape(WaveShape::kSine);
+    return;
+  case Oscillator::WAVE_SAW:
+    wave->SetWaveShape(WaveShape::kSaw);
+    return;
+  case Oscillator::WAVE_RAMP:
+    wave->SetWaveShape(WaveShape::kRamp);
+    return;
+  case Oscillator::WAVE_POLYBLEP_TRI:
+    wave->SetWaveShape(WaveShape::kTriangle);
+    return;
+  case Oscillator::WAVE_POLYBLEP_SQUARE:
+    wave->SetWaveShape(WaveShape::kSquare);
+    return;
+  default:
+  case Oscillator::WAVE_POLYBLEP_SAW:
+    wave->SetWaveShape(WaveShape::kSaw);
+    return;
+  }
 }

@@ -8,10 +8,22 @@ Wave::Wave(WaveShape m_wave, int width, int height) : Sprite(width, height) {
 void Wave::DrawShape() {
   SetBlank();
   int mid = GetWidth()/2;
+  int x_max = GetWidth()-1;
+  int y_max = GetHeight()-1;
   switch(wave) {
+  case WaveShape::kSaw:
+    AddLine(0, 0, x_max, y_max, true);
+    AddLine(x_max, y_max, x_max, 0, true);
+    return;
+  case WaveShape::kSquare:
+    AddLine(0, 0, mid, 0, true);
+    AddLine(mid, 0, mid, y_max, true);
+    AddLine(mid, y_max, x_max, y_max, true);
+    AddLine(GetWidth()-1, GetHeight()-1, GetWidth()-1, 0, true);
+    return;
   case WaveShape::kTriangle:
-    AddLine(0, GetHeight()+1, mid, 0, true);
-    AddLine(mid, 0, GetWidth()+1, GetHeight(), true);
+    AddLine(0, 0, mid, y_max, true);
+    AddLine(mid, y_max, x_max, 0, true);
     return;
   case WaveShape::kSine:
   default:
@@ -21,4 +33,9 @@ void Wave::DrawShape() {
     }
     return;
   }
+}
+
+void Wave::SetWaveShape(WaveShape m_wave) {
+  wave = m_wave;
+  DrawShape();
 }
