@@ -22,10 +22,7 @@ private:
   std::string WaveToString(uint8_t);
   void SetWaveState(uint8_t);
   const double pi = std::acos(-1);
-  int sine_width = 21;
-  Wave* wave = new Wave(WaveShape::kTriangle, sine_width, GetTitleHeight());
-  int testH = 20;
-  //Wave* testWave = new Wave(WaveShape::kSaw, 30, testH);
+  Wave* wave = new Wave(WaveShape::kTriangle, 21, GetTitleHeight());
 public:
   VCODroplet(DaisyPatch*, DropletState, float);
   ~VCODroplet();

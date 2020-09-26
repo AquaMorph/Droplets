@@ -54,7 +54,6 @@ int Sprite::GetHeight() {
   return height;
 }
 
-
 int Sprite::GetWidth() {
   return width;
 
@@ -117,7 +116,9 @@ void Sprite::AdjustYShift(int y) {
   y_shift += y;
 }
 
-int Sprite::GetShiftArray(int pos, int shift, int array_size) {
+int Sprite::GetShiftArray(int pos,
+			  int shift,
+			  int array_size) {
   return (array_size + ((pos + shift) % array_size)) % array_size;
 }
 

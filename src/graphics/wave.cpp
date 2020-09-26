@@ -1,6 +1,8 @@
 #include "wave.h"
 
-Wave::Wave(WaveShape m_wave, int width, int height) : Sprite(width, height) {
+Wave::Wave(WaveShape m_wave,
+	   int width,
+	   int height) : Sprite(width, height) {
   wave = m_wave;
   DrawShape();
 }
@@ -28,7 +30,7 @@ void Wave::DrawShape() {
   case WaveShape::kSine:
   default:
     for (int i = 0; i < GetWidth(); i++) {
-      int pixel = (int) round(std::sin(2*pi*((double)(i%GetWidth())/GetWidth())) * (GetHeight()/2) + GetHeight()/2);
+      int pixel = (int) round(std::sin(2*pi*((double)(i%x_max)/x_max)) * (y_max/2) + y_max/2);
       AddPixel(i, pixel, true);
     }
     return;

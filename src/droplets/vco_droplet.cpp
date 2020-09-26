@@ -56,7 +56,6 @@ void VCODroplet::Draw() {
   if(NeedUpdate()) {
     wave->AdjustXShift(1);
   }
-  //testWave->DrawTile(*Patch(), 0, GetTitleHeight(), 60, GetTitleHeight()+testH);
   DrawName("VCO");
   AnimationInc();
 }
