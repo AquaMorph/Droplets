@@ -19,7 +19,7 @@ VCODroplet::VCODroplet(DaisyPatch* m_patch,
 }
 
 VCODroplet::~VCODroplet() {
-  //  delete wave;
+  delete wave;
 }
 
 void VCODroplet::Control() {}
@@ -49,12 +49,21 @@ void VCODroplet::Process(float** in, float** out, size_t size) {
 }
 
 void VCODroplet::Draw() {
-  WriteDoubleCentered(*Patch(),
-		      (GetScreenMax()-GetScreenMin())/2,
-		      54,
-		      GetScreenMax()-GetScreenMin(),
-		      Font_6x8,
-		      WaveToString(wavectrl.Process()));
+  if (GetState() == DropletState::kFull) {
+    WriteCenteredString(*Patch(),
+			(GetScreenMax()-GetScreenMin())/2,
+			54,
+			Font_6x8,
+			WaveToString(wavectrl.Process()));
+  } else {
+    WriteDoubleCentered(*Patch(),
+			GetScreenMin() +
+			(GetScreenMax()-GetScreenMin())/2,
+			54,
+			GetScreenMax()-GetScreenMin(),
+			Font_6x8,
+			WaveToString(wavectrl.Process()));
+  }
   SetWaveState(wavectrl.Process());
   wave->DrawTile(*Patch(),
 		 GetScreenMin(),
