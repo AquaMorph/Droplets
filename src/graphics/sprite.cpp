@@ -19,15 +19,15 @@ Sprite::~Sprite() {
   delete[] sprite;
 }
 
-void Sprite::AddPixel(int x, int y, bool solid) {
-  sprite[x][height-y-1] = solid;
+void Sprite::AddPixel(int x, int y, bool on) {
+  sprite[x][height-y-1] = on;
 }
 
 void Sprite::AddLine(int x1,
 	     int y1,
 	     int x2,
 	     int y2,
-	     bool solid) {
+	     bool on) {
   uint8_t deltaX = abs(x2 - x1);
   uint8_t deltaY = abs(y2 - y1);
   int8_t  signX = ((x1 < x2) ? 1 : -1);
@@ -35,9 +35,9 @@ void Sprite::AddLine(int x1,
   int16_t error = deltaX - deltaY;
   int16_t error2;
   
-  AddPixel(x2, y2, solid);
+  AddPixel(x2, y2, on);
   while((x1 != x2) || (y1 != y2)) {
-    AddPixel(x1, y1, solid);
+    AddPixel(x1, y1, on);
     error2 = error * 2;
     if(error2 > -deltaY) {
       error -= deltaY;
