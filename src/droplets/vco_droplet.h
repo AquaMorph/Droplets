@@ -19,8 +19,10 @@ class VCODroplet: public Droplet {
 private:
   Oscillator osc;
   Parameter freqctrl, wavectrl, ampctrl, finectrl;
+  size_t wave;
+  size_t last_wave_ctrl;
   const double pi = std::acos(-1);
-  Wave* wave = new Wave(WaveShape::kTriangle, 21, GetTitleHeight());
+  Wave* wave_graphic = new Wave(WaveShape::kTriangle, 21, GetTitleHeight());
 
   /*
    * Converts oscilator to name of wave shape.
@@ -73,6 +75,20 @@ public:
    * Processes information to be shown on the display. 
    */
   void Draw();
+
+  /*
+   * Changes the wave shape of the VCO.
+   *
+   * @param amount wave shape table position adjustment
+   */
+  void AdjustWaveShape(int amount);
+
+  /*
+   * Sets the wave shape of the VCO.
+   *
+   * @param ws wave shape
+   */
+  void SetWaveShape(int ws);
 };
 
 #endif // CASCADE_DROPLETS_VCO_DROPLET_H_

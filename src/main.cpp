@@ -36,7 +36,11 @@ void ProcessControls() {
   }
 }
 
-void ProcessOutputs() {}
+void ProcessOutputs() {
+  if(!menu.InMenu()) {
+    droplet->Control();
+  }
+}
 
 void ProcessOled() {
   patch.display.Fill(false);
@@ -58,7 +62,7 @@ Droplet* GetDroplet() {
   switch(menu.GetState()) {
   case MenuState::kVCO:
     return new VCODroplet(&patch,
-			  DropletState::kRight,
+			  DropletState::kFull,
 			  sample_rate);
   case MenuState::kNoise:
   default:

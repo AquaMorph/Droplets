@@ -8,53 +8,82 @@ VCODroplet::VCODroplet(DaisyPatch* m_patch,
   int num_waves = Oscillator::WAVE_LAST;
   SetAnimationRate(10);
   osc.Init(sample_rate);
-  freqctrl.Init(Patch()->controls[Patch()->CTRL_1], 10.0,
+
+  wave = Oscillator::WAVE_SAW;
+
+  DaisyPatch::Ctrl freq, fine;
+  switch (GetState()){
+    default:
+    case DropletState::kFull:  
+      wavectrl.Init(Patch()->controls[Patch()->CTRL_3], 0.0,
+		    num_waves, Parameter::LINEAR);
+      ampctrl.Init(Patch()->controls[Patch()->CTRL_4], 0.0,
+		   0.5f, Parameter::LINEAR);
+      freq = Patch()->CTRL_1;
+      fine = Patch()->CTRL_2;
+      SetWaveShape(wavectrl.Process());
+      break;
+    case DropletState::kLeft:
+      freq = Patch()->CTRL_1;
+      fine = Patch()->CTRL_2;
+      break;
+      case DropletState::kRight:
+	freq = Patch()->CTRL_3;
+	fine = Patch()->CTRL_4;
+	break;
+  }
+  freqctrl.Init(Patch()->controls[freq], 10.0,
 		110.0f, Parameter::LINEAR);
-  finectrl.Init(Patch()->controls[Patch()->CTRL_2], 0.f,
+  finectrl.Init(Patch()->controls[fine], 0.f,
 		7.f, Parameter::LINEAR);
-  wavectrl.Init(Patch()->controls[Patch()->CTRL_3], 0.0,
-		num_waves, Parameter::LINEAR);
-  ampctrl.Init(Patch()->controls[Patch()->CTRL_4], 0.0,
-	       0.5f, Parameter::LINEAR);
 }
 
 VCODroplet::~VCODroplet() {
-  delete wave;
+  delete wave_graphic;
 }
 
-void VCODroplet::Control() {}
+void VCODroplet::Control() {
+  Patch()->UpdateAnalogControls();
+  Patch()->DebounceControls();
+  AdjustWaveShape(Patch()->encoder.Increment());
+}
 
 void VCODroplet::Process(float** in, float** out, size_t size) {
-  float sig, freq, amp;
-  size_t wave;
+  float sig, freq, amp = 1.0;
   
   Patch()->UpdateAnalogControls();
   
   for (size_t i = 0; i < size; i += 2) {
     // Read Knobs
     freq = mtof(freqctrl.Process() + finectrl.Process());
-    wave = wavectrl.Process();
-    amp = ampctrl.Process();
+    if (GetState() == DropletState::kFull) {
+      if((size_t) wavectrl.Process() != last_wave_ctrl) {
+	AdjustWaveShape((size_t)wavectrl.Process()-last_wave_ctrl);
+	last_wave_ctrl = wavectrl.Process();
+      }
+      amp = ampctrl.Process();
+    }
     // Set osc params
     osc.SetFreq(freq);
     osc.SetWaveform(wave);
     osc.SetAmp(amp);
     // Process
     sig = osc.Process();
-    // Assign Synthesized Waveform to all four outputs.
-    for (size_t chn = 0; chn < 4; chn++) {
+    // Assign Synthesized Waveform to outputs.
+    for (size_t chn = GetChannelMin(); chn < GetChannelMax(); chn++) {
       out[chn][i] = sig;
     }
   }
 }
 
 void VCODroplet::Draw() {
+  SetWaveState(wave);
   if (GetState() == DropletState::kFull) {
     WriteCenteredString(*Patch(),
 			(GetScreenMax()-GetScreenMin())/2,
 			54,
 			Font_6x8,
-			WaveToString(wavectrl.Process()));
+			WaveToString(wave));
   } else {
     WriteDoubleCentered(*Patch(),
 			GetScreenMin() +
@@ -62,16 +91,15 @@ void VCODroplet::Draw() {
 			54,
 			GetScreenMax()-GetScreenMin(),
 			Font_6x8,
-			WaveToString(wavectrl.Process()));
+			WaveToString(wave));
   }
-  SetWaveState(wavectrl.Process());
-  wave->DrawTile(*Patch(),
+  wave_graphic->DrawTile(*Patch(),
 		 GetScreenMin(),
 		 0,
 		 GetScreenMax(),
 		 GetTitleHeight());
   if(NeedUpdate()) {
-    wave->AdjustXShift(1);
+    wave_graphic->AdjustXShift(1);
   }
   DrawName("VCO");
   AnimationInc();
@@ -102,29 +130,39 @@ std::string VCODroplet::WaveToString(uint8_t wf) {
 void VCODroplet::SetWaveState(uint8_t wf) {
   switch(wf){
   case Oscillator::WAVE_TRI:
-    wave->SetWaveShape(WaveShape::kTriangle);
+    wave_graphic->SetWaveShape(WaveShape::kTriangle);
     return;
   case Oscillator::WAVE_SQUARE:
-    wave->SetWaveShape(WaveShape::kSquare);
+    wave_graphic->SetWaveShape(WaveShape::kSquare);
     return;
   case Oscillator::WAVE_SIN:
-    wave->SetWaveShape(WaveShape::kSine);
+    wave_graphic->SetWaveShape(WaveShape::kSine);
     return;
   case Oscillator::WAVE_SAW:
-    wave->SetWaveShape(WaveShape::kSaw);
+    wave_graphic->SetWaveShape(WaveShape::kSaw);
     return;
   case Oscillator::WAVE_RAMP:
-    wave->SetWaveShape(WaveShape::kRamp);
+    wave_graphic->SetWaveShape(WaveShape::kRamp);
     return;
   case Oscillator::WAVE_POLYBLEP_TRI:
-    wave->SetWaveShape(WaveShape::kTriangle);
+    wave_graphic->SetWaveShape(WaveShape::kTriangle);
     return;
   case Oscillator::WAVE_POLYBLEP_SQUARE:
-    wave->SetWaveShape(WaveShape::kSquare);
+    wave_graphic->SetWaveShape(WaveShape::kSquare);
     return;
   default:
   case Oscillator::WAVE_POLYBLEP_SAW:
-    wave->SetWaveShape(WaveShape::kSaw);
+    wave_graphic->SetWaveShape(WaveShape::kSaw);
     return;
   }
+}
+
+void VCODroplet::AdjustWaveShape(int amount) {
+  wave = (Oscillator::WAVE_LAST + wave + amount) %
+    Oscillator::WAVE_LAST;
+}
+
+void VCODroplet::SetWaveShape(int ws) {
+  wave = ws % Oscillator::WAVE_LAST;
+  last_wave_ctrl = ws;
 }
