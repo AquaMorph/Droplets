@@ -72,7 +72,7 @@ void WriteCenteredString(DaisyPatch patch,
 			 int x,
 			 int y,
 			 FontDef font,
-			 std::string font,
+			 std::string text,
 			 bool on);
 
 /*
