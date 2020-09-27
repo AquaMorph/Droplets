@@ -57,7 +57,7 @@ public:
 		       size_t size)=0;
 
   /*
-   * Processes information to be displayed on the screen. 
+   * Processes information to be shown on the display. 
    */
   virtual void Draw()=0;
 
