@@ -16,15 +16,74 @@ class Menu {
  private:
   DaisyPatch* patch;
  public:
-  Menu(DaisyPatch*);
+  /*
+   * Constructor for a menu system to control the state of the patch.
+   *
+   * @param m_patch pointer to patch
+   */
+  Menu(DaisyPatch* m_patch);
+
+  /*
+   * Gives if the user is currently in the menu.
+   *
+   * @return menu active
+   */
   bool InMenu();
+
+  /*
+   * Sets if the user is in the menu.
+   *
+   * @param menu active
+   */
   void SetInMenu(bool);
+
+  /*
+   * Keeps menu selection within the bounds of the menu's size.
+   */
   void FilterMenuSelection();
-  std::string FilterMenuText(int);
-  void CreateMenuItem(std::string, int, bool);
+
+  /*
+   * Returns item name based on given position and if out of the menu
+   * returns a blank string.
+   *
+   * @param position place in the menu
+   * @return menu item name
+   */
+  std::string FilterMenuText(int position);
+
+  /*
+   * Draws a menu item on screen.
+   *
+   * @param text menu item name
+   * @param position menu items position in the menu
+   * @param highlighted state of menu items selection
+   */
+  void CreateMenuItem(std::string text,
+		      int position,
+		      bool highlighted);
+
+  /*
+   * Draws droplet information on the screen.
+   */
   void ProcessMenuOled();
+
+  /*
+   * Updates menu position based on user input from the encoder.
+   */
   void UpdateMenuPosition();
+
+  /*
+   * Returns the name of the currently selected menu item.
+   *
+   * @return selected menu item's name
+   */
   std::string SelectedName();
+
+  /*
+   * Returns the currently selected menu item.
+   *
+   * @return menu state
+   */
   MenuState GetState();
 };
 
