@@ -26,23 +26,128 @@ private:
   size_t chn_min = 0;
   size_t chn_max = 4;
 public:
-  Droplet(DaisyPatch*, DropletState);
+  /*
+   * Constructor for a droplet which is a mode for either half or full
+   * control for the daisy patch.
+   *
+   * @param m_patch pointer to patch
+   * @param m_state droplet position
+   */
+  Droplet(DaisyPatch* m_patch, DropletState m_state);
+
+  /*
+   * Destructor for a droplet.
+   */
   virtual ~Droplet() {};
+
+  /*
+   * Processes user controls and inputs.
+   */
   virtual void Control()=0;
-  virtual void Process(float**, float**, size_t)=0;
+
+  /*
+   * Processes audio input and outputs.
+   *
+   * @param in the audio inputs for the patch
+   * @param out the audio outputs for the patch
+   * @param size the number of inputs and outputs
+   */
+  virtual void Process(float** in,
+		       float** out,
+		       size_t size)=0;
+
+  /*
+   * Processes information to be displayed on the screen. 
+   */
   virtual void Draw()=0;
+
+  /*
+   * Returns patch
+   *
+   * @return pointer to patch
+   */
   DaisyPatch* Patch();
+
+  /*
+   * Returns the size of the droplet.
+   *
+   * @return size of droplet
+   */
   DropletState GetState();
+
+  /*
+   * Returns the height of the title bar of the droplet.
+   *
+   * @return height of title bar
+   */
   int GetTitleHeight();
+
+  /*
+   * Returns the minimum screen position based on droplet size.
+   *
+   * @return droplet minimum screen position
+   */
   int GetScreenMin();
+
+  /*
+   * Returns the maximum screen position based on droplet size.
+   *
+   * @return droplet maximum screen position
+   */
   int GetScreenMax();
+
+  /*
+   * Returns the minimum channel position based on droplet size.
+   *
+   * @return droplet minimum channel position
+   */
   size_t GetChannelMin();
+
+  /*
+   * Returns the maximum channel position based on droplet size.
+   *
+   * @return droplet maximum channel position
+   */
   size_t GetChannelMax();
-  void DrawName(std::string);
-  void UpdateState(DropletState);  
+
+  /*
+   * Draws droplet name on the title bar.
+   *
+   * @param name droplet position
+   */
+  void DrawName(std::string name);
+
+  /*
+   * Changes droplet position.
+   *
+   * @param m_state droplet 
+   */
+  void UpdateState(DropletState m_state);
+
+  /*
+   * Updates animation clock.
+   */
   void AnimationInc();
-  void SetAnimationRate(int);
+
+  /*
+   * Sets animation refresh rate
+   *
+   * @param rate display refrash rate
+   */
+  void SetAnimationRate(int rate);
+
+  /*
+   * Returns a count for total amount of animation frames.
+   *
+   * @return animation count
+   */
   int GetAnimationCount();
+
+  /*
+   * Returns if display needs a refresh.
+   *
+   * @return display in need of update
+   */
   bool NeedUpdate();
 };
 

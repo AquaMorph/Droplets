@@ -13,9 +13,33 @@ class NoiseDroplet: public Droplet {
 private:
   daisysp::WhiteNoise noise;
 public:
+  /*
+   * Constructor for a droplet which outputs noise.
+   *
+   * @param m_patch pointer to patch
+   * @param m_state droplet position
+   */
   NoiseDroplet(DaisyPatch*, DropletState);
+
+  /*
+   * Processes user controls and inputs.
+   */
   void Control();
-  void Process(float**, float**, size_t);
+
+  /*
+   * Processes audio input and outputs.
+   *
+   * @param in the audio inputs for the patch
+   * @param out the audio outputs for the patch
+   * @param size the number of inputs and outputs
+   */
+  void Process(float** in,
+	       float** out,
+	       size_t size);
+
+  /*
+   * Processes information to be shown on the display. 
+   */
   void Draw();
 };
 
