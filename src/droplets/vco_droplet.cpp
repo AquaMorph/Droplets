@@ -49,10 +49,18 @@ void VCODroplet::Process(float** in, float** out, size_t size) {
 }
 
 void VCODroplet::Draw() {
-  WriteString(*Patch(), 0, 54, Font_6x8,
-	      WaveToString(wavectrl.Process()));
+  WriteDoubleCentered(*Patch(),
+		      (GetScreenMax()-GetScreenMin())/2,
+		      54,
+		      GetScreenMax()-GetScreenMin(),
+		      Font_6x8,
+		      WaveToString(wavectrl.Process()));
   SetWaveState(wavectrl.Process());
-  wave->DrawTile(*Patch(), GetScreenMin(), 0, GetScreenMax(), GetTitleHeight());
+  wave->DrawTile(*Patch(),
+		 GetScreenMin(),
+		 0,
+		 GetScreenMax(),
+		 GetTitleHeight());
   if(NeedUpdate()) {
     wave->AdjustXShift(1);
   }
@@ -73,11 +81,11 @@ std::string VCODroplet::WaveToString(uint8_t wf) {
   case Oscillator::WAVE_RAMP:
     return "Ramp";
   case Oscillator::WAVE_POLYBLEP_TRI:
-    return "Poly Triangle";
+    return "PolyBLEP Triangle";
   case Oscillator::WAVE_POLYBLEP_SQUARE:
-    return "Poly Square";
+    return "PolyBLEP Square";
   case Oscillator::WAVE_POLYBLEP_SAW:
-    return "Poly Saw";
+    return "PolyBLEP Saw";
   }
   return "";
 }

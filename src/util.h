@@ -90,4 +90,40 @@ void WriteCenteredString(DaisyPatch patch,
 			 FontDef font,
 			 std::string text);
 
+/*
+ * Draws text on screen centered taking up two lines. 
+ *
+ * @param patch daisy patch board
+ * @param x center of text x coordinate 
+ * @param y start of text y coordinate
+ * @param width text field width
+ * @param font text font
+ * @param text text to be written
+ * @param on draw screen on or off
+ */
+void WriteDoubleCentered(DaisyPatch patch,
+			 int x,
+			 int y,
+			 int width,
+			 FontDef font,
+			 std::string text,
+			 bool on);
+
+/*
+ * Draws text on screen centered taking up two lines. 
+ *
+ * @param patch daisy patch board
+ * @param x center of text x coordinate 
+ * @param y start of text y coordinate
+ * @param width text field width
+ * @param font text font
+ * @param text text to be written
+ */
+void WriteDoubleCentered(DaisyPatch patch,
+			 int x,
+			 int y,
+			 int width,
+			 FontDef font,
+			 std::string text);
+
 #endif // CASCADE_UTIL_H_

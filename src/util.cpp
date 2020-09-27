@@ -47,3 +47,49 @@ void WriteCenteredString(DaisyPatch patch,
 		 std::string text) {
   WriteCenteredString(patch, x, y, font, text, true);
 }
+
+void WriteDoubleCentered(DaisyPatch patch,
+			 int x,
+			 int y,
+			 int width,
+			 FontDef font,
+			 std::string text,
+			 bool on) {
+  // If only one line is needed
+  if ((int) text.length() * font.FontWidth < width) {
+    WriteCenteredString(patch,
+			x,
+			y - font.FontHeight/2,
+			font,
+			text,
+			on);
+  } else {
+    unsigned int split = text.find(" ");
+    if (split == std::string::npos) {
+      split = width / font.FontWidth;
+    }
+    std::string row1 = text.substr(0, split);
+    std::string row2 = text.substr(split+1, text.length());
+    WriteCenteredString(patch,
+			x,
+			y - font.FontHeight,
+			font,
+			row1,
+			on);
+    WriteCenteredString(patch,
+			x,
+			y,
+			font,
+			row2,
+			on);
+  }
+}
+
+void WriteDoubleCentered(DaisyPatch patch,
+			 int x,
+			 int y,
+			 int width,
+			 FontDef font,
+			 std::string text) {
+  WriteDoubleCentered(patch, x, y, width, font, text, true);
+}

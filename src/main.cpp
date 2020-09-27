@@ -58,7 +58,7 @@ Droplet* GetDroplet() {
   switch(menu.GetState()) {
   case MenuState::kVCO:
     return new VCODroplet(&patch,
-			  DropletState::kFull,
+			  DropletState::kLeft,
 			  sample_rate);
   case MenuState::kNoise:
   default:
