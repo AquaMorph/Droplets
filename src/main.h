@@ -15,8 +15,11 @@
 #include "droplets/vco_droplet.h"
 
 DaisyPatch patch;
-Menu menu(&patch);
-Droplet* droplet;
+bool split = false;
+Menu left_menu(&patch, "Right", &split);
+Menu right_menu(&patch, "Left", &split);
+Droplet* droplet_left;
+Droplet* droplet_right;
 float sample_rate;
 
 /*
@@ -49,8 +52,9 @@ static void AudioThrough(float** in,
 /*
  * Initializes a new audio processing droplet based on menu state.
  *
- * @return a droplet
+ * @param state new droplet state
+ * @return droplet
  */
-Droplet* GetDroplet();
+Droplet* GetDroplet(DropletState state);
 
 #endif // CASCADE_MAIN_H_

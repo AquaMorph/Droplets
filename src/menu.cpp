@@ -1,10 +1,16 @@
 #include "menu.h"
 
-Menu::Menu(DaisyPatch* m_patch) {
+Menu::Menu(DaisyPatch* m_patch,
+	   std::string m_name,
+	   bool* m_split) {
   patch = m_patch;
+  name = m_name;
+  split = m_split;
 }
-const std::string MENU_ITEMS[] = {"VCO", 
-				  "Noise"};
+const std::string MENU_ITEMS[] = {"Split",
+  "Change",
+  "VCO", 
+  "Noise"};
 const int MENU_SIZE = sizeof(MENU_ITEMS)/sizeof(*MENU_ITEMS);
 const int MAX_CHAR_LENGTH = 15;
 const int MENU_X[] = {0,  5,  10,  5,  0};
@@ -32,6 +38,11 @@ std::string Menu::FilterMenuText(int position) {
   if (position >= MENU_SIZE || position < 0) {
     return "";
   } else {
+    if (ConvertState(position) == MenuState::kSplit && *split) {
+      return "Merge";
+    } else if (ConvertState(position) == MenuState::kChange) {
+      return name;
+    }
     return MENU_ITEMS[position];
   }
 }
@@ -69,5 +80,9 @@ std::string Menu::SelectedName() {
 }
 
 MenuState Menu::GetState() {
-  return static_cast<MenuState>(selectedMenuItem);
+  return ConvertState(selectedMenuItem);
+}
+
+MenuState Menu::ConvertState(int menu_state) {
+  return static_cast<MenuState>(menu_state);
 }

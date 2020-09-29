@@ -40,6 +40,8 @@ void Droplet::DrawName(std::string name) {
 
 void Droplet::UpdateState(DropletState m_state) {
   state = m_state;
+  chn_min = 0;
+  chn_max = 4;
   screen_min = 0;
   screen_max = SSD1309_WIDTH;
   if (state == DropletState::kLeft) {

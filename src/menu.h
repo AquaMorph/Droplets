@@ -10,18 +10,30 @@
 
 using namespace daisy;
 
-enum class MenuState {kVCO, kNoise};
+enum class MenuState {kSplit, kChange, kVCO, kNoise};
 
 class Menu {
  private:
   DaisyPatch* patch;
+  bool* split;
+  std::string name;
+
+  /*
+   * Converts a number to the related menu state.
+   *
+   * @param menu_state state number
+   * @return menu state
+   */
+  MenuState ConvertState(int menu_state);
  public:
   /*
    * Constructor for a menu system to control the state of the patch.
    *
    * @param m_patch pointer to patch
+   * @param m_name name of the menu
+   * @param m_split one or two droplets
    */
-  Menu(DaisyPatch* m_patch);
+  Menu(DaisyPatch* m_patch, std::string m_name, bool* m_split);
 
   /*
    * Gives if the user is currently in the menu.

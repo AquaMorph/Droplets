@@ -5,7 +5,7 @@ using namespace daisy;
 int main(void) {
   patch.Init();
   sample_rate = patch.AudioSampleRate();
-  droplet = GetDroplet();
+  droplet_left = GetDroplet(DropletState::kFull);
   patch.StartAdc();
   patch.StartAudio(AudioThrough);
   
@@ -19,35 +19,56 @@ int main(void) {
 void ProcessControls() {
   patch.UpdateAnalogControls();
   patch.DebounceControls();
-  if (menu.InMenu()) {
-    menu.UpdateMenuPosition();
+  if (left_menu.InMenu()) {
+    left_menu.UpdateMenuPosition();
     if (patch.encoder.RisingEdge()) {
-      menu.SetInMenu(false);
-      delete droplet;
-      droplet = GetDroplet();
+      left_menu.SetInMenu(false);
+      if(left_menu.GetState() == MenuState::kSplit) {
+	split = !split;
+	if (split) {
+	  droplet_left->UpdateState(DropletState::kLeft);
+	  droplet_right = GetDroplet(DropletState::kRight);
+	} else {
+	  droplet_left->UpdateState(DropletState::kFull);
+	  delete droplet_right;
+	}
+      } else {
+	delete droplet_left;
+	if(split) {
+	  droplet_left = GetDroplet(DropletState::kLeft);
+	} else {
+	  droplet_left = GetDroplet(DropletState::kFull);
+	}
+      }
     }
   } else {
     if (patch.encoder.Pressed()) {
       if (patch.encoder.TimeHeldMs() > 500 &&
 	  patch.encoder.TimeHeldMs() < 505) {
-	menu.SetInMenu(true);
+	left_menu.SetInMenu(true);
       }
     }
   }
 }
 
 void ProcessOutputs() {
-  if(!menu.InMenu()) {
-    droplet->Control();
+  if(!left_menu.InMenu()) {
+    droplet_left->Control();
+    if (split) {
+      droplet_right->Control();
+    }
   }
 }
 
 void ProcessOled() {
   patch.display.Fill(false);
-  if (menu.InMenu()) {
-    menu.ProcessMenuOled();
+  if (left_menu.InMenu()) {
+    left_menu.ProcessMenuOled();
   } else {
-    droplet->Draw();
+    droplet_left->Draw();
+    if (split) {
+      droplet_right->Draw();
+    }
   }
   patch.display.Update();
 }
@@ -55,18 +76,21 @@ void ProcessOled() {
 static void AudioThrough(float **in,
 			 float **out,
 			 size_t size) {
-  droplet->Process(in, out, size);
+  droplet_left->Process(in, out, size);
+  if (split) {
+    droplet_right->Process(in, out, size);
+  }
 }
 
-Droplet* GetDroplet() {
-  switch(menu.GetState()) {
+Droplet* GetDroplet(DropletState state) {
+  switch(left_menu.GetState()) {
   case MenuState::kVCO:
     return new VCODroplet(&patch,
-			  DropletState::kFull,
+			  state,
 			  sample_rate);
   case MenuState::kNoise:
   default:
     return new NoiseDroplet(&patch,
-			    DropletState::kFull);
+			    state);
   }	
 }
