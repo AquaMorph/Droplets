@@ -1,13 +1,7 @@
 TARGET = cascade
 
-CPP_SOURCES = src/main.cpp \
-              src/util.cpp \
-              src/menu.cpp \
-              src/droplets/droplet.cpp \
-              src/droplets/noise_droplet.cpp \
-              src/droplets/vco_droplet.cpp \
-              src/graphics/sprite.cpp \
-              src/graphics/wave.cpp
+SRC_DIR := ./src
+CPP_SOURCES := $(wildcard $(SRC_DIR)/*.cpp $(SRC_DIR)/*/*.cpp)
 
 LIBDAISY_DIR = ./lib/libDaisy
 DAISYSP_DIR = ./lib/daisySP
