@@ -5,6 +5,7 @@
 
 #include "daisy_patch.h"
 #include "util.h"
+#include "droplets/droplet_manager.h"
 
 #include <string>
 
@@ -15,7 +16,7 @@ enum class MenuState {kSplit, kChange, kVCO, kNoise};
 class Menu {
  private:
   DaisyPatch* patch;
-  bool* split;
+  DropletManager* state;
   std::string name;
 
   /*
@@ -33,7 +34,7 @@ class Menu {
    * @param m_name name of the menu
    * @param m_split one or two droplets
    */
-  Menu(DaisyPatch* m_patch, std::string m_name, bool* m_split);
+  Menu(DaisyPatch* m_patch, std::string m_name, DropletManager* m_state);
 
   /*
    * Gives if the user is currently in the menu.

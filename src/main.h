@@ -11,13 +11,14 @@
 #include "util.h"
 #include "menu.h"
 #include "droplets/droplet.h"
+#include "droplets/droplet_manager.h"
 #include "droplets/noise_droplet.h"
 #include "droplets/vco_droplet.h"
 
 DaisyPatch patch;
-bool split = false;
-Menu left_menu(&patch, "Right", &split);
-Menu right_menu(&patch, "Left", &split);
+DropletManager* state = new DropletManager();
+Menu left_menu(&patch, "Right", state);
+Menu right_menu(&patch, "Left", state);
 Droplet* droplet_left;
 Droplet* droplet_right;
 float sample_rate;

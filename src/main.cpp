@@ -24,8 +24,8 @@ void ProcessControls() {
     if (patch.encoder.RisingEdge()) {
       left_menu.SetInMenu(false);
       if(left_menu.GetState() == MenuState::kSplit) {
-	split = !split;
-	if (split) {
+	state->ToggleSplit();
+	if (state->GetSplitMode()) {
 	  droplet_left->UpdateState(DropletState::kLeft);
 	  droplet_right = GetDroplet(DropletState::kRight);
 	} else {
@@ -34,7 +34,7 @@ void ProcessControls() {
 	}
       } else {
 	delete droplet_left;
-	if(split) {
+	if(state->GetSplitMode()) {
 	  droplet_left = GetDroplet(DropletState::kLeft);
 	} else {
 	  droplet_left = GetDroplet(DropletState::kFull);
@@ -54,7 +54,7 @@ void ProcessControls() {
 void ProcessOutputs() {
   if(!left_menu.InMenu()) {
     droplet_left->Control();
-    if (split) {
+    if (state->GetSplitMode()) {
       droplet_right->Control();
     }
   }
@@ -66,7 +66,7 @@ void ProcessOled() {
     left_menu.ProcessMenuOled();
   } else {
     droplet_left->Draw();
-    if (split) {
+    if (state->GetSplitMode()) {
       droplet_right->Draw();
     }
   }
@@ -77,7 +77,7 @@ static void AudioThrough(float **in,
 			 float **out,
 			 size_t size) {
   droplet_left->Process(in, out, size);
-  if (split) {
+  if (state->GetSplitMode()) {
     droplet_right->Process(in, out, size);
   }
 }

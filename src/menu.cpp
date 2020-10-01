@@ -2,10 +2,10 @@
 
 Menu::Menu(DaisyPatch* m_patch,
 	   std::string m_name,
-	   bool* m_split) {
+	   DropletManager* m_state) {
   patch = m_patch;
   name = m_name;
-  split = m_split;
+  state = m_state;
 }
 const std::string MENU_ITEMS[] = {"Split",
   "Change",
@@ -38,7 +38,7 @@ std::string Menu::FilterMenuText(int position) {
   if (position >= MENU_SIZE || position < 0) {
     return "";
   } else {
-    if (ConvertState(position) == MenuState::kSplit && *split) {
+    if (ConvertState(position) == MenuState::kSplit && (*state).GetSplitMode()) {
       return "Merge";
     } else if (ConvertState(position) == MenuState::kChange) {
       return name;
