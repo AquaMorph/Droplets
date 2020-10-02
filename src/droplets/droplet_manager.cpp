@@ -7,3 +7,11 @@ void DropletManager::ToggleSplit() {
 bool DropletManager::GetSplitMode() {
   return split;
 }
+
+void DropletManager::SetSelected(DropletState state) {
+  selected_drop = state;
+}
+
+DropletState DropletManager::GetSelected() {
+  return selected_drop;
+}

@@ -17,6 +17,7 @@ class Menu {
  private:
   DaisyPatch* patch;
   DropletManager* state;
+  DropletState menu_droplet;
   std::string name;
 
   /*
