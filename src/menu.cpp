@@ -1,10 +1,10 @@
 #include "menu.h"
 
 Menu::Menu(DaisyPatch* m_patch,
-	   std::string m_name,
-	   DropletManager* m_state) {
+	   DropletState m_state,
+	   DropletManager* m_manager) {
   patch = m_patch;
-  name = m_name;
+  state = m_state;
   state = m_state;
 }
 const std::string MENU_ITEMS[] = {"Split",
@@ -38,10 +38,14 @@ std::string Menu::FilterMenuText(int position) {
   if (position >= MENU_SIZE || position < 0) {
     return "";
   } else {
-    if (ConvertState(position) == MenuState::kSplit && (*state).GetSplitMode()) {
-      return "Merge";
+    if (ConvertState(position) == MenuState::kSplit) {
+      if (!manager->GetSplitMode()) {
+	return "Merge";
+      } else {
+	return "Split";
+      }
     } else if (ConvertState(position) == MenuState::kChange) {
-      return name;
+      return manager->OtherStateName(state);
     }
     return MENU_ITEMS[position];
   }

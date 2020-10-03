@@ -35,6 +35,14 @@ public:
    * @return selected droplet
    */
   DropletState GetSelected();
+
+  /*
+   * Returns the name of the other droplet
+   *
+   * @param state droplat state of the current
+   * @return other droplet name
+   */
+  std::string OtherStateName(DropletState state);
 };
 
 #endif // CASCADE_DROPLETS_DROPLET_MANAGER_H_

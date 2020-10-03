@@ -16,9 +16,8 @@ enum class MenuState {kSplit, kChange, kVCO, kNoise};
 class Menu {
  private:
   DaisyPatch* patch;
-  DropletManager* state;
-  DropletState menu_droplet;
-  std::string name;
+  DropletManager* manager;
+  DropletState state;
 
   /*
    * Converts a number to the related menu state.
@@ -35,7 +34,7 @@ class Menu {
    * @param m_name name of the menu
    * @param m_split one or two droplets
    */
-  Menu(DaisyPatch* m_patch, std::string m_name, DropletManager* m_state);
+  Menu(DaisyPatch* m_patch, DropletState m_state, DropletManager* m_manager);
 
   /*
    * Gives if the user is currently in the menu.

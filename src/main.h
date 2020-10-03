@@ -16,9 +16,9 @@
 #include "droplets/vco_droplet.h"
 
 DaisyPatch patch;
-DropletManager* state = new DropletManager();
-Menu left_menu(&patch, "Right", state);
-Menu right_menu(&patch, "Left", state);
+DropletManager* manager = new DropletManager();
+Menu left_menu(&patch, DropletState::kLeft, manager);
+Menu right_menu(&patch, DropletState::kRight, manager);
 Droplet* droplet_left;
 Droplet* droplet_right;
 float sample_rate;
