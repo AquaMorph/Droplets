@@ -43,15 +43,15 @@ VCODroplet::~VCODroplet() {
 }
 
 void VCODroplet::Control() {
-  Patch()->UpdateAnalogControls();
-  Patch()->DebounceControls();
+  Patch()->ProcessAnalogControls();
+  Patch()->encoder.Debounce();
   AdjustWaveShape(Patch()->encoder.Increment());
 }
 
 void VCODroplet::Process(float** in, float** out, size_t size) {
   float sig, freq, amp = 1.0;
   
-  Patch()->UpdateAnalogControls();
+  Patch()->ProcessAnalogControls();
   
   for (size_t i = 0; i < size; i += 2) {
     // Read Knobs

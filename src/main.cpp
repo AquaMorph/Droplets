@@ -17,8 +17,8 @@ int main(void) {
 }
 
 void ProcessControls() {
-  patch.UpdateAnalogControls();
-  patch.DebounceControls();
+  patch.ProcessAnalogControls();
+  patch.encoder.Debounce();
   if (left_menu.InMenu()) {
     left_menu.UpdateMenuPosition();
     if (patch.encoder.RisingEdge()) {
