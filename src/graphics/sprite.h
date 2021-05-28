@@ -110,7 +110,7 @@ class Sprite {
    * @param x starting x coordinate of sprite
    * @param y starting y coordinate of sprite
    */
-  void Draw(DaisyPatch patch,
+  void Draw(DaisyPatch* patch,
 	    int x,
 	    int y);
 
@@ -124,7 +124,7 @@ class Sprite {
    * @param x2 x coordinate of the second point
    * @param y2 y coordinate of the second point
    */
-  void DrawTile(DaisyPatch patch,
+  void DrawTile(DaisyPatch* patch,
 		int x1,
 		int y1,
 		int x2,

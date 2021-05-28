@@ -93,7 +93,7 @@ void VCODroplet::Draw() {
 			Font_6x8,
 			WaveToString(wave));
   }
-  wave_graphic->DrawTile(*Patch(),
+  wave_graphic->DrawTile(Patch(),
 		 GetScreenMin(),
 		 0,
 		 GetScreenMax(),
