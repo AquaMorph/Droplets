@@ -34,7 +34,7 @@ size_t Droplet::GetChannelMax() {
 }
 
 void Droplet::DrawName(std::string name) {
-  WriteCenteredString(*patch, (screen_min + screen_max) / 2, 0,
+  WriteCenteredString(patch, (screen_min + screen_max) / 2, 0,
 		      Font_6x8, name);
 }
 

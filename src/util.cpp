@@ -1,27 +1,27 @@
 #include "util.h"
 
-void DrawSolidRect(DaisyPatch patch,
+void DrawSolidRect(DaisyPatch* patch,
 		   uint8_t x1,
 		   uint8_t y1,
 		   uint8_t x2,
 		   uint8_t y2,
 		   bool on) {
   for (int i = std::min(y1, y2); i <= std::max(y1, y2); i++) {
-    patch.display.DrawLine(x1, i, x2, i, on);
+    patch->display.DrawLine(x1, i, x2, i, on);
   }
 }
 
-void WriteString(DaisyPatch patch,
+void WriteString(DaisyPatch* patch,
 		 int x,
 		 int y,
 		 FontDef font,
 		 std::string text,
 		 bool on) {
-  patch.display.SetCursor(x, y);
-  patch.display.WriteString(&text[0], font, on);
+  patch->display.SetCursor(x, y);
+  patch->display.WriteString(&text[0], font, on);
 }
 
-void WriteString(DaisyPatch patch,
+void WriteString(DaisyPatch* patch,
 		 int x,
 		 int y,
 		 FontDef font,
@@ -29,7 +29,7 @@ void WriteString(DaisyPatch patch,
   WriteString(patch, x, y, font, text, true);
 }
 
-void WriteCenteredString(DaisyPatch patch,
+void WriteCenteredString(DaisyPatch* patch,
 			 int x,
 			 int y,
 			 FontDef font,
@@ -40,7 +40,7 @@ void WriteCenteredString(DaisyPatch patch,
   WriteString(patch, x - (text_width / 2), y, font, text, on);
 }
 
-void WriteCenteredString(DaisyPatch patch,
+void WriteCenteredString(DaisyPatch* patch,
 		 int x,
 		 int y,
 		 FontDef font,
@@ -48,7 +48,7 @@ void WriteCenteredString(DaisyPatch patch,
   WriteCenteredString(patch, x, y, font, text, true);
 }
 
-void WriteDoubleCentered(DaisyPatch patch,
+void WriteDoubleCentered(DaisyPatch* patch,
 			 int x,
 			 int y,
 			 int width,
@@ -85,7 +85,7 @@ void WriteDoubleCentered(DaisyPatch patch,
   }
 }
 
-void WriteDoubleCentered(DaisyPatch patch,
+void WriteDoubleCentered(DaisyPatch* patch,
 			 int x,
 			 int y,
 			 int width,

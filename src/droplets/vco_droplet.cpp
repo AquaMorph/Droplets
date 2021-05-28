@@ -48,7 +48,7 @@ void VCODroplet::Control() {
   AdjustWaveShape(Patch()->encoder.Increment());
 }
 
-void VCODroplet::Process(float** in, float** out, size_t size) {
+void VCODroplet::Process(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size) {
   float sig, freq, amp = 1.0;
   
   Patch()->ProcessAnalogControls();
@@ -79,13 +79,13 @@ void VCODroplet::Process(float** in, float** out, size_t size) {
 void VCODroplet::Draw() {
   SetWaveState(wave);
   if (GetState() == DropletState::kFull) {
-    WriteCenteredString(*Patch(),
+    WriteCenteredString(Patch(),
 			(GetScreenMax()-GetScreenMin())/2,
 			54,
 			Font_6x8,
 			WaveToString(wave));
   } else {
-    WriteDoubleCentered(*Patch(),
+    WriteDoubleCentered(Patch(),
 			GetScreenMin() +
 			(GetScreenMax()-GetScreenMin())/2,
 			54,

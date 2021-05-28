@@ -56,12 +56,12 @@ void Menu::CreateMenuItem(std::string text,
 			  bool highlighted) {
   text.insert(text.end(), MAX_CHAR_LENGTH-text.size(), ' ');
   if (highlighted) {
-    DrawSolidRect(*patch, 0, MENU_Y[2],
+    DrawSolidRect(patch, 0, MENU_Y[2],
 		  SSD1309_WIDTH, MENU_Y[2]+17, true);
-    WriteString(*patch, MENU_X[position-1], MENU_Y[position-1],
+    WriteString(patch, MENU_X[position-1], MENU_Y[position-1],
 		Font_11x18, text, !highlighted);
   } else {
-    WriteString(*patch, MENU_X[position-1], MENU_Y[position-1],
+    WriteString(patch, MENU_X[position-1], MENU_Y[position-1],
 		Font_7x10, text, !highlighted);
   }
 }

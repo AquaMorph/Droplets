@@ -33,8 +33,8 @@ public:
    * @param out the audio outputs for the patch
    * @param size the number of inputs and outputs
    */
-  void Process(float** in,
-	       float** out,
+  void Process(AudioHandle::InputBuffer in,
+	       AudioHandle::OutputBuffer out,
 	       size_t size);
 
   /*

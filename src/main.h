@@ -46,8 +46,8 @@ void ProcessOutputs();
  * @param out the audio outputs for the patch
  * @param size the number of inputs and outputs
  */
-static void AudioThrough(float** in,
-			 float** out,
+static void AudioThrough(AudioHandle::InputBuffer in,
+			 AudioHandle::OutputBuffer out,
 			 size_t size);
 
 /*

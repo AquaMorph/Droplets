@@ -73,8 +73,8 @@ void ProcessOled() {
   patch.display.Update();
 }
 
-static void AudioThrough(float **in,
-			 float **out,
+static void AudioThrough(AudioHandle::InputBuffer in,
+			 AudioHandle::OutputBuffer out,
 			 size_t size) {
   droplet_left->Process(in, out, size);
   if (manager->GetSplitMode()) {
