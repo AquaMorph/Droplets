@@ -7,7 +7,7 @@ Menu::Menu(DaisyPatch* m_patch,
   state = m_state;
   state = m_state;
 }
-const std::string MENU_ITEMS[] = {"Split",
+const std::string MENU_ITEMS[] = {"TEST",
   "Change",
   "VCO", 
   "Noise"};

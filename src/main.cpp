@@ -6,6 +6,7 @@ int main(void) {
   patch.Init();
   sample_rate = patch.AudioSampleRate();
   droplet_left = GetDroplet(DropletState::kFull);
+  selected_menu = left_menu;
   patch.StartAdc();
   patch.StartAudio(AudioThrough);
   
@@ -19,40 +20,64 @@ int main(void) {
 void ProcessControls() {
   patch.ProcessAnalogControls();
   patch.encoder.Debounce();
-  if (left_menu.InMenu()) {
-    left_menu.UpdateMenuPosition();
+  // Handle menu interactions
+  if (selected_menu->InMenu()) {
+    selected_menu->UpdateMenuPosition();
+    // Handle menu selection
     if (patch.encoder.RisingEdge()) {
-      left_menu.SetInMenu(false);
-      if(left_menu.GetState() == MenuState::kSplit) {
+      selected_menu->SetInMenu(false);
+      // Split selected
+      if(selected_menu->GetState() == MenuState::kSplit) {
 	manager->ToggleSplit();
+	// Enable split
 	if (manager->GetSplitMode()) {
 	  droplet_left->UpdateState(DropletState::kLeft);
 	  droplet_right = GetDroplet(DropletState::kRight);
-	} else {
+	}
+	// Disable split
+	else {
 	  droplet_left->UpdateState(DropletState::kFull);
 	  delete droplet_right;
 	}
-      } else {
-	delete droplet_left;
-	if(manager->GetSplitMode()) {
-	  droplet_left = GetDroplet(DropletState::kLeft);
+      }
+      // Switch side
+      else if (selected_menu->GetState() == MenuState::kChange) {
+	if (selected_menu == left_menu) {
+	  selected_menu = right_menu;
 	} else {
+	  selected_menu = left_menu;
+	}
+      }
+      // Enable new mode
+      else {
+	if(manager->GetSplitMode()) {
+	  if (selected_menu == left_menu) {
+	    delete droplet_left;
+	    droplet_left = GetDroplet(DropletState::kLeft);
+	  } else {
+	    delete droplet_right;
+	    droplet_right = GetDroplet(DropletState::kRight);
+	  }
+	} else {
+	  delete droplet_left;
 	  droplet_left = GetDroplet(DropletState::kFull);
 	}
       }
     }
-  } else {
+  }
+  // Check if entering menu
+  else {
     if (patch.encoder.Pressed()) {
       if (patch.encoder.TimeHeldMs() > 500 &&
 	  patch.encoder.TimeHeldMs() < 505) {
-	left_menu.SetInMenu(true);
+	selected_menu->SetInMenu(true);
       }
     }
   }
 }
 
 void ProcessOutputs() {
-  if(!left_menu.InMenu()) {
+  if(!selected_menu->InMenu()) {
     droplet_left->Control();
     if (manager->GetSplitMode()) {
       droplet_right->Control();
@@ -62,8 +87,8 @@ void ProcessOutputs() {
 
 void ProcessOled() {
   patch.display.Fill(false);
-  if (left_menu.InMenu()) {
-    left_menu.ProcessMenuOled();
+  if (selected_menu->InMenu()) {
+    selected_menu->ProcessMenuOled();
   } else {
     droplet_left->Draw();
     if (manager->GetSplitMode()) {
@@ -83,7 +108,7 @@ static void AudioThrough(AudioHandle::InputBuffer in,
 }
 
 Droplet* GetDroplet(DropletState state) {
-  switch(left_menu.GetState()) {
+  switch(selected_menu->GetState()) {
   case MenuState::kVCO:
     return new VCODroplet(&patch,
 			  state,

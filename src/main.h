@@ -17,8 +17,9 @@
 
 DaisyPatch patch;
 DropletManager* manager = new DropletManager();
-Menu left_menu(&patch, DropletState::kLeft, manager);
-Menu right_menu(&patch, DropletState::kRight, manager);
+Menu* selected_menu;
+Menu* left_menu = new Menu(&patch, DropletState::kLeft, manager);
+Menu* right_menu = new Menu(&patch, DropletState::kRight, manager);
 Droplet* droplet_left;
 Droplet* droplet_right;
 float sample_rate;
