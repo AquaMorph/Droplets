@@ -4,14 +4,13 @@
 #define CASCADE_MENU_H_
 
 #include "daisy_patch.h"
+#include "menu_item.h"
 #include "util.h"
 #include "droplets/droplet_manager.h"
 
 #include <string>
 
 using namespace daisy;
-
-enum class MenuState {kSplit, kChange, kVCO, kNoise};
 
 class Menu {
  private:
