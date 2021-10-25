@@ -78,9 +78,11 @@ void ProcessControls() {
 
 void ProcessOutputs() {
   if(!selected_menu->InMenu()) {
-    droplet_left->Control();
-    if (manager->GetSplitMode()) {
+    if (manager->GetSplitMode() &&
+	selected_menu == right_menu) {
       droplet_right->Control();
+    } else {
+      droplet_left->Control();
     }
   }
 }
