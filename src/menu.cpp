@@ -5,9 +5,9 @@ Menu::Menu(DaisyPatch* m_patch,
 	   DropletManager* m_manager) {
   patch = m_patch;
   state = m_state;
-  state = m_state;
+  manager = m_manager;
 }
-const std::string MENU_ITEMS[] = {"TEST",
+const std::string MENU_ITEMS[] = {"Split",
   "Change",
   "VCO", 
   "Noise"};
@@ -16,10 +16,9 @@ const int MAX_CHAR_LENGTH = 15;
 const int MENU_X[] = {0,  5,  10,  5,  0};
 const int MENU_Y[] = {0, 11,  22, 41, 52};
 int selectedMenuItem = 0;
-bool inMenu = false;
 
 bool Menu::InMenu() {
-  return inMenu;
+  return this->inMenu;
 }
 
 void Menu::SetInMenu(bool menuState) {
@@ -35,11 +34,12 @@ void Menu::FilterMenuSelection() {
 }
 
 std::string Menu::FilterMenuText(int position) {
+  //return std::to_string(position);
   if (position >= MENU_SIZE || position < 0) {
     return "";
   } else {
     if (ConvertState(position) == MenuState::kSplit) {
-      if (!manager->GetSplitMode()) {
+      if (manager->GetSplitMode()) {
 	return "Merge";
       } else {
 	return "Split";

@@ -17,6 +17,7 @@ class Menu {
   DaisyPatch* patch;
   DropletManager* manager;
   DropletState state;
+  bool inMenu = false;
 
   /*
    * Converts a number to the related menu state.

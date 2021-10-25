@@ -53,7 +53,7 @@ void VCODroplet::Process(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer 
   
   Patch()->ProcessAnalogControls();
   
-  for (size_t i = 0; i < size; i += 2) {
+  for (size_t i = 0; i < size; i++) {
     // Read Knobs
     freq = mtof(freqctrl.Process() + finectrl.Process());
     if (GetState() == DropletState::kFull) {

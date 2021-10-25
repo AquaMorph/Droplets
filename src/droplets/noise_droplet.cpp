@@ -10,7 +10,7 @@ NoiseDroplet::NoiseDroplet(DaisyPatch* m_patch,
 void NoiseDroplet::Control() {}
 
 void NoiseDroplet::Process(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size) {
-  for (size_t i = 0; i < size; i += 2) {
+  for (size_t i = 0; i < size; i++) {
     float sig = noise.Process();
     for (size_t chn = GetChannelMin(); chn < GetChannelMax(); chn++) {
       out[chn][i] = sig;
