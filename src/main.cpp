@@ -5,8 +5,9 @@ using namespace daisy;
 int main(void) {
   patch.Init();
   sample_rate = patch.AudioSampleRate();
-  droplet_left = GetDroplet(DropletState::kFull);
   selected_menu = left_menu;
+  droplet_left = GetDroplet(DropletState::kFull);
+ 
   patch.StartAdc();
   patch.StartAudio(AudioThrough);
   

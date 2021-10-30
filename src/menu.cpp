@@ -6,6 +6,14 @@ Menu::Menu(DaisyPatch* m_patch,
   patch = m_patch;
   state = m_state;
   manager = m_manager;
+
+  head = new MenuItem(MenuState::kSplit, "Split");
+  head->AddItemEnd(new MenuItem(MenuState::kChange, "Right"));
+  head->AddItemEnd(new MenuItem(MenuState::kVCO, "VCO"));
+  head->AddItemEnd(new MenuItem(MenuState::kNoise, "Noise"));
+  selected = head;
+  buffer = selected;
+  highlighted = selected;
 }
 const std::string MENU_ITEMS[] = {"Split",
   "Change",
@@ -15,7 +23,6 @@ const int MENU_SIZE = sizeof(MENU_ITEMS)/sizeof(*MENU_ITEMS);
 const int MAX_CHAR_LENGTH = 15;
 const int MENU_X[] = {0,  5,  10,  5,  0};
 const int MENU_Y[] = {0, 11,  22, 41, 52};
-int selectedMenuItem = 0;
 
 bool Menu::InMenu() {
   return this->inMenu;
@@ -23,32 +30,6 @@ bool Menu::InMenu() {
 
 void Menu::SetInMenu(bool menuState) {
   inMenu = menuState;
-}
-
-void Menu::FilterMenuSelection() {
-  if (selectedMenuItem >= MENU_SIZE) {
-    selectedMenuItem = MENU_SIZE - 1;
-  } else if (selectedMenuItem < 0) {
-    selectedMenuItem = 0;
-  }
-}
-
-std::string Menu::FilterMenuText(int position) {
-  //return std::to_string(position);
-  if (position >= MENU_SIZE || position < 0) {
-    return "";
-  } else {
-    if (ConvertState(position) == MenuState::kSplit) {
-      if (manager->GetSplitMode()) {
-	return "Merge";
-      } else {
-	return "Split";
-      }
-    } else if (ConvertState(position) == MenuState::kChange) {
-      return manager->OtherStateName(state);
-    }
-    return MENU_ITEMS[position];
-  }
 }
 
 void Menu::CreateMenuItem(std::string text,
@@ -67,26 +48,60 @@ void Menu::CreateMenuItem(std::string text,
 }
 
 void Menu::ProcessMenuOled() {
-  CreateMenuItem(FilterMenuText(selectedMenuItem-2), 1, false);
-  CreateMenuItem(FilterMenuText(selectedMenuItem-1), 2, false);
-  CreateMenuItem(FilterMenuText(selectedMenuItem),   3, true);
-  CreateMenuItem(FilterMenuText(selectedMenuItem+1), 4, false);
-  CreateMenuItem(FilterMenuText(selectedMenuItem+2), 5, false);
+  MenuItem* ptr;
+  // Item 3 Highlighted
+  CreateMenuItem(highlighted->GetTitle(),   3, true);
+
+  // Item 2
+  ptr = highlighted->GetPrevious();
+  if (ptr == NULL) {
+    CreateMenuItem("", 2, false);
+  } else {
+    CreateMenuItem(ptr->GetTitle(), 2, false);
+    ptr = ptr->GetPrevious();
+  }
+    // Item 1
+  if (ptr == NULL) {
+    CreateMenuItem("", 1, false);
+  } else {
+    CreateMenuItem(ptr->GetTitle(), 1, false);
+  }
+
+  // Item 4
+  ptr = highlighted->GetNext();
+  if (ptr == NULL) {
+    CreateMenuItem("", 4, false);
+  } else {
+    CreateMenuItem(ptr->GetTitle(), 4, false);
+    ptr = ptr->GetNext();
+  }
+
+  // Item 5
+  if (ptr == NULL) {
+    CreateMenuItem("", 5, false);
+  } else {
+    CreateMenuItem(ptr->GetTitle(), 5, false);
+  }
 }
 
 void Menu::UpdateMenuPosition() {
-  selectedMenuItem -= patch->encoder.Increment();
-  FilterMenuSelection();
+  int move = patch->encoder.Increment();
+  if (move < 0) {
+    if (highlighted->GetNextVisible() != NULL) {
+      highlighted = highlighted->GetNextVisible();
+    }
+  } else if (move > 0) {
+    if (highlighted->GetPreviousVisible() != NULL) {
+      highlighted = highlighted->GetPreviousVisible();
+    }
+  }
 }
 
 std::string Menu::SelectedName() {
-  return MENU_ITEMS[selectedMenuItem];
+  return highlighted->GetTitle();
 }
 
 MenuState Menu::GetState() {
-  return ConvertState(selectedMenuItem);
+  return highlighted->GetState();
 }
 
-MenuState Menu::ConvertState(int menu_state) {
-  return static_cast<MenuState>(menu_state);
-}

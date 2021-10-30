@@ -3,31 +3,33 @@
 #ifndef CASCADE_MENU_ITEM_H_
 #define CASCADE_MENU_ITEM_H_
 
+#include <string>
+
 enum class MenuState {kSplit, kChange, kVCO, kNoise};
 
 class MenuItem {
  private:
   MenuState state;
-  char* title;
+  std::string title;
   bool visible;
   MenuItem* previous;
   MenuItem* next;
  public:
-  MenuItem(MenuState m_state, char* m_title);
+  MenuItem(MenuState m_state, std::string m_title);
   
   /*
    * Returns the title of the menu item.
    * 
    * @return menu item title
    */
-  char* GetTitle();
+  std::string GetTitle();
 
   /*
    * Sets the title for a munu item.
    * 
    * @param menu title
    */
-  void SetTitle(char* m_title);
+  void SetTitle(std::string m_title);
   
   /*
    * Returns the previous menu item.
@@ -88,6 +90,13 @@ class MenuItem {
    * Toggles visibility of menu item.
    */
   void ToggleVisibility();
+
+  MenuState GetState();
+
+  void AddItemBefore(MenuItem* item);
+  void AddItemAfter(MenuItem* item);
+  void AddItemStart(MenuItem* item);
+  void AddItemEnd(MenuItem* item);
 };
 
 #endif // CASCADE_MENU_ITEM_H_

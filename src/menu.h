@@ -17,6 +17,10 @@ class Menu {
   DaisyPatch* patch;
   DropletManager* manager;
   DropletState state;
+  MenuItem* selected;
+  MenuItem* buffer;
+  MenuItem* highlighted;
+  MenuItem* head;
   bool inMenu = false;
 
   /*
@@ -49,20 +53,6 @@ class Menu {
    * @param menu active
    */
   void SetInMenu(bool);
-
-  /*
-   * Keeps menu selection within the bounds of the menu's size.
-   */
-  void FilterMenuSelection();
-
-  /*
-   * Returns item name based on given position and if out of the menu
-   * returns a blank string.
-   *
-   * @param position place in the menu
-   * @return menu item name
-   */
-  std::string FilterMenuText(int position);
 
   /*
    * Draws a menu item on screen.
