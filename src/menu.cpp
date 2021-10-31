@@ -8,21 +8,22 @@ Menu::Menu(DaisyPatch* m_patch,
   manager = m_manager;
 
   head = new MenuItem(MenuState::kSplit, "Split");
-  head->AddItemEnd(new MenuItem(MenuState::kChange, "Right"));
+  head->AddItemEnd(new MenuItem(MenuState::kChange, ""));
   head->AddItemEnd(new MenuItem(MenuState::kVCO, "VCO"));
   head->AddItemEnd(new MenuItem(MenuState::kNoise, "Noise"));
+  
   selected = head;
   buffer = selected;
   highlighted = selected;
+
+  head->SetStateVisibility(MenuState::kChange, false);
+
+  if (state == DropletState::kLeft) {
+    head->SetStateTitle(MenuState::kChange, "Right");
+  } else if (state == DropletState::kRight) {
+    head->SetStateTitle(MenuState::kChange, "Left");
+  }
 }
-const std::string MENU_ITEMS[] = {"Split",
-  "Change",
-  "VCO", 
-  "Noise"};
-const int MENU_SIZE = sizeof(MENU_ITEMS)/sizeof(*MENU_ITEMS);
-const int MAX_CHAR_LENGTH = 15;
-const int MENU_X[] = {0,  5,  10,  5,  0};
-const int MENU_Y[] = {0, 11,  22, 41, 52};
 
 bool Menu::InMenu() {
   return this->inMenu;
@@ -53,12 +54,12 @@ void Menu::ProcessMenuOled() {
   CreateMenuItem(highlighted->GetTitle(),   3, true);
 
   // Item 2
-  ptr = highlighted->GetPrevious();
+  ptr = highlighted->GetPreviousVisible();
   if (ptr == NULL) {
     CreateMenuItem("", 2, false);
   } else {
     CreateMenuItem(ptr->GetTitle(), 2, false);
-    ptr = ptr->GetPrevious();
+    ptr = ptr->GetPreviousVisible();
   }
     // Item 1
   if (ptr == NULL) {
@@ -68,12 +69,12 @@ void Menu::ProcessMenuOled() {
   }
 
   // Item 4
-  ptr = highlighted->GetNext();
+  ptr = highlighted->GetNextVisible();
   if (ptr == NULL) {
     CreateMenuItem("", 4, false);
   } else {
     CreateMenuItem(ptr->GetTitle(), 4, false);
-    ptr = ptr->GetNext();
+    ptr = ptr->GetNextVisible();
   }
 
   // Item 5

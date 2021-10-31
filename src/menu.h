@@ -12,6 +12,10 @@
 
 using namespace daisy;
 
+const int MAX_CHAR_LENGTH = 15;
+const int MENU_X[] = {0,  5,  10,  5,  0};
+const int MENU_Y[] = {0, 11,  22, 41, 52};
+
 class Menu {
  private:
   DaisyPatch* patch;
@@ -24,12 +28,15 @@ class Menu {
   bool inMenu = false;
 
   /*
-   * Converts a number to the related menu state.
+   * Draws a menu item on screen.
    *
-   * @param menu_state state number
-   * @return menu state
+   * @param text menu item name
+   * @param position menu items position in the menu
+   * @param highlighted state of menu items selection
    */
-  MenuState ConvertState(int menu_state);
+  void CreateMenuItem(std::string text,
+		      int position,
+		      bool highlighted);
  public:
   /*
    * Constructor for a menu system to control the state of the patch.
@@ -53,17 +60,6 @@ class Menu {
    * @param menu active
    */
   void SetInMenu(bool);
-
-  /*
-   * Draws a menu item on screen.
-   *
-   * @param text menu item name
-   * @param position menu items position in the menu
-   * @param highlighted state of menu items selection
-   */
-  void CreateMenuItem(std::string text,
-		      int position,
-		      bool highlighted);
 
   /*
    * Draws droplet information on the screen.

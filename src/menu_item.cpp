@@ -62,6 +62,24 @@ void MenuItem::ToggleVisibility() {
   visible = !visible;
 }
 
+void MenuItem::SetStateVisibility(MenuState m_state, bool visibility) {
+  if (this->GetState() == m_state) {
+    this->SetVisibility(visibility);
+  }
+  if (this->GetNext() != NULL) {
+    this->GetNext()->SetStateVisibility(m_state, visibility);
+  }
+}
+
+void MenuItem::SetStateTitle(MenuState m_state, std::string m_title) {
+  if (this->GetState() == m_state) {
+    this->SetTitle(m_title);
+  }
+  if (this->GetNext() != NULL) {
+    this->GetNext()->SetStateTitle(m_state, m_title);
+  }
+}
+
 MenuState MenuItem::GetState() {
   return state;
 }

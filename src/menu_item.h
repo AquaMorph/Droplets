@@ -91,11 +91,42 @@ class MenuItem {
    */
   void ToggleVisibility();
 
+  void SetStateVisibility(MenuState m_state, bool visibility);
+  void SetStateTitle(MenuState m_state, std::string m_title);
+
+  /*
+   * Returns the state of the menu item.
+   *
+   * @return state
+   */
   MenuState GetState();
 
+  /*
+   * Add menu item before other menu item.
+   *
+   * @param menu item to be added
+   */
   void AddItemBefore(MenuItem* item);
+
+  /*
+   * Add menu item after other menu item.
+   *
+   * @param menu item to be added
+   */
   void AddItemAfter(MenuItem* item);
+
+  /*
+   * Add menu item at the beginning of a a menu item list.
+   *
+   * @param menu item to be added
+   */
   void AddItemStart(MenuItem* item);
+
+  /*
+   * Add menu item at the end of a a menu item list.
+   *
+   * @param menu item to be added
+   */
   void AddItemEnd(MenuItem* item);
 };
 
