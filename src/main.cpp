@@ -30,6 +30,8 @@ void ProcessControls() {
       // Split selected
       if(selected_menu->GetState() == MenuState::kSplit) {
 	manager->ToggleSplit();
+	left_menu->UpdateMenuState();
+	right_menu->UpdateMenuState();
 	// Enable split
 	if (manager->GetSplitMode()) {
 	  droplet_left->UpdateState(DropletState::kLeft);

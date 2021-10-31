@@ -91,7 +91,20 @@ class MenuItem {
    */
   void ToggleVisibility();
 
+  /*
+   * Set the visibility of all menu items with a given state.
+   *
+   * @param state
+   * @param visibility
+   */
   void SetStateVisibility(MenuState m_state, bool visibility);
+
+  /*
+   * Set the title of all menu items with a given state.
+   *
+   * @param state
+   * @param title
+   */
   void SetStateTitle(MenuState m_state, std::string m_title);
 
   /*

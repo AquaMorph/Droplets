@@ -84,6 +84,11 @@ class Menu {
    * @return menu state
    */
   MenuState GetState();
+
+  /*
+   * Updates the menu upon a split or a merge.
+   */
+  void UpdateMenuState();
 };
 
 #endif // CASCADE_MENU_H_

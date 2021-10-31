@@ -16,13 +16,12 @@ Menu::Menu(DaisyPatch* m_patch,
   buffer = selected;
   highlighted = selected;
 
-  head->SetStateVisibility(MenuState::kChange, false);
-
   if (state == DropletState::kLeft) {
     head->SetStateTitle(MenuState::kChange, "Right");
   } else if (state == DropletState::kRight) {
     head->SetStateTitle(MenuState::kChange, "Left");
   }
+  this->UpdateMenuState();
 }
 
 bool Menu::InMenu() {
@@ -106,3 +105,12 @@ MenuState Menu::GetState() {
   return highlighted->GetState();
 }
 
+void Menu::UpdateMenuState() {
+  if (manager->GetSplitMode()) {
+    head->SetStateVisibility(MenuState::kChange, true);
+    head->SetStateTitle(MenuState::kSplit, "Merge");
+  } else {
+    head->SetStateVisibility(MenuState::kChange, false);
+    head->SetStateTitle(MenuState::kSplit, "Split");
+  }
+}
