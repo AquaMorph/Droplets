@@ -13,6 +13,7 @@
 #include "droplets/droplet.h"
 #include "droplets/droplet_manager.h"
 #include "droplets/noise_droplet.h"
+#include "droplets/vca_droplet.h"
 #include "droplets/vco_droplet.h"
 
 DaisyPatch patch;

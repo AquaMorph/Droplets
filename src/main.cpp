@@ -114,6 +114,9 @@ static void AudioThrough(AudioHandle::InputBuffer in,
 
 Droplet* GetDroplet(DropletState state) {
   switch(selected_menu->GetState()) {
+  case MenuState::kVCA:
+    return new VCADroplet(&patch,
+			  state);
   case MenuState::kVCO:
     return new VCODroplet(&patch,
 			  state,
