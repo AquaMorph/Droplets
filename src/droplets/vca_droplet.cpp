@@ -25,7 +25,7 @@ VCADroplet::VCADroplet(DaisyPatch* m_patch,
   case DropletState::kRight:
     vca[2].Init(Patch()->controls[Patch()->CTRL_3],
 		0.0, 1.0f, Parameter::LINEAR);
-    vca[3].Init(Patch()->controls[Patch()->CTRL_3],
+    vca[3].Init(Patch()->controls[Patch()->CTRL_4],
 		0.0, 1.0f, Parameter::LINEAR);
     break;
   }
@@ -46,5 +46,66 @@ void VCADroplet::Process(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer 
 }
 
 void VCADroplet::Draw() {
+  int divider;
+  switch (GetState()) {
+  default:
+  case DropletState::kFull:
+    divider = (GetScreenMax()-GetScreenMin())/5;
+    DrawSolidRect(Patch(),
+		  GetScreenMin(),
+		  0,
+		  divider,
+		  GetTitleHeight()*vca[0].Process(),
+		  true);
+    DrawSolidRect(Patch(),
+		  GetScreenMin()+divider,
+		  0,
+		  GetScreenMin()+divider*2,
+		  GetTitleHeight()*vca[1].Process(),
+		  true);
+    DrawSolidRect(Patch(),
+		  GetScreenMin()+divider*3,
+		  0,
+		  GetScreenMin()+divider*4,
+		  GetTitleHeight()*vca[2].Process(),
+		  true);
+    DrawSolidRect(Patch(),
+		  GetScreenMin()+divider*4,
+		  0,
+		  GetScreenMax(),
+		  GetTitleHeight()*vca[3].Process(),
+		  true);
+    break;
+  case DropletState::kLeft:
+    divider = (GetScreenMax()-GetScreenMin())/3;
+    DrawSolidRect(Patch(),
+		  GetScreenMin(),
+		  0,
+		  GetScreenMin()+divider,
+		  GetTitleHeight()*vca[0].Process(),
+		  true);
+    DrawSolidRect(Patch(),
+		  GetScreenMax()-divider,
+		  0,
+		  GetScreenMax(),
+		  GetTitleHeight()*vca[1].Process(),
+		  true);
+    break;
+  case DropletState::kRight:
+    divider = (GetScreenMax()-GetScreenMin())/3;
+    DrawSolidRect(Patch(),
+		  GetScreenMin(),
+		  0,
+		  GetScreenMin()+divider,
+		  GetTitleHeight()*vca[2].Process(),
+		  true);
+    DrawSolidRect(Patch(),
+		  GetScreenMax()-divider,
+		  0,
+		  GetScreenMax(),
+		  GetTitleHeight()*vca[3].Process(),
+		  true);
+    break;
+  }
   DrawName("VCA");
 }
