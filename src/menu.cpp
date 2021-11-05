@@ -9,9 +9,10 @@ Menu::Menu(DaisyPatch* m_patch,
 
   head = new MenuItem(MenuState::kSplit, "Split");
   head->AddItemEnd(new MenuItem(MenuState::kChange, ""));
-  head->AddItemEnd(new MenuItem(MenuState::kVCO, "VCO"));
-  head->AddItemEnd(new MenuItem(MenuState::kVCA, "VCA"));
+  head->AddItemEnd(new MenuItem(MenuState::kMixer, "Mixer"));
   head->AddItemEnd(new MenuItem(MenuState::kNoise, "Noise"));
+  head->AddItemEnd(new MenuItem(MenuState::kVCA, "VCA"));
+  head->AddItemEnd(new MenuItem(MenuState::kVCO, "VCO"));
   
   selected = head;
   buffer = selected;

@@ -114,6 +114,10 @@ static void AudioThrough(AudioHandle::InputBuffer in,
 
 Droplet* GetDroplet(DropletState state) {
   switch(selected_menu->GetState()) {
+  default:
+  case MenuState::kMixer:
+    return new MixerDroplet(&patch,
+			    state);
   case MenuState::kVCA:
     return new VCADroplet(&patch,
 			  state);
@@ -122,7 +126,6 @@ Droplet* GetDroplet(DropletState state) {
 			  state,
 			  sample_rate);
   case MenuState::kNoise:
-  default:
     return new NoiseDroplet(&patch,
 			    state);
   }	
