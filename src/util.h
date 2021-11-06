@@ -3,11 +3,13 @@
 #ifndef CASCADE_UTIL_H_
 #define CASCADE_UTIL_H_
 
+#include "daisysp.h"
 #include "daisy_patch.h"
 
 #include <string>
 
 using namespace daisy;
+using namespace daisysp;
 
 #define SSD1309_WIDTH 128
 
@@ -127,5 +129,13 @@ void WriteDoubleCentered(DaisyPatch* patch,
 			 int width,
 			 FontDef font,
 			 std::string text);
+
+/*
+   * Converts oscilator to name of wave shape.
+   *
+   * @param wf wave shape
+   * @return name of wave shap
+   */
+std::string WaveToString(uint8_t wf);
 
 #endif // CASCADE_UTIL_H_

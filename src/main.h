@@ -12,6 +12,7 @@
 #include "menu.h"
 #include "droplets/droplet.h"
 #include "droplets/droplet_manager.h"
+#include "droplets/lfo_droplet.h"
 #include "droplets/mixer_droplet.h"
 #include "droplets/noise_droplet.h"
 #include "droplets/vca_droplet.h"

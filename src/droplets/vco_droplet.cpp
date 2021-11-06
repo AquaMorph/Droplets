@@ -105,28 +105,6 @@ void VCODroplet::Draw() {
   AnimationInc();
 }
 
-std::string VCODroplet::WaveToString(uint8_t wf) {
-  switch(wf){
-  case Oscillator::WAVE_TRI:
-    return "Triangle";
-  case Oscillator::WAVE_SQUARE:
-    return "Square";
-  case Oscillator::WAVE_SIN:
-    return "Sine";
-  case Oscillator::WAVE_SAW:
-    return "Saw";
-  case Oscillator::WAVE_RAMP:
-    return "Ramp";
-  case Oscillator::WAVE_POLYBLEP_TRI:
-    return "PolyBLEP Triangle";
-  case Oscillator::WAVE_POLYBLEP_SQUARE:
-    return "PolyBLEP Square";
-  case Oscillator::WAVE_POLYBLEP_SAW:
-    return "PolyBLEP Saw";
-  }
-  return "";
-}
-
 void VCODroplet::SetWaveState(uint8_t wf) {
   switch(wf){
   case Oscillator::WAVE_TRI:

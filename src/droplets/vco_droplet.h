@@ -25,14 +25,6 @@ private:
   Wave* wave_graphic = new Wave(WaveShape::kTriangle, 21, GetTitleHeight());
 
   /*
-   * Converts oscilator to name of wave shape.
-   *
-   * @param wf wave shape
-   * @return name of wave shap
-   */
-  std::string WaveToString(uint8_t wf);
-
-  /*
    * Sets the vco wave shap to display on screen.
    *
    * @param wf wave shape

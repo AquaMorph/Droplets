@@ -115,6 +115,10 @@ static void AudioThrough(AudioHandle::InputBuffer in,
 Droplet* GetDroplet(DropletState state) {
   switch(selected_menu->GetState()) {
   default:
+  case MenuState::kLFO:
+    return new LFODroplet(&patch,
+			  state,
+			  sample_rate);
   case MenuState::kMixer:
     return new MixerDroplet(&patch,
 			    state);
