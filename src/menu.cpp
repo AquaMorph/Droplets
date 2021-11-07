@@ -9,6 +9,7 @@ Menu::Menu(DaisyPatch* m_patch,
 
   head = new MenuItem(MenuState::kSplit, "Split");
   head->AddItemEnd(new MenuItem(MenuState::kChange, ""));
+  head->AddItemEnd(new MenuItem(MenuState::kAD, "AD"));
   head->AddItemEnd(new MenuItem(MenuState::kLFO, "LFO"));
   head->AddItemEnd(new MenuItem(MenuState::kMixer, "Mixer"));
   head->AddItemEnd(new MenuItem(MenuState::kNoise, "Noise"));
