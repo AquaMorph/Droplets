@@ -15,6 +15,7 @@ using namespace daisysp;
 class AD {
 private:
   AdEnv         env;
+  float         attack, decay, curve = 0;
   Parameter     attack_param;
   Parameter     decay_param;
   Parameter     curve_param;
@@ -22,13 +23,16 @@ private:
   DaisyPatch*   patch;
 public:
   void Init(DaisyPatch* m_patch,
-	    float samplerate,
-	    AnalogControl attackKnob,
-	    AnalogControl decaynob);
+	    float sample_rate,
+	    AnalogControl attack_knob,
+	    AnalogControl decay_knob);
 
   void Process(DacHandle::Channel chn, DaisyPatch::GateInput gate);
 
   float GetSignal();
+  float GetAttack();
+  float GetDecay();
+  float GetCurve();
 };
 
 class ADDroplet: public Droplet {

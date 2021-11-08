@@ -11,6 +11,7 @@ void AD::Init(DaisyPatch* m_patch,
     env.SetCurve(0.0f);
     attack_param.Init(attack_knob, .01f, 3.0f, Parameter::EXPONENTIAL);
     decay_param.Init(decay_knob, .01f, 3.0f, Parameter::EXPONENTIAL);
+    curve_param.Init(attack_knob, -10.f, 10.0f, Parameter::LINEAR);
   }
 
 void AD::Process(DacHandle::Channel chn,
@@ -19,8 +20,10 @@ void AD::Process(DacHandle::Channel chn,
     env.Trigger();
   }
 
-  env.SetTime(ADENV_SEG_ATTACK, attack_param.Process());
-  env.SetTime(ADENV_SEG_DECAY, decay_param.Process());
+  attack = attack_param.Process();
+  decay = decay_param.Process();
+  env.SetTime(ADENV_SEG_ATTACK, attack);
+  env.SetTime(ADENV_SEG_DECAY, decay);
   
   sig = env.Process();
   patch->seed.dac.WriteValue(chn,
@@ -29,6 +32,18 @@ void AD::Process(DacHandle::Channel chn,
 
 float AD::GetSignal() {
   return sig;
+}
+
+float AD::GetAttack() {
+  return attack;
+}
+
+float AD::GetDecay() {
+  return decay;
+}
+
+float AD::GetCurve() {
+  return curve;
 }
 
 ADDroplet::ADDroplet(DaisyPatch* m_patch,
@@ -90,5 +105,48 @@ void ADDroplet::Process(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer o
 }
 
 void ADDroplet::Draw() {
+  WriteString(Patch(),
+	      GetScreenMin(),
+	      10,
+	      Font_6x8,
+	      "A: " +
+	      std::to_string(static_cast<uint32_t>(1000*ad[0].GetAttack())) +
+	      "ms");
+  WriteString(Patch(),
+	      GetScreenMin(),
+	      20,
+	      Font_6x8,
+	      "D: " +
+	      std::to_string(static_cast<uint32_t>(1000*ad[0].GetDecay())) +
+	      "ms");
+  WriteString(Patch(),
+	      GetScreenMin(),
+	      30,
+	      Font_6x8,
+	      "C: " +
+	      std::to_string(static_cast<uint32_t>(1000*ad[0].GetCurve())));
+  if(GetState() == DropletState::kFull) {
+    int mid = (GetScreenMax() - GetScreenMin())/2;
+    WriteString(Patch(),
+	        mid,
+		10,
+		Font_6x8,
+		"A: " +
+		std::to_string(static_cast<uint32_t>(1000*ad[1].GetAttack())) +
+		"ms");
+    WriteString(Patch(),
+		mid,
+		20,
+		Font_6x8,
+		"D: " +
+		std::to_string(static_cast<uint32_t>(1000*ad[1].GetDecay())) +
+		"ms");
+    WriteString(Patch(),
+		mid,
+		30,
+		Font_6x8,
+		"C: " +
+		std::to_string(static_cast<uint32_t>(1000*ad[1].GetCurve())));
+  }
   DrawName("AD");
 }
