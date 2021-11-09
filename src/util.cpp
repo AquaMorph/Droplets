@@ -115,3 +115,21 @@ std::string WaveToString(uint8_t wf) {
   }
   return "";
 }
+
+std::string FloatToString(float num, int places) {
+  std::string sign = "";
+  int integral = static_cast<int>(num);
+  int fractional = static_cast<int>((abs(num) - abs(integral))
+				    * pow(10, places));
+  if (num < 0.0f && num > -1.0f) {
+    sign = "-";
+  }
+  return sign + std::to_string(integral) + "." + std::to_string(fractional);
+}
+
+
+
+
+
+
+

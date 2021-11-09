@@ -110,21 +110,21 @@ void ADDroplet::Draw() {
 	      10,
 	      Font_6x8,
 	      "A: " +
-	      std::to_string(static_cast<uint32_t>(1000*ad[0].GetAttack())) +
-	      "ms");
+	      FloatToString(ad[0].GetAttack(), 2) +
+	      "s");
   WriteString(Patch(),
 	      GetScreenMin(),
 	      20,
 	      Font_6x8,
 	      "D: " +
-	      std::to_string(static_cast<uint32_t>(1000*ad[0].GetDecay())) +
-	      "ms");
+	      FloatToString(ad[0].GetDecay(), 2) +
+	      "s");
   WriteString(Patch(),
 	      GetScreenMin(),
 	      30,
 	      Font_6x8,
 	      "C: " +
-	      std::to_string(static_cast<uint32_t>(1000*ad[0].GetCurve())));
+	      FloatToString(ad[0].GetCurve(), 2));
   if(GetState() == DropletState::kFull) {
     int mid = (GetScreenMax() - GetScreenMin())/2;
     WriteString(Patch(),
@@ -132,21 +132,21 @@ void ADDroplet::Draw() {
 		10,
 		Font_6x8,
 		"A: " +
-		std::to_string(static_cast<uint32_t>(1000*ad[1].GetAttack())) +
-		"ms");
+		FloatToString(ad[1].GetAttack(), 2) +
+		"s");
     WriteString(Patch(),
 		mid,
 		20,
 		Font_6x8,
 		"D: " +
-		std::to_string(static_cast<uint32_t>(1000*ad[1].GetDecay())) +
-		"ms");
+		FloatToString(ad[1].GetDecay(), 2) +
+		"s");
     WriteString(Patch(),
 		mid,
 		30,
 		Font_6x8,
 		"C: " +
-		std::to_string(static_cast<uint32_t>(1000*ad[1].GetCurve())));
+		FloatToString(ad[1].GetCurve(), 2));
   }
   DrawName("AD");
 }

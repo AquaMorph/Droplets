@@ -7,6 +7,7 @@
 #include "daisy_patch.h"
 
 #include <string>
+#include <math.h>
 
 using namespace daisy;
 using namespace daisysp;
@@ -131,11 +132,19 @@ void WriteDoubleCentered(DaisyPatch* patch,
 			 std::string text);
 
 /*
-   * Converts oscilator to name of wave shape.
-   *
-   * @param wf wave shape
-   * @return name of wave shap
-   */
+ * Converts oscilator to name of wave shape.
+ *
+ * @param wf wave shape
+ * @return name of wave shap
+ */
 std::string WaveToString(uint8_t wf);
+
+/*
+ * Converts float to formatted string.
+ *
+ * @param input number
+ * @param number of decimal places
+ */
+std::string FloatToString(float num, int places);
 
 #endif // CASCADE_UTIL_H_
