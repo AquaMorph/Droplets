@@ -21,6 +21,7 @@ private:
   Parameter     curve_param;
   float         sig;
   DaisyPatch*   patch;
+  bool          curve_menu = false;
 public:
   void Init(DaisyPatch* m_patch,
 	    float sample_rate,
@@ -33,6 +34,8 @@ public:
   float GetAttack();
   float GetDecay();
   float GetCurve();
+  bool GetMenu();
+  void ToggleCurve();
 };
 
 class ADDroplet: public Droplet {

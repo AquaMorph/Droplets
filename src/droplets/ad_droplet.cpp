@@ -19,11 +19,15 @@ void AD::Process(DacHandle::Channel chn,
   if(patch->gate_input[gate].Trig()) {
     env.Trigger();
   }
-
-  attack = attack_param.Process();
+  if (curve_menu) {
+    curve = curve_param.Process();
+  } else {
+    attack = attack_param.Process();
+  }
   decay = decay_param.Process();
   env.SetTime(ADENV_SEG_ATTACK, attack);
   env.SetTime(ADENV_SEG_DECAY, decay);
+  env.SetCurve(curve);
   
   sig = env.Process();
   patch->seed.dac.WriteValue(chn,
@@ -44,6 +48,14 @@ float AD::GetDecay() {
 
 float AD::GetCurve() {
   return curve;
+}
+
+bool AD::GetMenu() {
+  return curve_menu;
+}
+
+void AD::ToggleCurve() {
+  curve_menu = !curve_menu;
 }
 
 ADDroplet::ADDroplet(DaisyPatch* m_patch,
@@ -80,7 +92,16 @@ ADDroplet::ADDroplet(DaisyPatch* m_patch,
 
 ADDroplet::~ADDroplet() {}
 
-void ADDroplet::Control() {}
+void ADDroplet::Control() {
+  if (Patch()->encoder.Pressed()) {
+    if (Patch()->encoder.TimeHeldMs() < 10) {
+      ad[0].ToggleCurve();
+      if (GetState() == DropletState::kFull) {
+	ad[1].ToggleCurve();
+      }
+    }
+  }
+}
 
 void ADDroplet::Process(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size) {
   Patch()->ProcessAnalogControls();
@@ -106,22 +127,22 @@ void ADDroplet::Process(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer o
 
 void ADDroplet::Draw() {
   WriteString(Patch(),
-	      GetScreenMin(),
-	      10,
+	      GetScreenMin()+3,
+	      11,
 	      Font_6x8,
 	      "A: " +
 	      FloatToString(ad[0].GetAttack(), 2) +
 	      "s");
   WriteString(Patch(),
-	      GetScreenMin(),
-	      20,
+	      GetScreenMin()+3,
+	      21,
 	      Font_6x8,
 	      "D: " +
 	      FloatToString(ad[0].GetDecay(), 2) +
 	      "s");
   WriteString(Patch(),
-	      GetScreenMin(),
-	      30,
+	      GetScreenMin()+3,
+	      31,
 	      Font_6x8,
 	      "C: " +
 	      FloatToString(ad[0].GetCurve(), 2));
@@ -129,24 +150,32 @@ void ADDroplet::Draw() {
     int mid = (GetScreenMax() - GetScreenMin())/2;
     WriteString(Patch(),
 	        mid,
-		10,
+		11,
 		Font_6x8,
 		"A: " +
 		FloatToString(ad[1].GetAttack(), 2) +
 		"s");
     WriteString(Patch(),
 		mid,
-		20,
+		21,
 		Font_6x8,
 		"D: " +
 		FloatToString(ad[1].GetDecay(), 2) +
 		"s");
     WriteString(Patch(),
 		mid,
-		30,
+		31,
 		Font_6x8,
 		"C: " +
 		FloatToString(ad[1].GetCurve(), 2));
   }
+
+  if (ad[0].GetMenu()) {
+    DrawSolidRect(Patch(), GetScreenMin(), 30, GetScreenMin()+1, 39, true);
+  } else {
+    DrawSolidRect(Patch(), GetScreenMin(), 10, GetScreenMin()+1, 19, true);
+  }
+  DrawSolidRect(Patch(), GetScreenMin(), 20, GetScreenMin()+1, 29, true);
+  
   DrawName("AD");
 }
