@@ -109,3 +109,5 @@ void VCADroplet::Draw() {
   }
   DrawName("VCA");
 }
+
+void VCADroplet::UpdateStateCallback() {}

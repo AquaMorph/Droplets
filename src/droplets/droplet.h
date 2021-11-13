@@ -47,7 +47,7 @@ public:
 
   /*
    * Processes audio input and outputs.
-   *
+2   *
    * @param in the audio inputs for the patch
    * @param out the audio outputs for the patch
    * @param size the number of inputs and outputs
@@ -62,11 +62,23 @@ public:
   virtual void Draw()=0;
 
   /*
-   * Returns patch
+   * Runs when droplet state is updated.
+   */
+  virtual void UpdateStateCallback() {}
+
+  /*
+   * Returns patch.
    *
    * @return pointer to patch
    */
   DaisyPatch* Patch();
+
+  /*
+   * Returns droplet state.
+   *
+   * @return pointer to state
+   */
+  DropletState* State();
 
   /*
    * Returns the size of the droplet.

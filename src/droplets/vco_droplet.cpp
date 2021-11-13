@@ -144,3 +144,5 @@ void VCODroplet::SetWaveShape(int ws) {
   wave = ws % Oscillator::WAVE_LAST;
   last_wave_ctrl = ws;
 }
+
+void VCODroplet::UpdateStateCallback() {}

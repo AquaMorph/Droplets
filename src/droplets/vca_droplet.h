@@ -51,6 +51,11 @@ public:
    * Processes information to be shown on the display. 
    */
   void Draw();
+
+  /*
+   * Runs when droplet state is updated.
+   */
+  void UpdateStateCallback();
 };
 
 #endif // CASCADE_DROPLETS_VCA_DROPLET_H_

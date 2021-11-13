@@ -26,3 +26,5 @@ void NoiseDroplet::Draw() {
   }
   DrawName("Noise");
 }
+
+void NoiseDroplet::UpdateStateCallback() {}

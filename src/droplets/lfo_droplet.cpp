@@ -106,3 +106,5 @@ void LFODroplet::Draw() {
   }
   DrawName("LFO");
 }
+
+void LFODroplet::UpdateStateCallback() {}

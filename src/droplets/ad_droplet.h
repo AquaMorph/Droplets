@@ -16,17 +16,20 @@ class AD {
 private:
   AdEnv         env;
   float         attack, decay, curve = 0;
+  float         amp = 1.0f;
   Parameter     attack_param;
   Parameter     decay_param;
   Parameter     curve_param;
+  Parameter     amp_param;
   float         sig;
   DaisyPatch*   patch;
   bool          curve_menu = false;
+  DropletState* state;
+  
 public:
   void Init(DaisyPatch* m_patch,
 	    float sample_rate,
-	    AnalogControl attack_knob,
-	    AnalogControl decay_knob);
+	    DropletState* state);
 
   void Process(DacHandle::Channel chn, DaisyPatch::GateInput gate);
 
@@ -34,13 +37,16 @@ public:
   float GetAttack();
   float GetDecay();
   float GetCurve();
+  float GetAmp();
   bool GetMenu();
   void ToggleCurve();
+  void SetControls();
 };
 
 class ADDroplet: public Droplet {
 private:
   AD ad[2];
+  float sample_rate;
 
 public:
   /*
@@ -78,6 +84,11 @@ public:
    * Processes information to be shown on the display. 
    */
   void Draw();
+  
+  /*
+   * Runs when droplet state is updated.
+   */
+  void UpdateStateCallback();
 };
 
 #endif // CASCADE_DROPLETS_AD_DROPLET_H_

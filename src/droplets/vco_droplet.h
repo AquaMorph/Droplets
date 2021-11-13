@@ -68,6 +68,12 @@ public:
    */
   void Draw();
 
+  
+  /*
+   * Runs when droplet state is updated.
+   */
+  void UpdateStateCallback();
+
   /*
    * Changes the wave shape of the VCO.
    *

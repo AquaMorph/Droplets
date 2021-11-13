@@ -58,3 +58,5 @@ void MixerDroplet::Process(AudioHandle::InputBuffer in, AudioHandle::OutputBuffe
 void MixerDroplet::Draw() {
   DrawName("Mixer");
 }
+
+void MixerDroplet::UpdateStateCallback() {}
