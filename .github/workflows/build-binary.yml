@@ -24,5 +24,5 @@ jobs:
     - name: Archive
       uses: actions/upload-artifact@v1
       with:
-        name: cascade.bin
-        path: build/cascade.bin
+        name: droplets.bin
+        path: build/droplets.bin

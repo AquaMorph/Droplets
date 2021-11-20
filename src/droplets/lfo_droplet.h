@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef CASCADE_DROPLETS_LFO_DROPLET_H_
-#define CASCADE_DROPLETS_LFO_DROPLET_H_
+#ifndef DROPLETS_LFO_DROPLET_H_
+#define DROPLETS_LFO_DROPLET_H_
 
 #include "daisysp.h"
 #include "daisy_patch.h"
@@ -84,4 +84,4 @@ public:
   void UpdateStateCallback();
 };
 
-#endif // CASCADE_DROPLETS_LFO_DROPLET_H_
+#endif // DROPLETS_LFO_DROPLET_H_

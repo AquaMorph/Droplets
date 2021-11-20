@@ -1,4 +1,4 @@
-TARGET = cascade
+TARGET = droplets
 
 SRC_DIR := ./src
 CPP_SOURCES := $(wildcard $(SRC_DIR)/*.cpp $(SRC_DIR)/*/*.cpp)

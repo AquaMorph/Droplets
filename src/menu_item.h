@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef CASCADE_MENU_ITEM_H_
-#define CASCADE_MENU_ITEM_H_
+#ifndef DROPLETS_MENU_ITEM_H_
+#define DROPLETS_MENU_ITEM_H_
 
 #include <string>
 
@@ -143,4 +143,4 @@ class MenuItem {
   void AddItemEnd(MenuItem* item);
 };
 
-#endif // CASCADE_MENU_ITEM_H_
+#endif // DROPLETS_MENU_ITEM_H_

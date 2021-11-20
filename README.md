@@ -1,11 +1,11 @@
-# Cascade
+# Droplets
 
 Custom firmware for the Electrosmith Daisy Patch.
 
 ## Setup & Build
 1. Create git repository
 ```sh
-git clone --recurse-submodules git@github.com:AquaMorph/Cascade.git
+git clone --recurse-submodules git@github.com:AquaMorph/Droplets.git
 ```
 2. Build project
 ```sh

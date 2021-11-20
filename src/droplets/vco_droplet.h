@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef CASCADE_DROPLETS_VCO_DROPLET_H_
-#define CASCADE_DROPLETS_VCO_DROPLET_H_
+#ifndef DROPLETS_VCO_DROPLET_H_
+#define DROPLETS_VCO_DROPLET_H_
 
 #include <cmath>
 
@@ -89,4 +89,4 @@ public:
   void SetWaveShape(int ws);
 };
 
-#endif // CASCADE_DROPLETS_VCO_DROPLET_H_
+#endif // DROPLETS_VCO_DROPLET_H_

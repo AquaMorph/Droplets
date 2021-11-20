@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef CASCADE_MAIN_H_
-#define CASCADE_MAIN_H_
+#ifndef DROPLETS_MAIN_H_
+#define DROPLETS_MAIN_H_
 
 #include "daisysp.h"
 #include "daisy_patch.h"
@@ -63,4 +63,4 @@ static void AudioThrough(AudioHandle::InputBuffer in,
  */
 Droplet* GetDroplet(DropletState state);
 
-#endif // CASCADE_MAIN_H_
+#endif // DROPLETS_MAIN_H_

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef CASCADE_MENU_H_
-#define CASCADE_MENU_H_
+#ifndef DROPLETS_MENU_H_
+#define DROPLETS_MENU_H_
 
 #include "daisy_patch.h"
 #include "menu_item.h"
@@ -91,4 +91,4 @@ class Menu {
   void UpdateMenuState();
 };
 
-#endif // CASCADE_MENU_H_
+#endif // DROPLETS_MENU_H_

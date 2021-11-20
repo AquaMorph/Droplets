@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef CASCADE_DROPLETS_DROPLET_MANAGER_H_
-#define CASCADE_DROPLETS_DROPLET_MANAGER_H_
+#ifndef DROPLETS_DROPLET_MANAGER_H_
+#define DROPLETS_DROPLET_MANAGER_H_
 
 #include "droplet.h"
 
@@ -45,5 +45,5 @@ public:
   std::string OtherStateName(DropletState state);
 };
 
-#endif // CASCADE_DROPLETS_DROPLET_MANAGER_H_
+#endif // DROPLETS_DROPLET_MANAGER_H_
 
