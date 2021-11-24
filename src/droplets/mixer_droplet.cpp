@@ -56,6 +56,67 @@ void MixerDroplet::Process(AudioHandle::InputBuffer in, AudioHandle::OutputBuffe
 }
 
 void MixerDroplet::Draw() {
+  int divider;
+  switch (GetState()) {
+  default:
+  case DropletState::kFull:
+    divider = (GetScreenMax()-GetScreenMin())/5.5;
+    DrawSolidRect(Patch(),
+		  GetScreenMin(),
+		  GetTitleHeight()*(1.0f-mix[0].Process()),
+		  divider,
+		  GetTitleHeight()-1,
+		  true);
+    DrawSolidRect(Patch(),
+		  GetScreenMin()+divider,
+		  GetTitleHeight()*(1.0f-mix[1].Process()),
+		  GetScreenMin()+divider*2,
+		  GetTitleHeight()-1,
+		  true);
+    DrawSolidRect(Patch(),
+		  GetScreenMax()-divider*2,
+		  GetTitleHeight()*(1.0f-mix[2].Process()),
+		  GetScreenMax()-divider,
+		  GetTitleHeight()-1,
+		  true);
+    DrawSolidRect(Patch(),
+		  GetScreenMax()-divider,
+		  GetTitleHeight()*(1.0f-mix[3].Process()),
+		  GetScreenMax(),
+		  GetTitleHeight()-1,
+		  true);
+    break;
+  case DropletState::kLeft:
+    divider = (GetScreenMax()-GetScreenMin())/4.5;
+    DrawSolidRect(Patch(),
+		  GetScreenMin(),
+		  GetTitleHeight()*(1.0f-mix[0].Process()),
+		  GetScreenMin()+divider,
+		  GetTitleHeight()-1,
+		  true);
+    DrawSolidRect(Patch(),
+		  GetScreenMax()-divider,
+		  GetTitleHeight()*(1.0f-mix[1].Process()),
+		  GetScreenMax(),
+		  GetTitleHeight()-1,
+		  true);
+    break;
+  case DropletState::kRight:
+    divider = (GetScreenMax()-GetScreenMin())/4.5;
+    DrawSolidRect(Patch(),
+		  GetScreenMin(),
+		  GetTitleHeight()*(1.0f-mix[2].Process()),
+		  GetScreenMin()+divider,
+		  GetTitleHeight()-1,
+		  true);
+    DrawSolidRect(Patch(),
+		  GetScreenMax()-divider,
+		  GetTitleHeight()*(1.0f-mix[3].Process()),
+		  GetScreenMax(),
+		  GetTitleHeight()-1,
+		  true);
+    break;
+  }
   DrawName("Mixer");
 }
 
