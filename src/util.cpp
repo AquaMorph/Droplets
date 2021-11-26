@@ -127,9 +127,55 @@ std::string FloatToString(float num, int places) {
   return sign + std::to_string(integral) + "." + std::to_string(fractional);
 }
 
+void DrawTwoDividedRectangles(DaisyPatch* patch,
+				int divider,
+				int width_min,
+				int width_max,
+				int rect_one_min,
+				int rect_one_max,
+				int rect_two_min,
+				int rect_two_max) {
+  DrawSolidRect(patch,
+		width_min,
+		rect_one_max,
+		width_min+divider,
+		rect_one_min,
+		true);
+  DrawSolidRect(patch,
+		width_max-divider,
+		rect_two_max,
+		width_max,
+		rect_two_min,
+		true);
+}
 
-
-
-
-
+void DrawFourDividedRectangles(DaisyPatch* patch,
+			       int divider,
+			       int width_min,
+			       int width_max,
+			       int rect_one_min,
+			       int rect_one_max,
+			       int rect_two_min,
+			       int rect_two_max,
+			       int rect_three_min,
+			       int rect_three_max,
+			       int rect_four_min,
+			       int rect_four_max) {
+  DrawTwoDividedRectangles(patch,
+			   divider,
+			   width_min,
+			   width_max,
+			   rect_one_min,
+			   rect_one_max,
+			   rect_four_min,
+			   rect_four_max);
+  DrawTwoDividedRectangles(patch,
+			   divider,
+			   width_min+divider,
+			   width_max-divider,
+			   rect_two_min,
+			   rect_two_max,
+			   rect_three_min,
+			   rect_three_max);
+}
 

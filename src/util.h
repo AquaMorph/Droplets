@@ -147,4 +147,54 @@ std::string WaveToString(uint8_t wf);
  */
 std::string FloatToString(float num, int places);
 
+/*
+ * Draws two rectangles on the left and right side of a given area.
+ *
+ * @param patch daisy patch board
+ * @param divider rectangle length
+ * @param width_min left edge of bounding box
+ * @param width_max right enge of bounding box
+ * @param rect_one_min first rectangle lowest edge 
+ * @param rect_one_max first rectangle highest edge
+ * @param rect_two_min second rectangle lowest edge
+ * @param rect_two_max second rectangle highest edge
+ */
+void DrawTwoDividedRectangles(DaisyPatch* patch,
+				int divider,
+				int width_min,
+				int width_max,
+				int rect_one_min,
+				int rect_one_max,
+				int rect_two_min,
+				int rect_two_max);
+
+/*
+ * Draws four rectangles on the left and right side of a given area.
+ *
+ * @param patch daisy patch board
+ * @param divider rectangle length
+ * @param width_min left edge of bounding box
+ * @param width_max right enge of bounding box
+ * @param rect_one_min first rectangle lowest edge 
+ * @param rect_one_max first rectangle highest edge
+ * @param rect_two_min second rectangle lowest edge
+ * @param rect_two_max second rectangle highest edge
+ * @param rect_one_min third rectangle lowest edge 
+ * @param rect_one_max third rectangle highest edge
+ * @param rect_two_min forth rectangle lowest edge
+ * @param rect_two_max forth rectangle highest edge
+ */
+void DrawFourDividedRectangles(DaisyPatch* patch,
+			       int divider,
+			       int width_min,
+			       int width_max,
+			       int rect_one_min,
+			       int rect_one_max,
+			       int rect_two_min,
+			       int rect_two_max,
+			       int rect_three_min,
+			       int rect_three_max,
+			       int rect_four_min,
+			       int rect_four_max);
+
 #endif // CASCADE_UTIL_H_
