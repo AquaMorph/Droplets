@@ -51,60 +51,40 @@ void VCADroplet::Draw() {
   default:
   case DropletState::kFull:
     divider = (GetScreenMax()-GetScreenMin())/5;
-    DrawSolidRect(Patch(),
-		  GetScreenMin(),
-		  0,
-		  divider,
-		  GetTitleHeight()*vca[0].Process(),
-		  true);
-    DrawSolidRect(Patch(),
-		  GetScreenMin()+divider,
-		  0,
-		  GetScreenMin()+divider*2,
-		  GetTitleHeight()*vca[1].Process(),
-		  true);
-    DrawSolidRect(Patch(),
-		  GetScreenMin()+divider*3,
-		  0,
-		  GetScreenMin()+divider*4,
-		  GetTitleHeight()*vca[2].Process(),
-		  true);
-    DrawSolidRect(Patch(),
-		  GetScreenMin()+divider*4,
-		  0,
-		  GetScreenMax(),
-		  GetTitleHeight()*vca[3].Process(),
-		  true);
+    DrawFourDividedRectangles(Patch(),
+			      divider,
+			      GetScreenMin(),
+			      GetScreenMax(),
+			      0,
+			      GetTitleHeight()*vca[0].Process(),
+			      0,
+			      GetTitleHeight()*vca[1].Process(),
+			      0,
+			      GetTitleHeight()*vca[2].Process(),
+			      0,
+			      GetTitleHeight()*vca[3].Process());
     break;
   case DropletState::kLeft:
     divider = (GetScreenMax()-GetScreenMin())/3;
-    DrawSolidRect(Patch(),
-		  GetScreenMin(),
-		  0,
-		  GetScreenMin()+divider,
-		  GetTitleHeight()*vca[0].Process(),
-		  true);
-    DrawSolidRect(Patch(),
-		  GetScreenMax()-divider,
-		  0,
-		  GetScreenMax(),
-		  GetTitleHeight()*vca[1].Process(),
-		  true);
+    DrawTwoDividedRectangles(Patch(),
+			     divider,
+			     GetScreenMin(),
+			     GetScreenMax(),
+			     0,
+			     GetTitleHeight()*vca[0].Process(),
+			     0,
+			     GetTitleHeight()*vca[1].Process());
     break;
   case DropletState::kRight:
     divider = (GetScreenMax()-GetScreenMin())/3;
-    DrawSolidRect(Patch(),
-		  GetScreenMin(),
-		  0,
-		  GetScreenMin()+divider,
-		  GetTitleHeight()*vca[2].Process(),
-		  true);
-    DrawSolidRect(Patch(),
-		  GetScreenMax()-divider,
-		  0,
-		  GetScreenMax(),
-		  GetTitleHeight()*vca[3].Process(),
-		  true);
+    DrawTwoDividedRectangles(Patch(),
+			     divider,
+			     GetScreenMin(),
+			     GetScreenMax(),
+			     0,
+			     GetTitleHeight()*vca[2].Process(),
+			     0,
+			     GetTitleHeight()*vca[3].Process());
     break;
   }
   DrawName("VCA");
