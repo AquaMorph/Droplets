@@ -1,9 +1,10 @@
 #pragma once
 
-#ifndef CASCADE_GRAPHICS_SPRITE_H_
-#define CASCADE_GRAPHICS_SPRITE_H_
+#ifndef DROPLETS_GRAPHICS_SPRITE_H_
+#define DROPLETS_GRAPHICS_SPRITE_H_
 
 #include "daisy_patch.h"
+#include "../util.h"
 
 using namespace daisy;
 
@@ -13,19 +14,7 @@ class Sprite {
   bool** sprite;
   int x_shift = 0;
   int y_shift = 0;
-  
-  /*
-   * Converts a graphic pixel location to a new one based on 
-   * a given shift.
-   *
-   * @param pos pixel position
-   * @param shift shift amount
-   * @param array_size max length of dimension
-   * return new pixel position
-   */
-  int GetShiftArray(int pos,
-		    int shift,
-		    int array_size);
+
   /*
    * Converts a x axis position based upon the sprites shift.
    *
@@ -163,4 +152,4 @@ class Sprite {
   void AdjustYShift(int y);
 };
 
-#endif // CASCADE_GRAPHICS_SPRITE_H_
+#endif // DROPLETS_GRAPHICS_SPRITE_H_

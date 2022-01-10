@@ -197,4 +197,17 @@ void DrawFourDividedRectangles(DaisyPatch* patch,
 			       int rect_four_min,
 			       int rect_four_max);
 
+  /*
+   * Converts a graphic pixel location to a new one based on 
+   * a given shift.
+   *
+   * @param pos pixel position
+   * @param shift shift amount
+   * @param array_size max length of dimension
+   * return new pixel position
+   */
+  int GetShiftArray(int pos,
+		    int shift,
+		    int array_size);
+
 #endif // CASCADE_UTIL_H_

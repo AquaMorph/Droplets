@@ -179,3 +179,8 @@ void DrawFourDividedRectangles(DaisyPatch* patch,
 			   rect_three_max);
 }
 
+int GetShiftArray(int pos,
+		  int shift,
+		  int array_size) {
+  return (array_size + ((pos + shift) % array_size)) % array_size;
+}

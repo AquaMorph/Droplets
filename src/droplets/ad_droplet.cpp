@@ -105,6 +105,7 @@ ADDroplet::ADDroplet(DaisyPatch* m_patch,
   Droplet(m_patch,
 	  m_state) {
   sample_rate = m_sample_rate;
+  SetAnimationRate(20);
   ad[0].Init(Patch(),
 	     sample_rate,
 	     &m_state);
@@ -113,6 +114,9 @@ ADDroplet::ADDroplet(DaisyPatch* m_patch,
 	       sample_rate,
 	       &m_state);
   }
+
+  title_graph = new Graph(GetScreenMax()-GetScreenMin(),
+			  GetTitleHeight());
 }
 
 ADDroplet::~ADDroplet() {}
@@ -185,8 +189,17 @@ void ADDroplet::Draw() {
       DrawSolidRect(Patch(), GetScreenMin(), 10, GetScreenMin()+1, 29, true);
     }
   }
+
+  if(NeedUpdate()) {
+    title_graph->Update();
+  }
+  title_graph->SetPixelPercentage(ad[0].GetSignal());
+ 
+  //title_graph->SetPixelPercentage(0.99f);
+  title_graph->Draw(Patch(), 0, 0);
   
   DrawName("AD");
+  AnimationInc();
 }
 
 void ADDroplet::UpdateStateCallback() {

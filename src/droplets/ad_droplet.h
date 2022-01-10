@@ -8,6 +8,7 @@
 
 #include "droplet.h"
 #include "../util.h"
+#include "../graphics/graph.h"
 
 using namespace daisy;
 using namespace daisysp;
@@ -47,6 +48,7 @@ class ADDroplet: public Droplet {
 private:
   AD ad[2];
   float sample_rate;
+  Graph* title_graph;
 
 public:
   /*
@@ -56,8 +58,8 @@ public:
    * @param m_state droplet position
    */
   ADDroplet(DaisyPatch* m_patch,
-	     DropletState m_state,
-	     float sample_rate);
+	    DropletState m_state,
+	    float sample_rate);
   
   /*
    * Destructor for vco droplet.
