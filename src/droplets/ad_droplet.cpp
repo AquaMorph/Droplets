@@ -119,7 +119,9 @@ ADDroplet::ADDroplet(DaisyPatch* m_patch,
 			  GetTitleHeight());
 }
 
-ADDroplet::~ADDroplet() {}
+ADDroplet::~ADDroplet() {
+  delete title_graph;
+}
 
 void ADDroplet::Control() {
   if (Patch()->encoder.Pressed()) {
@@ -194,7 +196,7 @@ void ADDroplet::Draw() {
     title_graph->Update();
   }
   title_graph->SetPixelPercentage(ad[0].GetSignal());
-  title_graph->Draw(Patch(), 0, 0);
+  title_graph->Draw(Patch(), GetScreenMin(), 0);
   
   DrawName("AD");
   AnimationInc();
@@ -209,4 +211,6 @@ void ADDroplet::UpdateStateCallback() {
 	       sample_rate,
 	       State());
   }
+  title_graph = new Graph(GetScreenMax()-GetScreenMin(),
+			  GetTitleHeight());
 }

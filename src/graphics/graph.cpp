@@ -59,7 +59,7 @@ void Graph::Draw(DaisyPatch* patch, int x, int y) {
   for (int w = 0; w < width; w++) {
     for (int h = 0; h < height; h++) {
       patch->display.DrawPixel(x+w, y+h,
-			       graph[GetShiftArray(width-w, active, width)]
+			       graph[GetShiftArray(w, active+1, width)]
 			       [GetShiftArray(height-h, height-1, height)]);
     }
   }
