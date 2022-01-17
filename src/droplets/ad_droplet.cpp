@@ -211,6 +211,7 @@ void ADDroplet::UpdateStateCallback() {
 	       sample_rate,
 	       State());
   }
+  delete title_graph;
   title_graph = new Graph(GetScreenMax()-GetScreenMin(),
 			  GetTitleHeight());
 }
