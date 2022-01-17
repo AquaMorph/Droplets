@@ -105,7 +105,7 @@ ADDroplet::ADDroplet(DaisyPatch* m_patch,
   Droplet(m_patch,
 	  m_state) {
   sample_rate = m_sample_rate;
-  SetAnimationRate(20);
+  SetAnimationRate(10);
   ad[0].Init(Patch(),
 	     sample_rate,
 	     &m_state);
@@ -194,8 +194,6 @@ void ADDroplet::Draw() {
     title_graph->Update();
   }
   title_graph->SetPixelPercentage(ad[0].GetSignal());
- 
-  //title_graph->SetPixelPercentage(0.99f);
   title_graph->Draw(Patch(), 0, 0);
   
   DrawName("AD");
