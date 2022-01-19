@@ -114,7 +114,10 @@ ADDroplet::ADDroplet(DaisyPatch* m_patch,
 	       sample_rate,
 	       &m_state);
   }
+  CreateTitleGraph();
+}
 
+void ADDroplet::CreateTitleGraph() {
   title_graph = new Graph(GetScreenMax()-GetScreenMin(),
 			  GetTitleHeight());
 }
@@ -212,6 +215,5 @@ void ADDroplet::UpdateStateCallback() {
 	       State());
   }
   delete title_graph;
-  title_graph = new Graph(GetScreenMax()-GetScreenMin(),
-			  GetTitleHeight());
+  CreateTitleGraph();
 }

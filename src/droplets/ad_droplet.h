@@ -28,19 +28,77 @@ private:
   DropletState* state;
   
 public:
+  /*
+   * Contructor for attach decay envelope.
+   *
+   * @param m_patch pointer to patch
+   * @param sample_rate audio sample rate
+   * @param state droplet position
+   */
   void Init(DaisyPatch* m_patch,
 	    float sample_rate,
 	    DropletState* state);
 
-  void Process(DacHandle::Channel chn, DaisyPatch::GateInput gate);
+  /*
+   * Precesses input from the trigger gate
+   * and sends envelope data to a given CV output.
+   *
+   * @param chn
+   * @param gate
+   */
+  void Process(DacHandle::Channel chn,
+	       DaisyPatch::GateInput gate);
 
+  /*
+   * Returns the envelope signal level.
+   *
+   * @return envelope signal level
+   */
   float GetSignal();
+
+  /*
+   * Returns the envelope attack time.
+   *
+   * @return envelope attack time
+   */
   float GetAttack();
+
+  /*
+   * Returns the envelope decay time.
+   *
+   * @return envelope decay time
+   */
   float GetDecay();
+
+  /*
+   * Returns the envelope slope shape.
+   *
+   * @return envelope slope shape
+   */
   float GetCurve();
+
+  /*
+   * Returns the envelope amp level.
+   *
+   * @return envelope amp level
+   */
   float GetAmp();
+
+  /*
+   * Returns the envelope menu state.
+   *
+   * @return envelope menu state
+   */
   bool GetMenu();
+
+  /*
+   * Toggles envelope menu state.
+   */
   void ToggleCurve();
+
+  /*
+   * Binds envelope to menu hardware controls.
+   */
   void SetControls();
 };
 
@@ -50,12 +108,18 @@ private:
   float sample_rate;
   Graph* title_graph;
 
+  /*
+   * Create a new graph for the title bar.
+   */
+  void CreateTitleGraph();
+
 public:
   /*
    * Constructor for a AD droplet.
    *
    * @param m_patch pointer to patch
    * @param m_state droplet position
+   * @param sample_rate audio sample rate
    */
   ADDroplet(DaisyPatch* m_patch,
 	    DropletState m_state,
