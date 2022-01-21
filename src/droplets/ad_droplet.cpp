@@ -18,7 +18,9 @@ void AD::Process(DacHandle::Channel chn,
   if(patch->gate_input[gate].Trig()) {
     env.Trigger();
   }
+  
   if (*state == DropletState::kFull) {
+    //DrawSolidRect(patch, 30,30,40,40, true);
     attack = attack_param.Process();
     decay = decay_param.Process();
     curve = curve_param.Process();
@@ -108,11 +110,11 @@ ADDroplet::ADDroplet(DaisyPatch* m_patch,
   SetAnimationRate(10);
   ad[0].Init(Patch(),
 	     sample_rate,
-	     &m_state);
+	     State());
   if (m_state == DropletState::kFull) {
     ad[1].Init(Patch(),
 	       sample_rate,
-	       &m_state);
+	       State());
   }
   CreateTitleGraph();
 }
@@ -200,6 +202,7 @@ void ADDroplet::Draw() {
   }
   title_graph->SetPixelPercentage(ad[0].GetSignal());
   title_graph->Draw(Patch(), GetScreenMin(), 0);
+
   
   DrawName("AD");
   AnimationInc();
