@@ -16,10 +16,8 @@ void LFO::Process(DacHandle::Channel chn) {
   osc.SetFreq(freqCtrl.Process());
   osc.SetWaveform(wave);
   
-  patch->seed.dac.WriteValue(
-			     chn,
-			     uint16_t((osc.Process() + 1.f) *
-				      .5f * ampCtrl.Process() * 4095.f));
+  patch->seed.dac.WriteValue(chn,
+			     GetSignal() * ampCtrl.Process() * 4095.f);
 }
 
 void LFO::UpdateWave(int change) {
@@ -30,11 +28,18 @@ uint8_t LFO::GetWave() {
   return wave;
 }
 
+float LFO::GetSignal() {
+  return (osc.Process()+ 1.0f) /2;
+}
+
 LFODroplet::LFODroplet(DaisyPatch* m_patch,
 		       DropletState m_state,
 		       float sample_rate) :
   Droplet(m_patch,
 	  m_state) {
+  SetAnimationRate(5);
+  CreateTitleGraph();
+  
   switch (GetState()) {
   default:
   case DropletState::kFull:
@@ -62,7 +67,14 @@ LFODroplet::LFODroplet(DaisyPatch* m_patch,
   }
 }
 
-LFODroplet::~LFODroplet() {}
+LFODroplet::~LFODroplet() {
+  delete title_graph;
+}
+
+void LFODroplet::CreateTitleGraph() {
+  title_graph = new Graph(GetScreenMax()-GetScreenMin(),
+			  GetTitleHeight());
+}
 
 void LFODroplet::Control() {
   Patch()->ProcessAnalogControls();
@@ -104,7 +116,18 @@ void LFODroplet::Draw() {
 			Font_6x8,
 			WaveToString(lfo[0].GetWave()));
   }
+
+  if(NeedUpdate()) {
+    title_graph->Update();
+  }
+  title_graph->SetPixelPercentage(lfo[0].GetSignal());
+  title_graph->Draw(Patch(), GetScreenMin(), 0);
+  
   DrawName("LFO");
+  AnimationInc();
 }
 
-void LFODroplet::UpdateStateCallback() {}
+void LFODroplet::UpdateStateCallback() {
+  delete title_graph;
+  CreateTitleGraph();
+}

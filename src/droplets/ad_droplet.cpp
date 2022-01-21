@@ -117,13 +117,13 @@ ADDroplet::ADDroplet(DaisyPatch* m_patch,
   CreateTitleGraph();
 }
 
+ADDroplet::~ADDroplet() {
+  delete title_graph;
+}
+
 void ADDroplet::CreateTitleGraph() {
   title_graph = new Graph(GetScreenMax()-GetScreenMin(),
 			  GetTitleHeight());
-}
-
-ADDroplet::~ADDroplet() {
-  delete title_graph;
 }
 
 void ADDroplet::Control() {
