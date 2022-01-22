@@ -56,6 +56,11 @@ public:
    * Runs when droplet state is updated.
    */
   void UpdateStateCallback();
+
+  /*
+   * Set up the controls for the droplet.
+   */
+  void SetControls();
 };
 
 #endif // DROPLETS_VCA_DROPLET_H_
