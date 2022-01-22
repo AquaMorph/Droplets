@@ -34,37 +34,13 @@ float LFO::GetSignal() {
 
 LFODroplet::LFODroplet(DaisyPatch* m_patch,
 		       DropletState m_state,
-		       float sample_rate) :
+		       float m_sample_rate) :
   Droplet(m_patch,
 	  m_state) {
+  sample_rate = m_sample_rate;
   SetAnimationRate(5);
   CreateTitleGraph();
-  
-  switch (GetState()) {
-  default:
-  case DropletState::kFull:
-    lfo[0].Init(Patch(),
-		sample_rate,
-		Patch()->controls[Patch()->CTRL_1],
-		Patch()->controls[Patch()->CTRL_2]);
-    lfo[1].Init(Patch(),
-		sample_rate,
-		Patch()->controls[Patch()->CTRL_3],
-		Patch()->controls[Patch()->CTRL_4]);
-    break;
-  case DropletState::kLeft:
-    lfo[0].Init(Patch(),
-		sample_rate,
-		Patch()->controls[Patch()->CTRL_1],
-		Patch()->controls[Patch()->CTRL_2]);
-    break;
-  case DropletState::kRight:
-    lfo[0].Init(Patch(),
-		sample_rate,
-		Patch()->controls[Patch()->CTRL_3],
-		Patch()->controls[Patch()->CTRL_4]);
-    break;
-  }
+  SetControls();
 }
 
 LFODroplet::~LFODroplet() {
@@ -85,7 +61,9 @@ void LFODroplet::Control() {
   }
 }
 
-void LFODroplet::Process(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size) {
+void LFODroplet::Process(AudioHandle::InputBuffer in,
+			 AudioHandle::OutputBuffer out,
+			 size_t size) {
   Patch()->ProcessAnalogControls();
 
   for(size_t i = 0; i < size; i++) {
@@ -130,4 +108,33 @@ void LFODroplet::Draw() {
 void LFODroplet::UpdateStateCallback() {
   delete title_graph;
   CreateTitleGraph();
+  SetControls();
+}
+
+void LFODroplet::SetControls() {
+  switch (GetState()) {
+  default:
+  case DropletState::kFull:
+    lfo[0].Init(Patch(),
+		sample_rate,
+		Patch()->controls[Patch()->CTRL_1],
+		Patch()->controls[Patch()->CTRL_2]);
+    lfo[1].Init(Patch(),
+		sample_rate,
+		Patch()->controls[Patch()->CTRL_3],
+		Patch()->controls[Patch()->CTRL_4]);
+    break;
+  case DropletState::kLeft:
+    lfo[0].Init(Patch(),
+		sample_rate,
+		Patch()->controls[Patch()->CTRL_1],
+		Patch()->controls[Patch()->CTRL_2]);
+    break;
+  case DropletState::kRight:
+    lfo[0].Init(Patch(),
+		sample_rate,
+		Patch()->controls[Patch()->CTRL_3],
+		Patch()->controls[Patch()->CTRL_4]);
+    break;
+  }
 }

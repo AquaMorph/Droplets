@@ -72,6 +72,7 @@ class LFODroplet: public Droplet {
 private:
   LFO    lfo[2];
   Graph* title_graph;
+  float  sample_rate;
 
   /*
    * Create a new graph for the title bar.
@@ -120,6 +121,11 @@ public:
    * Runs when droplet state is updated.
    */
   void UpdateStateCallback();
+
+  /*
+   * Set up the controls for the droplet.
+   */
+  void SetControls();
 };
 
 #endif // DROPLETS_LFO_DROPLET_H_
