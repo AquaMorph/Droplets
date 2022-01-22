@@ -124,6 +124,8 @@ void Menu::UpdateMenuState() {
 }
 
 void Menu::Select() {
-  buffer = selected;
+  if (selected->GetState() != MenuState::kSplit) {
+    buffer = selected;
+  }
   selected = highlighted;
 }
