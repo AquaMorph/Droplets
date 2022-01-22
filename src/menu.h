@@ -86,9 +86,22 @@ class Menu {
   MenuState GetState();
 
   /*
+   * Returns the previously selected menu item.
+   *
+   * @return menu state
+   */
+  MenuState GetBufferState();
+
+  /*
    * Updates the menu upon a split or a merge.
    */
   void UpdateMenuState();
+
+
+  /*
+   * Select the currently highlighted menu item.
+   */
+  void Select();
 };
 
 #endif // DROPLETS_MENU_H_

@@ -59,8 +59,9 @@ static void AudioThrough(AudioHandle::InputBuffer in,
  * Initializes a new audio processing droplet based on menu state.
  *
  * @param state new droplet state
+ * @param menu menu state
  * @return droplet
  */
-Droplet* GetDroplet(DropletState state);
+Droplet* GetDroplet(DropletState state, MenuState menu);
 
 #endif // DROPLETS_MAIN_H_

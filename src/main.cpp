@@ -6,7 +6,8 @@ int main(void) {
   patch.Init();
   sample_rate = patch.AudioSampleRate();
   selected_menu = left_menu;
-  droplet_left = GetDroplet(DropletState::kFull);
+  droplet_left = GetDroplet(DropletState::kFull,
+			    selected_menu->GetState());
  
   patch.StartAdc();
   patch.StartAudio(AudioThrough);
@@ -27,6 +28,7 @@ void ProcessControls() {
     // Handle menu selection
     if (patch.encoder.RisingEdge()) {
       selected_menu->SetInMenu(false);
+      selected_menu->Select();
       // Split selected
       if(selected_menu->GetState() == MenuState::kSplit) {
 	manager->ToggleSplit();
@@ -35,7 +37,8 @@ void ProcessControls() {
 	// Enable split
 	if (manager->GetSplitMode()) {
 	  droplet_left->UpdateState(DropletState::kLeft);
-	  droplet_right = GetDroplet(DropletState::kRight);
+	  droplet_right = GetDroplet(DropletState::kRight,
+				     left_menu->GetBufferState());
 	}
 	// Disable split
 	else {
@@ -56,14 +59,17 @@ void ProcessControls() {
 	if(manager->GetSplitMode()) {
 	  if (selected_menu == left_menu) {
 	    delete droplet_left;
-	    droplet_left = GetDroplet(DropletState::kLeft);
+	    droplet_left = GetDroplet(DropletState::kLeft,
+				      selected_menu->GetState());
 	  } else {
 	    delete droplet_right;
-	    droplet_right = GetDroplet(DropletState::kRight);
+	    droplet_right = GetDroplet(DropletState::kRight,
+				       selected_menu->GetState());
 	  }
 	} else {
 	  delete droplet_left;
-	  droplet_left = GetDroplet(DropletState::kFull);
+	  droplet_left = GetDroplet(DropletState::kFull,
+				    selected_menu->GetState());
 	}
       }
     }
@@ -112,8 +118,9 @@ static void AudioThrough(AudioHandle::InputBuffer in,
   }
 }
 
-Droplet* GetDroplet(DropletState state) {
-  switch(selected_menu->GetState()) {
+Droplet* GetDroplet(DropletState state,
+		    MenuState menu) {
+  switch(menu) {
   default:
   case MenuState::kAD:
     return new ADDroplet(&patch,

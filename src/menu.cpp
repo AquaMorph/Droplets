@@ -109,6 +109,10 @@ MenuState Menu::GetState() {
   return highlighted->GetState();
 }
 
+MenuState Menu::GetBufferState() {
+  return buffer->GetState();
+}
+
 void Menu::UpdateMenuState() {
   if (manager->GetSplitMode()) {
     head->SetStateVisibility(MenuState::kChange, true);
@@ -117,4 +121,9 @@ void Menu::UpdateMenuState() {
     head->SetStateVisibility(MenuState::kChange, false);
     head->SetStateTitle(MenuState::kSplit, "Split");
   }
+}
+
+void Menu::Select() {
+  buffer = selected;
+  selected = highlighted;
 }

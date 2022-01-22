@@ -20,7 +20,6 @@ void AD::Process(DacHandle::Channel chn,
   }
   
   if (*state == DropletState::kFull) {
-    //DrawSolidRect(patch, 30,30,40,40, true);
     attack = attack_param.Process();
     decay = decay_param.Process();
     curve = curve_param.Process();
