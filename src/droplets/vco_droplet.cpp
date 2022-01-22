@@ -5,37 +5,12 @@ VCODroplet::VCODroplet(DaisyPatch* m_patch,
 		       float sample_rate) :
   Droplet(m_patch,
 	  m_state) {
-  int num_waves = Oscillator::WAVE_LAST;
   SetAnimationRate(10);
   osc.Init(sample_rate);
 
   wave = Oscillator::WAVE_SAW;
 
-  DaisyPatch::Ctrl freq, fine;
-  switch (GetState()){
-    default:
-    case DropletState::kFull:  
-      wavectrl.Init(Patch()->controls[Patch()->CTRL_3], 0.0,
-		    num_waves, Parameter::LINEAR);
-      ampctrl.Init(Patch()->controls[Patch()->CTRL_4], 0.0,
-		   0.5f, Parameter::LINEAR);
-      freq = Patch()->CTRL_1;
-      fine = Patch()->CTRL_2;
-      SetWaveShape(wavectrl.Process());
-      break;
-    case DropletState::kLeft:
-      freq = Patch()->CTRL_1;
-      fine = Patch()->CTRL_2;
-      break;
-      case DropletState::kRight:
-	freq = Patch()->CTRL_3;
-	fine = Patch()->CTRL_4;
-	break;
-  }
-  freqctrl.Init(Patch()->controls[freq], 10.0,
-		110.0f, Parameter::LINEAR);
-  finectrl.Init(Patch()->controls[fine], 0.f,
-		7.f, Parameter::LINEAR);
+  SetControls();
 }
 
 VCODroplet::~VCODroplet() {
@@ -145,4 +120,38 @@ void VCODroplet::SetWaveShape(int ws) {
   last_wave_ctrl = ws;
 }
 
-void VCODroplet::UpdateStateCallback() {}
+void VCODroplet::UpdateStateCallback() {
+  SetControls();
+}
+
+void VCODroplet::SetControls() {
+  DaisyPatch::Ctrl freq, fine;
+  switch (GetState()){
+    default:
+    case DropletState::kFull:  
+      wavectrl.Init(Patch()->controls[Patch()->CTRL_3],
+		    0.0,
+		    Oscillator::WAVE_LAST,
+		    Parameter::LINEAR);
+      ampctrl.Init(Patch()->controls[Patch()->CTRL_4],
+		   0.0,
+		   0.5f,
+		   Parameter::LINEAR);
+      freq = Patch()->CTRL_1;
+      fine = Patch()->CTRL_2;
+      SetWaveShape(wavectrl.Process());
+      break;
+    case DropletState::kLeft:
+      freq = Patch()->CTRL_1;
+      fine = Patch()->CTRL_2;
+      break;
+      case DropletState::kRight:
+	freq = Patch()->CTRL_3;
+	fine = Patch()->CTRL_4;
+	break;
+  }
+  freqctrl.Init(Patch()->controls[freq], 10.0,
+		110.0f, Parameter::LINEAR);
+  finectrl.Init(Patch()->controls[fine], 0.f,
+		7.f, Parameter::LINEAR);
+}

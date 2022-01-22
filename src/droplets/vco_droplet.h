@@ -87,6 +87,11 @@ public:
    * @param ws wave shape
    */
   void SetWaveShape(int ws);
+
+    /*
+   * Set up the controls for the droplet.
+   */
+  void SetControls();
 };
 
 #endif // DROPLETS_VCO_DROPLET_H_
