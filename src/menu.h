@@ -84,6 +84,13 @@ class Menu {
    * @return menu state
    */
   MenuState GetState();
+  
+  /*
+   * Set the menu state.
+   *
+   * @param state menu state
+   */
+  void SetState(MenuState state);
 
   /*
    * Returns the previously selected menu item.
@@ -102,6 +109,13 @@ class Menu {
    * Select the currently highlighted menu item.
    */
   void Select();
+
+  /*
+   * Select the given menu item.
+   *
+   * @param item menu item to select
+   */
+  void Select(MenuItem* item);
 };
 
 #endif // DROPLETS_MENU_H_

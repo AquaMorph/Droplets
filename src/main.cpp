@@ -40,10 +40,18 @@ void ProcessControls() {
 	  droplet_right = GetDroplet(DropletState::kRight,
 				     left_menu->GetBufferState());
 	}
-	// Disable split
+	// Merge
 	else {
-	  droplet_left->UpdateState(DropletState::kFull);
-	  delete droplet_right;
+	  if (selected_menu == left_menu) {
+	    droplet_left->UpdateState(DropletState::kFull);
+	    delete droplet_right;
+	  } else {
+	    droplet_right->UpdateState(DropletState::kFull);
+	    delete droplet_left;
+	    droplet_left = droplet_right;
+	    left_menu->SetState(right_menu->GetBufferState());
+	    selected_menu = left_menu;
+	  }
 	}
       }
       // Switch side

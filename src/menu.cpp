@@ -109,6 +109,17 @@ MenuState Menu::GetState() {
   return highlighted->GetState();
 }
 
+void Menu::SetState(MenuState state) {
+  MenuItem* ptr = head;
+  while(ptr != NULL) {
+    if (ptr->GetState() == state) {
+      Select(ptr);
+      return;
+    }
+  ptr = ptr->GetNext();
+  }
+}
+
 MenuState Menu::GetBufferState() {
   return buffer->GetState();
 }
@@ -124,8 +135,12 @@ void Menu::UpdateMenuState() {
 }
 
 void Menu::Select() {
+  Select(highlighted);
+}
+
+void Menu::Select(MenuItem* item) {
   if (selected->GetState() != MenuState::kSplit) {
     buffer = selected;
   }
-  selected = highlighted;
+  selected = item;
 }
