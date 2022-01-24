@@ -139,8 +139,10 @@ void Menu::Select() {
 }
 
 void Menu::Select(MenuItem* item) {
-  if (selected->GetState() != MenuState::kSplit) {
+  if (selected->GetState() != MenuState::kSplit ||
+      selected->GetState() != MenuState::kChange) {
     buffer = selected;
   }
+
   selected = item;
 }
