@@ -27,33 +27,33 @@ The Droplets firmware is based around writing modular code blocks called droplet
 
 #### Full Mode
 
-CTRL [1-4]
-GATE IN [1-2]
-GATE OUT 1
-AUDIO IN [1-4]
-AUDIO OUT [1-4]
-MIDI IN
-MIDI OUT
-CV OUT [1-2]
+ - CTRL [1-4]
+ - GATE IN [1-2]
+ - GATE OUT 1
+ - AUDIO IN [1-4]
+ - AUDIO OUT [1-4]
+ - MIDI IN
+ - MIDI OUT
+ - CV OUT [1-2]
 
 #### Left Mode
 
-CTRL [1-2]
-GATE IN 1
-GATE OUT 1
-AUDIO IN [1-2]
-AUDIO OUT [1-2]
-MIDI IN
-MIDI OUT
-CV OUT 1
+ - CTRL [1-2]
+ - GATE IN 1
+ - GATE OUT 1
+ - AUDIO IN [1-2]
+ - AUDIO OUT [1-2]
+ - MIDI IN
+ - MIDI OUT
+ - CV OUT 1
 
 #### Right Mode
 
-CTRL [3-4]
-GATE IN 2
-AUDIO IN [3-4]
-AUDIO OUT [3-4]
-CV OUT 2
+ - CTRL [3-4]
+ - GATE IN 2
+ - AUDIO IN [3-4]
+ - AUDIO OUT [3-4]
+ - CV OUT 2
 
 ### Setting Up Code
 
