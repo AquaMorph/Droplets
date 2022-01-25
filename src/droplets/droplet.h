@@ -67,6 +67,11 @@ public:
   virtual void UpdateStateCallback() {}
 
   /*
+   * Set up the controls for the droplet.
+   */
+  virtual void SetControls() {}
+
+  /*
    * Returns patch.
    *
    * @return pointer to patch

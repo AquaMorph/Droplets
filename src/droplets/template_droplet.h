@@ -17,8 +17,11 @@ public:
    *
    * @param m_patch pointer to patch
    * @param m_state droplet position
+   * @param sample_rate audio sample rate
    */
-  TemplateDroplet(DaisyPatch*, DropletState);
+  TemplateDroplet(DaisyPatch* m_patch,
+		  DropletState m_state,
+		  float sample_rate);
 
   /*
    * Processes user controls and inputs.
@@ -45,6 +48,11 @@ public:
    * Runs when droplet state is updated.
    */
   void UpdateStateCallback();
+
+  /*
+   * Set up the controls for the droplet.
+   */
+  void SetControls();
 };
 
 #endif // DROPLETS_TEMPLATE_DROPLET_H_

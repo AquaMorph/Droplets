@@ -108,7 +108,6 @@ void LFODroplet::Draw() {
 void LFODroplet::UpdateStateCallback() {
   delete title_graph;
   CreateTitleGraph();
-  SetControls();
 }
 
 void LFODroplet::SetControls() {

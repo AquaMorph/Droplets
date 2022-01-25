@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef DROPLETS_NOISE_DROPLET_H_
-#define DROPLETS_NOISE_DROPLET_H_
+#ifndef DROPLETS_LADDER_FILTER_DROPLET_H_
+#define DROPLETS_LADDER_FILTER_DROPLET_H_
 
 #include "daisysp.h"
 #include "daisy_patch.h"
@@ -9,17 +9,22 @@
 #include "droplet.h"
 #include "../util.h"
 
-class NoiseDroplet: public Droplet {
+class LadderFilterDroplet: public Droplet {
 private:
-  daisysp::WhiteNoise noise;
+  MoogLadder filter;
+  Parameter freq_ctrl, res_ctrl;
+  float freq, res;
 public:
   /*
-   * Constructor for a droplet which outputs noise.
+   * Constructor for a droplet.
    *
    * @param m_patch pointer to patch
    * @param m_state droplet position
+   * @param sample_rate audio sample rate
    */
-  NoiseDroplet(DaisyPatch*, DropletState);
+  LadderFilterDroplet(DaisyPatch* m_patch,
+		      DropletState m_state,
+		      float sample_rate);
 
   /*
    * Processes user controls and inputs.
@@ -53,4 +58,4 @@ public:
   void SetControls();
 };
 
-#endif // DROPLETS_NOISE_DROPLET_H_
+#endif // DROPLETS_LADDER_FILTER_DROPLET_H_

@@ -55,6 +55,7 @@ void Droplet::UpdateState(DropletState m_state) {
     chn_min = 2;
     screen_min = SSD1309_WIDTH / 2;
   }
+  SetControls();
   UpdateStateCallback();
 }
 

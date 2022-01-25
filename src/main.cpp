@@ -134,6 +134,10 @@ Droplet* GetDroplet(DropletState state,
     return new ADDroplet(&patch,
 			 state,
 			 sample_rate);
+  case MenuState::kLadderFilter:
+    return new LadderFilterDroplet(&patch,
+				   state,
+				   sample_rate);
   case MenuState::kLFO:
     return new LFODroplet(&patch,
 			  state,

@@ -28,3 +28,5 @@ void NoiseDroplet::Draw() {
 }
 
 void NoiseDroplet::UpdateStateCallback() {}
+
+void NoiseDroplet::SetControls() {}

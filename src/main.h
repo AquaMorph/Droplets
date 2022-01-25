@@ -13,6 +13,7 @@
 #include "droplets/droplet.h"
 #include "droplets/droplet_manager.h"
 #include "droplets/ad_droplet.h"
+#include "droplets/ladder_filter_droplet.h"
 #include "droplets/lfo_droplet.h"
 #include "droplets/mixer_droplet.h"
 #include "droplets/noise_droplet.h"

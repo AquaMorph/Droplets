@@ -219,3 +219,5 @@ void ADDroplet::UpdateStateCallback() {
   delete title_graph;
   CreateTitleGraph();
 }
+
+void ADDroplet::SetControls() {}
