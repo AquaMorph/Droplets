@@ -21,7 +21,7 @@ void LadderFilterDroplet::Process(AudioHandle::InputBuffer in,
   filter.SetRes(res);
   for (size_t i = 0; i < size; i++) {
     for (size_t chn = GetChannelMin(); chn < GetChannelMax(); chn++) {
-      out[chn][i] = filter.Process(in[chn][i]);
+      out[chn][i] = filter.Process(in[chn][i]) * (1.0f+res*2);
     }
   }
 }
@@ -33,15 +33,14 @@ void LadderFilterDroplet::Draw() {
 void LadderFilterDroplet::UpdateStateCallback() {}
 
 void LadderFilterDroplet::SetControls() {
+  AnalogControl filter_knob, res_knob;
   if (GetState() == DropletState::kRight) {
-    freq_ctrl.Init(Patch()->controls[Patch()->CTRL_3],
-		   0.0, 10000.0f, Parameter::LINEAR);
-    res_ctrl.Init(Patch()->controls[Patch()->CTRL_4],
-		  0.0, 0.75f, Parameter::LINEAR);
+    filter_knob = Patch()->controls[Patch()->CTRL_3];
+    res_knob = Patch()->controls[Patch()->CTRL_4];
   } else {
-    freq_ctrl.Init(Patch()->controls[Patch()->CTRL_1],
-		   0.0, 10000.0f, Parameter::LINEAR);
-    res_ctrl.Init(Patch()->controls[Patch()->CTRL_2],
-		  0.0, 0.75f, Parameter::LINEAR);
+    filter_knob = Patch()->controls[Patch()->CTRL_1];
+    res_knob = Patch()->controls[Patch()->CTRL_2];
   }
+  freq_ctrl.Init(filter_knob, 5.0f, 10000.0f, Parameter::LOGARITHMIC);
+  res_ctrl.Init(res_knob, 0.0f, 0.95f, Parameter::LINEAR);
 }
