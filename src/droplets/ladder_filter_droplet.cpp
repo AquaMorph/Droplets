@@ -21,7 +21,7 @@ void LadderFilterDroplet::Process(AudioHandle::InputBuffer in,
   filter.SetRes(res);
   for (size_t i = 0; i < size; i++) {
     for (size_t chn = GetChannelMin(); chn < GetChannelMax(); chn++) {
-      out[chn][i] = filter.Process(in[chn][i]) * (1.0f+res*2);
+      out[chn][i] = filter.Process(in[chn][i]) * (1.0f+res*4);
     }
   }
 }
