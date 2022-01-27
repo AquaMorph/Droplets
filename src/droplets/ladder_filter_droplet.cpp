@@ -5,7 +5,10 @@ LadderFilterDroplet::LadderFilterDroplet(DaisyPatch* m_patch,
 					 float sample_rate) :
   Droplet(m_patch,
 	  m_state) {
-  filter.Init(sample_rate);
+
+  for (int i = 0; i < 4; i++) {
+    filter[i].Init(sample_rate);
+  }
 
   SetControls();
 }
@@ -17,11 +20,13 @@ void LadderFilterDroplet::Process(AudioHandle::InputBuffer in,
 			   size_t size) {
   freq = freq_ctrl.Process();
   res = res_ctrl.Process();
-  filter.SetFreq(freq);
-  filter.SetRes(res);
+  
   for (size_t i = 0; i < size; i++) {
     for (size_t chn = GetChannelMin(); chn < GetChannelMax(); chn++) {
-      out[chn][i] = filter.Process(in[chn][i]) * (1.0f+res*4);
+      filter[chn].SetFreq(freq);
+      filter[chn].SetRes(res);
+      out[chn][i] = filter[chn].Process(in[chn][i]) * (1.0f+res*4);
+      //out[chn][i] = in[chn][i] * res;
     }
   }
 }

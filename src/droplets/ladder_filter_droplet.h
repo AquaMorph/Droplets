@@ -11,7 +11,7 @@
 
 class LadderFilterDroplet: public Droplet {
 private:
-  MoogLadder filter;
+  MoogLadder filter[4];
   Parameter freq_ctrl, res_ctrl;
   float freq, res;
 public:
