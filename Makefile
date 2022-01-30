@@ -6,6 +6,9 @@ CPP_SOURCES := $(wildcard $(SRC_DIR)/*.cpp $(SRC_DIR)/*/*.cpp)
 LIBDAISY_DIR = ./lib/libDaisy
 DAISYSP_DIR = ./lib/daisySP
 
+# Reduce binary size
+OPT += -Os
+
 SYSTEM_FILES_DIR = $(LIBDAISY_DIR)/core
 include $(SYSTEM_FILES_DIR)/Makefile
 
