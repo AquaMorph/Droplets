@@ -21,6 +21,10 @@ int Droplet::GetTitleHeight() {
   return kTitleHeight;
 }
 
+int Droplet::GetScreenWidth() {
+  return screen_max - screen_min;
+}
+
 int Droplet::GetScreenMin() {
   return screen_min;
 }

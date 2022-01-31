@@ -100,6 +100,13 @@ public:
   int GetTitleHeight();
 
   /*
+   * Returns the width of the droplet.
+   *
+   * @return screen width of the droplet
+   */
+  int GetScreenWidth();
+
+  /*
    * Returns the minimum screen position based on droplet size.
    *
    * @return droplet minimum screen position

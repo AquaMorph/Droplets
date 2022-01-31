@@ -14,6 +14,9 @@ private:
   MoogLadder filter[4];
   Parameter freq_ctrl, res_ctrl;
   float freq, res;
+  float FILTER_MAX = 10000.0f;
+  float RES_MAX = 0.95f;
+  int res_points[6];
 public:
   /*
    * Constructor for a droplet.
