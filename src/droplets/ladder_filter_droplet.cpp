@@ -13,6 +13,8 @@ LadderFilterDroplet::LadderFilterDroplet(DaisyPatch* m_patch,
   SetControls();
 }
 
+LadderFilterDroplet::~LadderFilterDroplet() {}
+
 void LadderFilterDroplet::Control() {}
 
 void LadderFilterDroplet::Process(AudioHandle::InputBuffer in,

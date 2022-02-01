@@ -7,6 +7,8 @@ TemplateDroplet::TemplateDroplet(DaisyPatch* m_patch,
 	  m_state) {
 }
 
+TemplateDroplet::~TemplateDroplet() {}
+
 void TemplateDroplet::Control() {}
 
 void TemplateDroplet::Process(AudioHandle::InputBuffer in,

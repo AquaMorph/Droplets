@@ -24,6 +24,11 @@ public:
 		  float sample_rate);
 
   /*
+   * Destructor for template droplet.
+   */
+  ~TemplateDroplet();
+
+  /*
    * Processes user controls and inputs.
    */
   void Control();

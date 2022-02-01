@@ -30,6 +30,11 @@ public:
 		      float sample_rate);
 
   /*
+   * Destructor for ladder filter droplet.
+   */
+  ~LadderFilterDroplet();
+
+  /*
    * Processes user controls and inputs.
    */
   void Control();
