@@ -6,7 +6,7 @@
 #include <string>
 
 enum class MenuState {kSplit, kChange, kAD, kLadderFilter,
-  kLFO, kMixer, kNoise, kVCA, kVCO};
+  kLFO, kMixer, kNoise, kSequencer, kVCA, kVCO};
 
 class MenuItem {
  private:

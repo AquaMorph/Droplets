@@ -145,6 +145,13 @@ Droplet* GetDroplet(DropletState state,
   case MenuState::kMixer:
     return new MixerDroplet(&patch,
 			    state);
+  case MenuState::kNoise:
+    return new NoiseDroplet(&patch,
+			    state);
+    case MenuState::kSequencer:
+    return new SequencerDroplet(&patch,
+				state,
+				sample_rate);
   case MenuState::kVCA:
     return new VCADroplet(&patch,
 			  state);
@@ -152,8 +159,5 @@ Droplet* GetDroplet(DropletState state,
     return new VCODroplet(&patch,
 			  state,
 			  sample_rate);
-  case MenuState::kNoise:
-    return new NoiseDroplet(&patch,
-			    state);
-  }	
+}
 }

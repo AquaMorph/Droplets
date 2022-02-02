@@ -17,6 +17,7 @@
 #include "droplets/lfo_droplet.h"
 #include "droplets/mixer_droplet.h"
 #include "droplets/noise_droplet.h"
+#include "droplets/sequencer_droplet.h"
 #include "droplets/vca_droplet.h"
 #include "droplets/vco_droplet.h"
 

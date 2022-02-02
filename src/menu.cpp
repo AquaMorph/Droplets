@@ -14,6 +14,7 @@ Menu::Menu(DaisyPatch* m_patch,
   head->AddItemEnd(new MenuItem(MenuState::kLFO, "LFO"));
   head->AddItemEnd(new MenuItem(MenuState::kMixer, "Mixer"));
   head->AddItemEnd(new MenuItem(MenuState::kNoise, "Noise"));
+  head->AddItemEnd(new MenuItem(MenuState::kSequencer, "Sequencer"));
   head->AddItemEnd(new MenuItem(MenuState::kVCA, "VCA"));
   head->AddItemEnd(new MenuItem(MenuState::kVCO, "VCO"));
   
