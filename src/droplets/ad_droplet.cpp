@@ -216,7 +216,9 @@ void ADDroplet::UpdateStateCallback() {
 	       sample_rate,
 	       State());
   }
-  delete title_graph;
+  if (title_graph != NULL) {
+    delete title_graph;
+  }
   CreateTitleGraph();
 }
 
