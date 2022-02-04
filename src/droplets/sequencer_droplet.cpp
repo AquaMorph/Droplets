@@ -9,7 +9,14 @@ SequencerDroplet::SequencerDroplet(DaisyPatch* m_patch,
 
 SequencerDroplet::~SequencerDroplet() {}
 
-void SequencerDroplet::Control() {}
+void SequencerDroplet::Control() {
+  if(Patch()->gate_input[0].Trig()) {
+    Step();
+  }
+  if(Patch()->gate_input[1].Trig()) {
+    Reset();
+  }
+}
 
 void SequencerDroplet::Process(AudioHandle::InputBuffer in,
 			      AudioHandle::OutputBuffer out,
@@ -17,9 +24,18 @@ void SequencerDroplet::Process(AudioHandle::InputBuffer in,
 }
 
 void SequencerDroplet::Draw() {
+  WriteString(Patch(), 0, 10, std::to_string(step));
   DrawName("Sequencer");
 }
 
 void SequencerDroplet::UpdateStateCallback() {}
 
 void SequencerDroplet::SetControls() {}
+
+void SequencerDroplet::Step() {
+  step = (step + 1) % MAX_SEQUENCE_LENGTH;
+}
+
+void SequencerDroplet::Reset() {
+  step = 0;
+}

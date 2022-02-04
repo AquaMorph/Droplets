@@ -9,11 +9,22 @@
 #include "droplet.h"
 #include "../util.h"
 
+#define MAX_SEQUENCE_LENGTH 32
+
 class SequencerDroplet: public Droplet {
 private:
-  int sequence_length = 32;
   int step = 0;
-  float swquence[32] = { 0.0f };
+  float swquence[MAX_SEQUENCE_LENGTH] = { 0.0f };
+
+  /*
+   * Set the sequencer to the next step.
+   */
+  void Step();
+
+  /*
+   * Reset the sequencers to the first step of the sequence.
+   */
+  void Reset();
 public:
   /*
    * Constructor for a droplet.

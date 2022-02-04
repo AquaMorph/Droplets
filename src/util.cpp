@@ -29,6 +29,13 @@ void WriteString(DaisyPatch* patch,
   WriteString(patch, x, y, font, text, true);
 }
 
+void WriteString(DaisyPatch* patch,
+		 int x,
+		 int y,
+		 std::string text) {
+  WriteString(patch, x, y, Font_6x8, text, true);
+}
+
 void WriteCenteredString(DaisyPatch* patch,
 			 int x,
 			 int y,
