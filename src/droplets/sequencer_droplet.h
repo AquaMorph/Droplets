@@ -10,11 +10,15 @@
 #include "../util.h"
 
 #define MAX_SEQUENCE_LENGTH 32
+#define CONTROL_DEADZONE = 0.01f
 
 class SequencerDroplet: public Droplet {
 private:
   int step = 0;
-  float swquence[MAX_SEQUENCE_LENGTH] = { 0.0f };
+  int selected = 0;
+  float sequence[MAX_SEQUENCE_LENGTH] = { 0.0f };
+  Parameter control[4];
+  float last_control_value[4] = { 0.0f };
 
   /*
    * Set the sequencer to the next step.
