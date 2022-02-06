@@ -10,8 +10,8 @@
 #include "../util.h"
 
 #define MAX_SEQUENCE_LENGTH 32
-#define CONTROL_DEADZONE 0.003f
-#define CONTROL_RATE_LIMIT 20
+#define CONTROL_DEADZONE 0.00499f
+#define CONTROL_RATE_LIMIT 25
 #define NUM_ROWS 6
 
 class SequencerDroplet: public Droplet {

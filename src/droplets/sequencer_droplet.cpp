@@ -47,6 +47,14 @@ void SequencerDroplet::Process(AudioHandle::InputBuffer in,
 void SequencerDroplet::Draw() {
   int left_padding = 4+GetScreenMin();
 
+  // Active Input
+  DrawSolidRect(Patch(),
+		GetScreenMin(),
+		8+selected*8,
+		GetScreenMin()+2,
+		15+selected*8, true);
+
+  // Notes
   for (int i = 0; i < num_columns*NUM_ROWS && i < sequence_length; i++) {
     WriteString(Patch(),
 		GetScreenWidth()/num_columns*(i%num_columns)+left_padding,
