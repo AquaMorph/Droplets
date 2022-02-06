@@ -23,13 +23,16 @@ void SequencerDroplet::Control() {
     Reset();
   }
 
-  for (size_t chn = GetChannelMin(); chn < GetChannelMax(); chn++) {
-    if (std::abs(control[chn].Process()-last_control_value[chn]) > CONTROL_DEADZONE) {
-      sequence[chn+selected*num_columns] = control[chn].Process();
+  if (control_rate_count == CONTROL_RATE_LIMIT) {
+    for (size_t chn = GetChannelMin(); chn < GetChannelMax(); chn++) {
+      if (std::abs(control[chn].Process()-last_control_value[chn]) > CONTROL_DEADZONE) {
+	sequence[chn+selected*num_columns] = control[chn].Process();
     }
-    last_control_value[chn] = control[chn].Process();
+      last_control_value[chn] = control[chn].Process();
+    }
+    control_rate_count = 0;
   }
-  
+  control_rate_count++;
 }
 
 void SequencerDroplet::Process(AudioHandle::InputBuffer in,
