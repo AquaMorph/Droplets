@@ -10,7 +10,7 @@
 #include "../util.h"
 
 #define MAX_SEQUENCE_LENGTH 32
-#define CONTROL_DEADZONE 0.03f
+#define CONTROL_DEADZONE 0.005f
 #define NUM_ROWS 6
 
 class SequencerDroplet: public Droplet {
@@ -34,6 +34,8 @@ private:
   void Reset();
 
   void SetColumns();
+
+  void AdjustSelected(int adj);
 public:
   /*
    * Constructor for a droplet.

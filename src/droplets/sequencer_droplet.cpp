@@ -12,6 +12,10 @@ SequencerDroplet::SequencerDroplet(DaisyPatch* m_patch,
 SequencerDroplet::~SequencerDroplet() {}
 
 void SequencerDroplet::Control() {
+  Patch()->ProcessAnalogControls();
+  Patch()->encoder.Debounce();
+  AdjustSelected(Patch()->encoder.Increment());
+
   if(Patch()->gate_input[0].Trig()) {
     Step();
   }
@@ -20,7 +24,10 @@ void SequencerDroplet::Control() {
   }
 
   for (size_t chn = GetChannelMin(); chn < GetChannelMax(); chn++) {
-    sequence[chn+selected] = control[chn].Process();
+    if (std::abs(control[chn].Process()-last_control_value[chn]) > CONTROL_DEADZONE) {
+      sequence[chn+selected*num_columns] = control[chn].Process();
+    }
+    last_control_value[chn] = control[chn].Process();
   }
   
 }
@@ -80,4 +87,9 @@ void SequencerDroplet::SetColumns() {
   } else {
     num_columns = 4;
   }
+}
+
+void SequencerDroplet::AdjustSelected(int adj) {
+  int rows = std::ceil(sequence_length/num_columns);
+  selected = (rows+selected+adj) % rows;
 }
