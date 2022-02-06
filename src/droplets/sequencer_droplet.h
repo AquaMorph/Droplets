@@ -10,13 +10,15 @@
 #include "../util.h"
 
 #define MAX_SEQUENCE_LENGTH 32
-#define CONTROL_DEADZONE = 0.03f
+#define CONTROL_DEADZONE 0.03f
+#define NUM_ROWS 6
 
 class SequencerDroplet: public Droplet {
 private:
   int step = 0;
   int selected = 0;
-  int sequence_length = 32;
+  int sequence_length = 16;
+  int num_columns = 4;
   float sequence[MAX_SEQUENCE_LENGTH] = { 0.0f };
   Parameter control[4];
   float last_control_value[4] = { 0.0f };
@@ -30,6 +32,8 @@ private:
    * Reset the sequencers to the first step of the sequence.
    */
   void Reset();
+
+  void SetColumns();
 public:
   /*
    * Constructor for a droplet.

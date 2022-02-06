@@ -6,6 +6,7 @@ SequencerDroplet::SequencerDroplet(DaisyPatch* m_patch,
   Droplet(m_patch,
 	  m_state) {
   SetControls();
+  SetColumns();
 }
 
 SequencerDroplet::~SequencerDroplet() {}
@@ -36,19 +37,23 @@ void SequencerDroplet::Process(AudioHandle::InputBuffer in,
 void SequencerDroplet::Draw() {
   int left_padding = 4+GetScreenMin();
 
-  for (int i = 0; i < 24; i++) {
+  for (int i = 0; i < num_columns*NUM_ROWS && i < sequence_length; i++) {
     WriteString(Patch(),
-		GetScreenWidth()/4*(i%4)+left_padding,
-		8+(std::floor(i/4)*8),
+		GetScreenWidth()/num_columns*(i%num_columns)+left_padding,
+		8+(std::floor(i/num_columns)*8),
 		FloatToString(sequence[i], 2),
 		i!=step);
   }
+
+  // Draw info bar
   DrawSolidRect(Patch(),GetScreenMin(),56,GetScreenMax(),63, true);
-  WriteString(Patch(), 2+GetScreenMin(), 56, std::to_string(step), false);
+  WriteString(Patch(), 2+GetScreenMin(), 56, std::to_string(step+1), false);
   DrawName("Sequencer");
 }
 
-void SequencerDroplet::UpdateStateCallback() {}
+void SequencerDroplet::UpdateStateCallback() {
+  SetColumns();
+}
 
 void SequencerDroplet::SetControls() {
   control[0].Init(Patch()->controls[Patch()->CTRL_1],
@@ -62,9 +67,17 @@ void SequencerDroplet::SetControls() {
 }
 
 void SequencerDroplet::Step() {
-  step = (step + 1) % MAX_SEQUENCE_LENGTH;
+  step = (step + 1) % sequence_length;
 }
 
 void SequencerDroplet::Reset() {
   step = 0;
+}
+
+void SequencerDroplet::SetColumns() {
+  if (GetState() != DropletState::kFull) {
+    num_columns = 2;
+  } else {
+    num_columns = 4;
+  }
 }
