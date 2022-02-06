@@ -70,6 +70,21 @@ void WriteString(DaisyPatch* patch,
  * @param x start of text x coordinate 
  * @param y start of text y coordinate
  * @param text text to be written
+ * @param on draw screen on or off
+ */
+void WriteString(DaisyPatch* patch,
+		 int x,
+		 int y,
+		 std::string text,
+		 bool on);
+
+/*
+ * Draws text on screen flushed left. 
+ *
+ * @param patch daisy patch board
+ * @param x start of text x coordinate 
+ * @param y start of text y coordinate
+ * @param text text to be written
  */
 void WriteString(DaisyPatch* patch,
 		 int x,

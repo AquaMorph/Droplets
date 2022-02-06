@@ -34,7 +34,17 @@ void SequencerDroplet::Process(AudioHandle::InputBuffer in,
 }
 
 void SequencerDroplet::Draw() {
-  WriteString(Patch(), 0, 10, std::to_string(step));
+  int left_padding = 4+GetScreenMin();
+
+  for (int i = 0; i < 24; i++) {
+    WriteString(Patch(),
+		GetScreenWidth()/4*(i%4)+left_padding,
+		8+(std::floor(i/4)*8),
+		FloatToString(sequence[i], 2),
+		i!=step);
+  }
+  DrawSolidRect(Patch(),GetScreenMin(),56,GetScreenMax(),63, true);
+  WriteString(Patch(), 2+GetScreenMin(), 56, std::to_string(step), false);
   DrawName("Sequencer");
 }
 

@@ -33,7 +33,15 @@ void WriteString(DaisyPatch* patch,
 		 int x,
 		 int y,
 		 std::string text) {
-  WriteString(patch, x, y, Font_6x8, text, true);
+  WriteString(patch, x, y, text, true);
+}
+
+void WriteString(DaisyPatch* patch,
+		 int x,
+		 int y,
+		 std::string text,
+		 bool on) {
+  WriteString(patch, x, y, Font_6x8, text, on);
 }
 
 void WriteCenteredString(DaisyPatch* patch,
