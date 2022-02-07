@@ -77,7 +77,16 @@ void SequencerDroplet::Draw() {
 
   // Draw info bar
   DrawSolidRect(Patch(),GetScreenMin(),56,GetScreenMax(),63, InMenu());
-  WriteString(Patch(), 2+GetScreenMin(), 56, std::to_string(step+1), !InMenu());
+  length_text = std::to_string(step+1);
+  if (sequence_length >= 10) {
+    length_text.insert(length_text.begin(), 2 - length_text.length(), '0');
+  }
+  length_text.append("/"+std::to_string(sequence_length));
+  WriteString(Patch(),
+	      2+GetScreenMin(),
+	      56,
+	      length_text,
+	      !InMenu());
   DrawName("Sequencer");
 }
 

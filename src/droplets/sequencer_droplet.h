@@ -25,6 +25,7 @@ private:
   float sequence[MAX_SEQUENCE_LENGTH] = { 0.0f };
   Parameter control[4];
   float last_control_value[4] = { 0.0f };
+  std::string length_text = "";
 
   /*
    * Set the sequencer to the next step.
