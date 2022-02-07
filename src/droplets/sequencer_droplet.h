@@ -20,6 +20,7 @@ private:
   int selected = 0;
   int sequence_length = 16;
   int num_columns = 4;
+  int num_rows = NUM_ROWS;
   int control_rate_count = 0;
   float sequence[MAX_SEQUENCE_LENGTH] = { 0.0f };
   Parameter control[4];
@@ -38,6 +39,8 @@ private:
   void SetColumns();
 
   void AdjustSelected(int adj);
+
+  bool InMenu();
 public:
   /*
    * Constructor for a droplet.
