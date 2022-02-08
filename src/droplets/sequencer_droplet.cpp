@@ -16,12 +16,22 @@ void SequencerDroplet::Control() {
   Patch()->ProcessAnalogControls();
   Patch()->encoder.Debounce();
   AdjustSelected(Patch()->encoder.Increment());
+}
 
-  if(Patch()->gate_input[0].Trig()) {
+void SequencerDroplet::Process(AudioHandle::InputBuffer in,
+			      AudioHandle::OutputBuffer out,
+			      size_t size) {
+  if(GetState() != DropletState::kRight &&
+     Patch()->gate_input[0].Trig()) {
     Step();
   }
-  if(Patch()->gate_input[1].Trig()) {
-    Reset();
+  if(GetState() != DropletState::kLeft &&
+     Patch()->gate_input[1].Trig()) {
+    if (GetState() == DropletState::kFull) {
+      Reset();
+    } else {
+      Step();
+    }
   }
 
   if (control_rate_count == CONTROL_RATE_LIMIT) {
@@ -43,14 +53,17 @@ void SequencerDroplet::Control() {
     control_rate_count = 0;
   }
   control_rate_count++;
-}
 
-void SequencerDroplet::Process(AudioHandle::InputBuffer in,
-			      AudioHandle::OutputBuffer out,
-			      size_t size) {
+  
   for(size_t i = 0; i < size; i++) {
-    Patch()->seed.dac.WriteValue(DacHandle::Channel::ONE,
-				 sequence[step] * 819.2f);
+    if (GetState() != DropletState::kRight) {
+      Patch()->seed.dac.WriteValue(DacHandle::Channel::ONE,
+				   sequence[step] * 819.2f);
+    }
+    if (GetState() != DropletState::kLeft) {
+      Patch()->seed.dac.WriteValue(DacHandle::Channel::TWO,
+				   sequence[step] * 819.2f);
+    }
   }
 }
 
