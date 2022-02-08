@@ -37,10 +37,23 @@ private:
    */
   void Reset();
 
-  void SetColumns();
+  /*
+   * Set the screeen dimensions of the sequence.
+   */
+  void SetDimensions();
 
+  /*
+   * Change the selected menu input.
+   *
+   * @param adj amount to adjust menu 
+   */
   void AdjustSelected(int adj);
 
+  /*
+   * Returns if the sequencer menu is selected.
+   *
+   * @return menu state
+   */
   bool InMenu();
 public:
   /*

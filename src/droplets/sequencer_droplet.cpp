@@ -5,7 +5,7 @@ SequencerDroplet::SequencerDroplet(DaisyPatch* m_patch,
 				 float sample_rate) :
   Droplet(m_patch,
 	  m_state) {
-  SetColumns();
+  SetDimensions();
   SetControls();
   AdjustSelected(-1);
 }
@@ -36,18 +36,20 @@ void SequencerDroplet::Process(AudioHandle::InputBuffer in,
 
   if (control_rate_count == CONTROL_RATE_LIMIT) {
     for (size_t chn = GetChannelMin(); chn < GetChannelMax(); chn++) {
-      if (std::abs(control[chn].Process()-last_control_value[chn]) > CONTROL_DEADZONE) {
+      if (std::abs(control[chn].Process()
+		   -last_control_value[chn]) > CONTROL_DEADZONE) {
 	if (!InMenu()) {
 	  sequence[chn+selected*num_columns] = control[chn].Process();
 	} else {
 	  if (chn == GetChannelMin()) {
-	    sequence_length = std::max(1.0f,control[chn].Process()/4.9f*MAX_SEQUENCE_LENGTH);
-	    SetColumns();
+	    sequence_length = std::max(1.0f,control[chn].Process() /
+				       4.9f*MAX_SEQUENCE_LENGTH);
+	    SetDimensions();
 	    selected = 0;
 	    AdjustSelected(-1);
 	  }
 	}
-    }
+      }
       last_control_value[chn] = control[chn].Process();
     }
     control_rate_count = 0;
@@ -104,7 +106,7 @@ void SequencerDroplet::Draw() {
 }
 
 void SequencerDroplet::UpdateStateCallback() {
-  SetColumns();
+  SetDimensions();
 }
 
 void SequencerDroplet::SetControls() {
@@ -126,7 +128,7 @@ void SequencerDroplet::Reset() {
   step = 0;
 }
 
-void SequencerDroplet::SetColumns() {
+void SequencerDroplet::SetDimensions() {
   if (GetState() != DropletState::kFull) {
     num_columns = 2;
   } else {
