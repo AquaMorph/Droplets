@@ -38,7 +38,7 @@ void SequencerDroplet::Process(AudioHandle::InputBuffer in,
     for (size_t chn = GetChannelMin(); chn < GetChannelMax(); chn++) {
       if (std::abs(control[chn].Process()
 		   -last_control_value[chn]) > CONTROL_DEADZONE) {
-	if (!InMenu()) {
+	if (!InMenu() && (int) chn+selected*num_columns < sequence_length) {
 	  sequence[chn+selected*num_columns] = control[chn].Process();
 	} else {
 	  if (chn == GetChannelMin()) {
