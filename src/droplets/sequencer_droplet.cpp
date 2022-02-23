@@ -71,16 +71,18 @@ void SequencerDroplet::Process(AudioHandle::InputBuffer in,
 void SequencerDroplet::Draw() {
   int left_padding = 4+GetScreenMin();
   int offset = step / (num_columns*NUM_ROWS);
-  offset *= num_columns*NUM_ROWS;
+  
   
   // Active Input
   if (!InMenu()) {
+    offset = selected / NUM_ROWS;
     DrawSolidRect(Patch(),
 		  GetScreenMin(),
-		  8+selected*8,
+		  8+selected%NUM_ROWS*8,
 		  GetScreenMin()+2,
-		  15+selected*8, true);
+		  15+selected%NUM_ROWS*8, true);
   }
+  offset *= num_columns*NUM_ROWS;
 
   // Notes
   for (int i = 0; i < num_columns*NUM_ROWS && i+offset < sequence_length; i++) {
