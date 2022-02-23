@@ -7,7 +7,7 @@ SequencerDroplet::SequencerDroplet(DaisyPatch* m_patch,
 	  m_state) {
   SetDimensions();
   SetControls();
-  AdjustSelected(-1);
+  SetInMenu();
 }
 
 SequencerDroplet::~SequencerDroplet() {}
@@ -45,8 +45,7 @@ void SequencerDroplet::Process(AudioHandle::InputBuffer in,
 	    sequence_length = std::max(1.0f,control[chn].Process() /
 				       4.9f*MAX_SEQUENCE_LENGTH);
 	    SetDimensions();
-	    selected = 0;
-	    AdjustSelected(-1);
+	    SetInMenu();
 	  }
 	}
       }
@@ -71,7 +70,9 @@ void SequencerDroplet::Process(AudioHandle::InputBuffer in,
 
 void SequencerDroplet::Draw() {
   int left_padding = 4+GetScreenMin();
-
+  int offset = step / (num_columns*NUM_ROWS);
+  offset *= num_columns*NUM_ROWS;
+  
   // Active Input
   if (!InMenu()) {
     DrawSolidRect(Patch(),
@@ -82,12 +83,12 @@ void SequencerDroplet::Draw() {
   }
 
   // Notes
-  for (int i = 0; i < num_columns*NUM_ROWS && i < sequence_length; i++) {
+  for (int i = 0; i < num_columns*NUM_ROWS && i+offset < sequence_length; i++) {
     WriteString(Patch(),
 		GetScreenWidth()/num_columns*(i%num_columns)+left_padding,
 		8+(std::floor(i/num_columns)*8),
-		FloatToString(sequence[i], 2),
-		i!=step);
+		FloatToString(sequence[i+offset], 2),
+		i+offset!=step);
   }
 
   // Draw info bar
@@ -107,6 +108,7 @@ void SequencerDroplet::Draw() {
 
 void SequencerDroplet::UpdateStateCallback() {
   SetDimensions();
+  SetInMenu();
 }
 
 void SequencerDroplet::SetControls() {
@@ -143,4 +145,9 @@ void SequencerDroplet::AdjustSelected(int adj) {
 
 bool SequencerDroplet::InMenu() {
   return selected >= num_rows;
+}
+
+void SequencerDroplet::SetInMenu() {
+  selected = 0;
+  AdjustSelected(-1);
 }

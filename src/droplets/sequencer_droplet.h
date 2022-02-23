@@ -55,6 +55,11 @@ private:
    * @return menu state
    */
   bool InMenu();
+
+  /*
+   * Set sequancer in the menu.
+   */
+  void SetInMenu();
 public:
   /*
    * Constructor for a droplet.
