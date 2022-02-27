@@ -31,7 +31,7 @@ void VCODroplet::Process(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer 
   for (size_t i = 0; i < size; i++) {
     // Read Knobs
     freq = mtof(freqctrl.Process() + finectrl.Process());
-    if (GetState() == DropletState::kFull) {
+    if (IsFull()) {
       if((size_t) wavectrl.Process() != last_wave_ctrl) {
 	AdjustWaveShape((size_t)wavectrl.Process()-last_wave_ctrl);
 	last_wave_ctrl = wavectrl.Process();
@@ -53,7 +53,7 @@ void VCODroplet::Process(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer 
 
 void VCODroplet::Draw() {
   SetWaveState(wave);
-  if (GetState() == DropletState::kFull) {
+  if (IsFull()) {
     WriteCenteredString(Patch(),
 			(GetScreenMax()-GetScreenMin())/2,
 			54,
@@ -127,28 +127,28 @@ void VCODroplet::UpdateStateCallback() {
 void VCODroplet::SetControls() {
   DaisyPatch::Ctrl freq, fine;
   switch (GetState()){
-    default:
-    case DropletState::kFull:  
-      wavectrl.Init(Patch()->controls[Patch()->CTRL_3],
-		    0.0,
-		    Oscillator::WAVE_LAST,
-		    Parameter::LINEAR);
-      ampctrl.Init(Patch()->controls[Patch()->CTRL_4],
-		   0.0,
-		   0.5f,
-		   Parameter::LINEAR);
-      freq = Patch()->CTRL_1;
-      fine = Patch()->CTRL_2;
-      SetWaveShape(wavectrl.Process());
-      break;
-    case DropletState::kLeft:
-      freq = Patch()->CTRL_1;
-      fine = Patch()->CTRL_2;
-      break;
-      case DropletState::kRight:
-	freq = Patch()->CTRL_3;
-	fine = Patch()->CTRL_4;
-	break;
+  default:
+  case DropletState::kFull:  
+    wavectrl.Init(Patch()->controls[Patch()->CTRL_3],
+		  0.0,
+		  Oscillator::WAVE_LAST,
+		  Parameter::LINEAR);
+    ampctrl.Init(Patch()->controls[Patch()->CTRL_4],
+		 0.0,
+		 0.5f,
+		 Parameter::LINEAR);
+    freq = Patch()->CTRL_1;
+    fine = Patch()->CTRL_2;
+    SetWaveShape(wavectrl.Process());
+    break;
+  case DropletState::kLeft:
+    freq = Patch()->CTRL_1;
+    fine = Patch()->CTRL_2;
+    break;
+  case DropletState::kRight:
+    freq = Patch()->CTRL_3;
+    fine = Patch()->CTRL_4;
+    break;
   }
   freqctrl.Init(Patch()->controls[freq], 10.0,
 		110.0f, Parameter::LINEAR);

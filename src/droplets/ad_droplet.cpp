@@ -110,7 +110,7 @@ ADDroplet::ADDroplet(DaisyPatch* m_patch,
   ad[0].Init(Patch(),
 	     sample_rate,
 	     State());
-  if (m_state == DropletState::kFull) {
+  if (IsFull()) {
     ad[1].Init(Patch(),
 	       sample_rate,
 	       State());
@@ -131,7 +131,7 @@ void ADDroplet::Control() {
   if (Patch()->encoder.Pressed()) {
     if (Patch()->encoder.TimeHeldMs() < 10) {
       ad[0].ToggleCurve();
-      if (GetState() == DropletState::kFull) {
+      if (IsFull()) {
 	ad[1].ToggleCurve();
       }
     }
@@ -141,17 +141,17 @@ void ADDroplet::Control() {
 void ADDroplet::Process(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size) {
   Patch()->ProcessAnalogControls();
   for(size_t i = 0; i < size; i++) {
-    if (GetState() == DropletState::kRight) {
+    if (IsRight()) {
       ad[0].Process(DacHandle::Channel::TWO, DaisyPatch::GATE_IN_2);
     } else {
       ad[0].Process(DacHandle::Channel::ONE, DaisyPatch::GATE_IN_1);
     }
-    if (GetState() == DropletState::kFull) {
+    if (IsFull()) {
       ad[1].Process(DacHandle::Channel::TWO, DaisyPatch::GATE_IN_2);
     }
     int env_sel = 0;
     for (size_t chn = GetChannelMin(); chn < GetChannelMax(); chn++) {
-      if(GetState() == DropletState::kFull && chn > 1) {
+      if(IsFull() && chn > 1) {
 	env_sel = 1;
       }
       out[chn][i] = in[chn][i] * ad[env_sel].GetSignal() *
@@ -188,7 +188,7 @@ void ADDroplet::Draw() {
 	      "Amp: " +
 	      FloatToString(ad[0].GetAmp(), 2));
 
-  if (GetState() != DropletState::kFull) {
+  if (!IsFull()) {
     if (ad[0].GetMenu()) {
       DrawSolidRect(Patch(), GetScreenMin(), 30, GetScreenMin()+1, 49, true);
     } else {
@@ -211,7 +211,7 @@ void ADDroplet::UpdateStateCallback() {
   ad[0].Init(Patch(),
 	     sample_rate,
 	     State());
-  if (GetState() == DropletState::kFull) {
+  if (IsFull()) {
     ad[1].Init(Patch(),
 	       sample_rate,
 	       State());

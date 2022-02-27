@@ -20,7 +20,7 @@ void MixerDroplet::Process(AudioHandle::InputBuffer in, AudioHandle::OutputBuffe
     for (size_t chn = GetChannelMin(); chn < GetChannelMax(); chn++) {
       output += in[chn][i] * mix[chn].Process();
     }
-    if (GetState() == DropletState::kFull) {
+    if (IsFull()) {
       output *= .25f;
     } else {
       output *= .5f;

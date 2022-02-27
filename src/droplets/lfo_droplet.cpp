@@ -56,7 +56,7 @@ void LFODroplet::Control() {
   Patch()->ProcessAnalogControls();
   Patch()->encoder.Debounce();
   lfo[0].UpdateWave(Patch()->encoder.Increment());
-  if (GetState() == DropletState::kFull) {
+  if (IsFull()) {
     lfo[1].UpdateWave(Patch()->encoder.Increment());
   }
 }
@@ -67,19 +67,19 @@ void LFODroplet::Process(AudioHandle::InputBuffer in,
   Patch()->ProcessAnalogControls();
 
   for(size_t i = 0; i < size; i++) {
-    if (GetState() == DropletState::kRight) {
+    if (IsRight()) {
       lfo[0].Process(DacHandle::Channel::TWO);
     } else {
       lfo[0].Process(DacHandle::Channel::ONE);
     }
-    if (GetState() == DropletState::kFull) {
+    if (IsFull()) {
       lfo[1].Process(DacHandle::Channel::TWO);
     }
   }
 }
 
 void LFODroplet::Draw() {
-  if (GetState() == DropletState::kFull) {
+  if (IsFull()) {
     WriteCenteredString(Patch(),
 			(GetScreenMax()-GetScreenMin())/2,
 			54,

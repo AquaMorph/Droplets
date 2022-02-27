@@ -74,7 +74,7 @@ void LadderFilterDroplet::UpdateStateCallback() {}
 
 void LadderFilterDroplet::SetControls() {
   AnalogControl filter_knob, res_knob;
-  if (GetState() == DropletState::kRight) {
+  if (IsRight()) {
     filter_knob = Patch()->controls[Patch()->CTRL_3];
     res_knob = Patch()->controls[Patch()->CTRL_4];
   } else {
