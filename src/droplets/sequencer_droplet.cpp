@@ -21,13 +21,14 @@ void SequencerDroplet::Control() {
 void SequencerDroplet::Process(AudioHandle::InputBuffer in,
 			      AudioHandle::OutputBuffer out,
 			      size_t size) {
-  if(GetState() != DropletState::kRight &&
-     Patch()->gate_input[0].Trig()) {
+  // Step input for full and left droplets
+  if(!IsRight() && Patch()->gate_input[0].Trig()) {
     Step();
   }
-  if(GetState() != DropletState::kLeft &&
-     Patch()->gate_input[1].Trig()) {
-    if (GetState() == DropletState::kFull) {
+
+  // Step for right droplet and reset for full
+  if(!IsLeft() && Patch()->gate_input[1].Trig()) {
+    if (IsFull()) {
       Reset();
     } else {
       Step();
@@ -55,13 +56,13 @@ void SequencerDroplet::Process(AudioHandle::InputBuffer in,
   }
   control_rate_count++;
 
-  
+  // VC output of sequencer
   for(size_t i = 0; i < size; i++) {
-    if (GetState() != DropletState::kRight) {
+    if (!IsRight()) {
       Patch()->seed.dac.WriteValue(DacHandle::Channel::ONE,
 				   sequence[step] * 819.2f);
     }
-    if (GetState() != DropletState::kLeft) {
+    if (!IsRight()) {
       Patch()->seed.dac.WriteValue(DacHandle::Channel::TWO,
 				   sequence[step] * 819.2f);
     }
@@ -71,7 +72,6 @@ void SequencerDroplet::Process(AudioHandle::InputBuffer in,
 void SequencerDroplet::Draw() {
   int left_padding = 4+GetScreenMin();
   int offset = step / (num_columns*NUM_ROWS);
-  
   
   // Active Input
   if (!InMenu()) {
@@ -133,7 +133,7 @@ void SequencerDroplet::Reset() {
 }
 
 void SequencerDroplet::SetDimensions() {
-  if (GetState() != DropletState::kFull) {
+  if (!IsFull()) {
     num_columns = 2;
   } else {
     num_columns = 4;

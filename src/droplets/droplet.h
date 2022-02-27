@@ -93,6 +93,27 @@ public:
   DropletState GetState();
 
   /*
+   * Returns if the droplet is in the left state.
+   *
+   * @ return droplet in left state
+   */
+  bool IsLeft();
+
+  /*
+   * Returns if the droplet is in the right state.
+   *
+   * @ return droplet in right state
+   */
+  bool IsRight();
+
+  /*
+   * Returns if the droplet is in the full state.
+   *
+   * @ return droplet in full state
+   */
+  bool IsFull();
+
+  /*
    * Returns the height of the title bar of the droplet.
    *
    * @return height of title bar

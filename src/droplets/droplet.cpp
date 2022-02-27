@@ -17,6 +17,19 @@ DropletState Droplet::GetState() {
   return state;
 }
 
+bool Droplet::IsLeft() {
+  return GetState() == DropletState::kLeft;
+}
+
+bool Droplet::IsRight() {
+  return GetState() == DropletState::kRight;
+}
+
+bool Droplet::IsFull() {
+  return GetState() == DropletState::kFull;
+}
+
+
 int Droplet::GetTitleHeight() {
   return kTitleHeight;
 }
