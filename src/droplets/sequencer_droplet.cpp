@@ -35,13 +35,17 @@ void SequencerDroplet::Process(AudioHandle::InputBuffer in,
     }
   }
 
+  // Limit control update rate to reduce noise
   if (control_rate_count == CONTROL_RATE_LIMIT) {
     for (size_t chn = GetChannelMin(); chn < GetChannelMax(); chn++) {
+      // Check for control being moved
       if (std::abs(control[chn].Process()
 		   -last_control_value[chn]) > CONTROL_DEADZONE) {
-	if (!InMenu() && (int) chn+selected*num_columns < sequence_length) {
-	  sequence[chn+selected*num_columns] = control[chn].Process();
+	int right_offset = IsRight() ? -2 : 0;
+	if (!InMenu() && (int) chn+selected*num_columns+right_offset < sequence_length) {
+	  sequence[chn+selected*num_columns+right_offset] = control[chn].Process();
 	} else {
+	  // Set sequence length
 	  if (chn == GetChannelMin()) {
 	    sequence_length = std::max(1.0f,control[chn].Process() /
 				       4.9f*MAX_SEQUENCE_LENGTH);
