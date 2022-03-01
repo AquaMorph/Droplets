@@ -8,6 +8,7 @@
 
 #include "droplet.h"
 #include "../util.h"
+#include "../graphics/graph.h"
 
 #define MAX_SEQUENCE_LENGTH 32
 #define CONTROL_DEADZONE 0.00499f
@@ -26,6 +27,7 @@ private:
   Parameter control[4];
   float last_control_value[4] = { 0.0f };
   std::string length_text = "";
+  Graph* title_graph;
 
   /*
    * Set the sequencer to the next step.
@@ -60,6 +62,11 @@ private:
    * Set sequancer in the menu.
    */
   void SetInMenu();
+
+  /*
+   * Create a new graph for the title bar.
+   */
+  void CreateTitleGraph();
 public:
   /*
    * Constructor for a droplet.

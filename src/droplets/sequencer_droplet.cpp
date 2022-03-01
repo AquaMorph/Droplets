@@ -5,12 +5,16 @@ SequencerDroplet::SequencerDroplet(DaisyPatch* m_patch,
 				 float sample_rate) :
   Droplet(m_patch,
 	  m_state) {
+  SetAnimationRate(20);
+  CreateTitleGraph();
   SetDimensions();
   SetControls();
   SetInMenu();
 }
 
-SequencerDroplet::~SequencerDroplet() {}
+SequencerDroplet::~SequencerDroplet() {
+  delete title_graph;
+}
 
 void SequencerDroplet::Control() {
   Patch()->ProcessAnalogControls();
@@ -109,12 +113,20 @@ void SequencerDroplet::Draw() {
 	      56,
 	      length_text,
 	      !InMenu());
+
+  if(NeedUpdate()) {
+    title_graph->Update();
+  }
+  title_graph->SetPixelPercentage(sequence[step]/5.0f);
+  title_graph->Draw(Patch(), GetScreenMin(), 0);
   DrawName("Sequencer");
 }
 
 void SequencerDroplet::UpdateStateCallback() {
   SetDimensions();
   SetInMenu();
+  delete title_graph;
+  CreateTitleGraph();
 }
 
 void SequencerDroplet::SetControls() {
@@ -156,4 +168,9 @@ bool SequencerDroplet::InMenu() {
 void SequencerDroplet::SetInMenu() {
   selected = 0;
   AdjustSelected(-1);
+}
+
+void SequencerDroplet::CreateTitleGraph() {
+  title_graph = new Graph(GetScreenMax()-GetScreenMin(),
+			  GetTitleHeight());
 }
