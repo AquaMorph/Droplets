@@ -11,6 +11,7 @@
 #include "../graphics/graph.h"
 
 #define MAX_SEQUENCE_LENGTH 32
+#define MAX_CLOCK_DIVIDE 16
 #define CONTROL_DEADZONE 0.00499f
 #define CONTROL_RATE_LIMIT 25
 #define NUM_ROWS 6
@@ -23,6 +24,8 @@ private:
   int num_columns = 4;
   int num_rows = NUM_ROWS;
   int control_rate_count = 0;
+  int divider = 0;
+  int divider_count = 1;
   float sequence[MAX_SEQUENCE_LENGTH] = { 0.0f };
   Parameter control[4];
   float last_control_value[4] = { 0.0f };

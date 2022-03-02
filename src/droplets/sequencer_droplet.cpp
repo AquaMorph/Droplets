@@ -52,9 +52,14 @@ void SequencerDroplet::Process(AudioHandle::InputBuffer in,
 	  // Set sequence length
 	  if (chn == GetChannelMin()) {
 	    sequence_length = std::max(1.0f,control[chn].Process() /
-				       4.9f*MAX_SEQUENCE_LENGTH);
+				       4.85f*MAX_SEQUENCE_LENGTH);
 	    SetDimensions();
 	    SetInMenu();
+	  }
+	  // Set clock divider
+	  if (chn == GetChannelMin()+1) {
+	    divider = std::max(1.0f,control[chn].Process() /
+				       4.85f*MAX_CLOCK_DIVIDE);
 	  }
 	}
       }
@@ -113,6 +118,11 @@ void SequencerDroplet::Draw() {
 	      56,
 	      length_text,
 	      !InMenu());
+  WriteString(Patch(),
+	      36+GetScreenMin(),
+	      56,
+	      std::to_string(divider),
+	      !InMenu());
 
   if(NeedUpdate()) {
     title_graph->Update();
@@ -141,7 +151,10 @@ void SequencerDroplet::SetControls() {
 }
 
 void SequencerDroplet::Step() {
-  step = (step + 1) % sequence_length;
+  divider_count = (divider_count + 1) % divider;
+  if (divider_count == 0) {
+    step = (step + 1) % sequence_length;
+  }
 }
 
 void SequencerDroplet::Reset() {
