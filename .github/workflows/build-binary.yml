@@ -2,7 +2,7 @@ name: Build Binary
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, 'feat-*' ]
   pull_request:
     branches: [ master ]
 
@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: make
     - name: Archive
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: droplets.bin
         path: build/droplets.bin
