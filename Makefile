@@ -8,6 +8,7 @@ DAISYSP_DIR = ./lib/daisySP
 
 # Reduce binary size
 OPT += -Os
+APP_TYPE = BOOT_SRAM
 
 SYSTEM_FILES_DIR = $(LIBDAISY_DIR)/core
 include $(SYSTEM_FILES_DIR)/Makefile
